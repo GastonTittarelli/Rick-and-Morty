@@ -61,8 +61,3 @@ Aplicación desarrollada en Angular Node.js y CSS. El proyecto consume la API p�
 - Bootstrap 5 utilizado como base de diseño.
 - Se agregaron estilos y ajustes personalizados con CSS.
 - Totalmente adaptada para dispositivos móviles y desktop.
-
-
----
-
-### 7. 🚀 Despliegue en Vercel
