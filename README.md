@@ -1,59 +1,68 @@
-# MiProyectoAngular
+# Rick & Morty App 
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.13.
+Aplicación desarrollada en Angular Node.js y CSS. El proyecto consume la API pública de Rick & Morty y presenta distintos desafíos implementados con buenas prácticas, uso de servicios, componentes, pipes personalizados, manejo de rutas y diseño responsive.
 
-## Development server
+---
 
-To start a local development server, run:
 
-```bash
-ng serve
-```
+## 🔗 Enlaces
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Deploy en Vercel:** https://rick-and-morty-blond-three.vercel.app/
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-```bash
-ng generate component component-name
-```
+## ✨ Funcionalidades desarrolladas
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 1. 🧍‍♂️ Sección de personajes (`/characters`)
 
-```bash
-ng generate --help
-```
+- Se accede desde la ruta `/characters`.
+- Muestra cards con imagen y nombre de cada personaje.
+- Implementa **paginación**, evitando cargar todos los personajes de una sola vez.
+- Paginación integrada usando la información que devuelve la propia API (20 personajes por página).
+- Cada card es clickeable y lleva al detalle del personaje.
 
-## Building
+🛠️ Implementado usando `*ngFor`, `routerLink`.
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+### 2. 🧬 Detalle de personaje (`/characters/:id`)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- Al hacer clic en una card, se navega a `/characters/:id`.
+- Se muestran todos los detalles del personaje en esta vista.
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
-```bash
-ng test
-```
+### 3. ❌ Vista 404 personalizada (`/404`)
 
-## Running end-to-end tests
+- Página personalizada que informa que la ruta no fue encontrada.
+- Implementado en el módulo de ruteo (`AppRoutingModule`) con `path: '**'`.
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### 4. 🌐 Pipes personalizados
 
-## Additional Resources
+- Se creó un pipe llamado `TranslateStatusPipe` para traducir el estado (`status`) y género (`gender`) del personaje del inglés al español.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+
+### 5. 🎨 Colores dinámicos con `ngClass`
+
+- Según el estado del personaje (`status`), el color de fondo cambia
+
+---
+
+
+### 6. 📱 Responsive design + estilos
+
+- Bootstrap 5 utilizado como base de diseño.
+- Se agregaron estilos y ajustes personalizados con CSS.
+- Totalmente adaptada para dispositivos móviles y desktop.
+
+
+---
+
+### 7. 🚀 Despliegue en Vercel
