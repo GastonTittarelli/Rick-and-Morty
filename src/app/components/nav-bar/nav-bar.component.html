@@ -1,0 +1,21 @@
+<nav>
+  <ul class="navOptions">
+    <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a routerLink="/">Rick & Morty</a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="/characters">Characters</a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="/#">Locations</a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="/#">Episodes</a>
+    </li>
+  </ul>
+
+  <ul class="navUser">
+    <li><a routerLink="/#" routerLinkActive="active">Profile</a></li>
+    <li><a routerLink="/#" routerLinkActive="active">Logout</a></li>
+  </ul>
+</nav>

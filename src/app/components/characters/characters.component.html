@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-4" *ngFor="let personaje of personajes">
     <div class="card mb-3">
-      <img [src]="personaje.image" class="card-img-top" [alt]="personaje.name">
-      <div class="card-body">
+      <img [src]="personaje.image" class="card-img-top characterImg" [alt]="personaje.name">
+      <div class="card-body" >
         <h5 class="card-title">{{ personaje.name }}</h5>
         <p class="card-text">Status: {{ personaje.status }}</p>
       </div>
