@@ -1,11 +1,31 @@
-<div class="row">
-  <div class="col-md-4" *ngFor="let personaje of personajes">
-    <div class="card mb-3">
-      <img [src]="personaje.image" class="card-img-top characterImg" [alt]="personaje.name">
-      <div class="card-body" >
-        <h5 class="card-title">{{ personaje.name }}</h5>
-        <p class="card-text">Status: {{ personaje.status }}</p>
-      </div>
+<div class="searchContainer">
+    <input class="form-control me-2 bg-dark text-white" type="search" placeholder="Search..." aria-label="Search">
+    <button class="btn btn-outline-primary" type="submit">Search</button>
+</div>
+
+<div class="charactersContainer">
+  <div class="card custom-card" *ngFor="let personaje of personajes">
+    <img [src]="personaje.image" class="card-img-top character-img" [alt]="personaje.name">
+    <div class="card-body">
+      <h5 class="card-title text-white">{{ personaje.name }}</h5>
     </div>
   </div>
+</div>
+
+<div class="paginationContainer">
+  <nav aria-label="...">
+    <ul class="pagination">
+      <li class="page-item disabled">
+        <span class="page-link">Previous</span>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item active" aria-current="page">
+        <span class="page-link">2</span>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </nav>
 </div>

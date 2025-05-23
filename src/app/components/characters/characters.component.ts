@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   selector: 'characters-app',
   imports: [CommonModule],
   templateUrl: './characters.component.html',
-styleUrl: './characters.component.css',
+  styleUrl: './characters.component.css',
 })
 export class CharactersComponent implements OnInit {
   personajes: any[] = [];

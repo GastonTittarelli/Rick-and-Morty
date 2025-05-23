@@ -1,0 +1,15 @@
+footer{
+  width: 100%;
+  background-color: #1b1b1b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: solid 1px rgb(0, 0, 0);
+}
+
+p{
+  color: rgb(190, 190, 190);
+  height: auto;
+  padding: 0;
+  margin: 0;
+}

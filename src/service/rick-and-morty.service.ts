@@ -12,11 +12,12 @@ export class RickAndMortyService {
   constructor(private http: HttpClient) {}
 
   getAllCharacters(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/character`);
-  }
+  return this.http.get(`${this.apiUrl}/character`);
+}
 
   getCharacterById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/character/${id}`);
   }
 
+  
 }
