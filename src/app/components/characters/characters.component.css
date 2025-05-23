@@ -1,6 +1,6 @@
 .searchContainer{
-  width: 100%;
-  margin-top: 1rem;
+  width: 80%;
+  margin-bottom: 2rem;
   display: flex;
 }
 
@@ -13,14 +13,20 @@ input::placeholder {
   color: rgb(190, 190, 190);
 }
 
-
 .charactersContainer{
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  min-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.wrapperContainer{
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
   gap:20px;
   justify-content: center;
-  margin: 30px 0;
 }
 
 .custom-card {
@@ -58,6 +64,7 @@ h5 {
 .pagination .page-link:hover {
   background-color: #202020;
   color: #0d6efd;
+  cursor: pointer;
 }
 
 

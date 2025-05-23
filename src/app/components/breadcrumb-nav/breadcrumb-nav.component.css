@@ -1,0 +1,29 @@
+.breadcrumbContainer{
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.breadcrumbWrapper{
+  width: 80%;
+}
+
+.breadcrumb{
+  background-color:#212529;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.breadcrumb .active{
+  color: rgb(190, 190, 190);
+}
+
+.breadcrumb a{
+  text-decoration: none;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  color: rgb(190, 190, 190);
+}

@@ -1,31 +1,56 @@
-<div class="searchContainer">
-    <input class="form-control me-2 bg-dark text-white" type="search" placeholder="Search..." aria-label="Search">
+<section class="charactersContainer">
+  <div class="searchContainer">
+  <form (submit)="onSearch()" class="d-flex w-100">
+    <input
+      [(ngModel)]="searchTerm"
+      name="search"
+      class="form-control me-2 bg-dark text-white"
+      type="search"
+      placeholder="Search..."
+      aria-label="Search"
+      (input)="onInputChange()"
+    />
     <button class="btn btn-outline-primary" type="submit">Search</button>
+  </form>
 </div>
 
-<div class="charactersContainer">
-  <div class="card custom-card" *ngFor="let personaje of personajes">
-    <img [src]="personaje.image" class="card-img-top character-img" [alt]="personaje.name">
-    <div class="card-body">
-      <h5 class="card-title text-white">{{ personaje.name }}</h5>
+  <div class="wrapperContainer">
+    <div class="card custom-card" *ngFor="let personaje of personajes">
+      <img
+        [src]="personaje.image"
+        class="card-img-top character-img"
+        [alt]="personaje.name"
+      />
+      <div class="card-body">
+        <h5 class="card-title text-white">{{ personaje.name }}</h5>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 <div class="paginationContainer">
-  <nav aria-label="...">
-    <ul class="pagination">
-      <li class="page-item disabled">
-        <span class="page-link">Previous</span>
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="changePage(currentPage - 1)">Previous</a>
       </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item active" aria-current="page">
-        <span class="page-link">2</span>
+
+      <li
+        class="page-item"
+        *ngFor="let page of getPageNumbers()"
+        [class.active]="page === currentPage"
+        [class.disabled]="page === '...'"
+      >
+        <a class="page-link" *ngIf="page !== '...'" (click)="changePage(page)">
+          {{ page }}
+        </a>
+        <span class="page-link" *ngIf="page === '...'">...</span>
       </li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#">Next</a>
+
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="changePage(currentPage + 1)">Next</a>
       </li>
     </ul>
   </nav>
 </div>
+
