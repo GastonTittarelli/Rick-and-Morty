@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { RickAndMortyService } from '../../../service/rick-and-morty.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'characters-app',
   imports: [CommonModule, FormsModule],
-  templateUrl: './characters.component.html',
-  styleUrl: './characters.component.css',
+  templateUrl: './characters-list.component.html',
+  styleUrl: './characters-list.component.css',
 })
 export class CharactersComponent implements OnInit {
   searchTerm: string = '';
@@ -16,7 +17,8 @@ export class CharactersComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 0;
   
-  constructor(private rickService: RickAndMortyService) {}
+  
+  constructor(private rickService: RickAndMortyService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchCharacters(this.currentPage);
@@ -78,4 +80,7 @@ onInputChange(): void {
   }
 }
 
+goToDetail(id: number): void {
+  this.router.navigate(['/home/characters', id]);
+}
 }

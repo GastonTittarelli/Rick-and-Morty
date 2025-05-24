@@ -35,6 +35,7 @@ input::placeholder {
   border: none;
   color: black;
   border-radius: 10px 10px 6px 6px;
+  cursor: pointer;
 }
 
 .character-img{

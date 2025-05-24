@@ -15,7 +15,7 @@
 </div>
 
   <div class="wrapperContainer">
-    <div class="card custom-card" *ngFor="let personaje of personajes">
+    <div class="card custom-card" *ngFor="let personaje of personajes" (click)="goToDetail(personaje.id)">
       <img
         [src]="personaje.image"
         class="card-img-top character-img"

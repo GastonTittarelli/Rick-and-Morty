@@ -4,6 +4,7 @@
   background-color: rgb(30, 39, 122);
   display: flex;
   justify-content: center;
+  align-items: start;
   position: relative;
   overflow: hidden;
 }
@@ -65,4 +66,41 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.notFoundMessage{
+  width: 350px;
+  height: 200px;
+  position: absolute;
+  top: 70%;
+  transform: translateY(-50%);
+  
+  
+}
+
+.notFoundMessage p{
+  color: white;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.customBtn{
+  background-color: #ff7f5c;
+  color: white;
+  padding: 12px 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  margin-left: 100px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.customBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }

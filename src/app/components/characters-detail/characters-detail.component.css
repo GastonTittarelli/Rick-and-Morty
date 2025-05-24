@@ -1,0 +1,44 @@
+.character-detail-container {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  color: #ddd;
+  background-color: #1e1e1e;
+}
+
+.character-info-card,
+.episodes-list-card {
+  background-color: #2c2c2c;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.character-info-card img {
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+.info-section p {
+  margin: 0.3rem 0;
+}
+
+.episodes-list-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.episodes-list-card li {
+  margin: 0.3rem 0;
+}
+
+.episodes-list-card span {
+  color: #6cf;
+  text-decoration: none;
+}
+
+.episodes-list-card span:hover {
+  text-decoration: underline;
+}
