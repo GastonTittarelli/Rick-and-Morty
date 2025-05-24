@@ -16,6 +16,7 @@ export const routes: Routes = [
       {
         path: 'characters/:id',
         component: CharactersDetailComponent,
+        data: { renderMode: 'default' },
       },
       {
         path: '404',
