@@ -13,11 +13,11 @@ export const routes: Routes = [
         path: 'characters',
         component: CharactersComponent,
       },
-      {
-        path: 'characters/:id',
-        component: CharactersDetailComponent,
-        data: { renderMode: 'default' },
-      },
+      // {
+      //   path: 'characters/:id',
+      //   component: CharactersDetailComponent,
+      //   data: { renderMode: 'client' },
+      // },
       {
         path: '404',
         component: NotFoundComponent,
