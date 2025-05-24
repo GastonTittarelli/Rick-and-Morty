@@ -8,3 +8,9 @@ p{
   margin-top: 200px;
   margin-left: 200px;
 }
+
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100%;
+}
