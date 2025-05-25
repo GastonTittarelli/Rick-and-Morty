@@ -3,10 +3,12 @@ import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { RickAndMortyService } from '../../../service/rick-and-morty.service';
 import { CommonModule } from '@angular/common';
 import { Observable, lastValueFrom, catchError, of  } from 'rxjs';
+import { StatusTranslatePipe } from '../../shared/pipes/status-translate.pipe';
+import { GenderTranslatePipe } from '../../shared/pipes/gender-translate.pipe';
 
 @Component({
   selector: 'app-characters-detail',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, StatusTranslatePipe, GenderTranslatePipe],
   templateUrl: './characters-detail.component.html',
   styleUrl: './characters-detail.component.css',
 })
@@ -53,4 +55,7 @@ export class CharactersDetailComponent {
       this.isLoading = false;
     });
   }
+
+
+  
 }

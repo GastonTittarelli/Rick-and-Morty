@@ -10,17 +10,31 @@
       <div class="infoSection">
         <h3>Character Info</h3>
         <p>Name: {{ character.name }}</p>
-        <p>Status: {{ character.status }}</p>
+        <p class="status-text">
+  Status:
+  <span
+    [ngClass]="{
+      'alive': character.status === 'Alive',
+      'dead': character.status === 'Dead',
+      'unknown': character.status === 'unknown'
+    }"
+  >
+    {{ character.status | statusTranslate }}
+  </span>
+</p>
         <p>Species: {{ character.species }}</p>
-        <p>Gender: {{ character.gender }}</p>
-        <p>Origin: {{ character.origin?.name }}</p>
-        <p>Location: {{ character.location?.name }}</p>
+        <p>Gender: {{ character.gender | genderTranslate }}</p>
+        <p>
+          Origin: <span class="highlight">{{ character.origin?.name }}</span>
+        </p>
+        <p>
+          Location:
+          <span class="highlight">{{ character.location?.name }}</span>
+        </p>
       </div>
     </div>
 
-    
     <div class="episodeListContainer">
-
       <div class="episodeList">
         <h3>List of Episodes appearances</h3>
         <ul>
@@ -34,7 +48,7 @@
             </a>
           </li>
         </ul>
-  
+
         <p
           *ngIf="episodes.length > 21 && !showAllEpisodes"
           (click)="showAllEpisodes = true"
@@ -43,5 +57,5 @@
         </p>
       </div>
     </div>
-    </div>
+  </div>
 </div>
