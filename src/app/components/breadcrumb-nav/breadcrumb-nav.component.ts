@@ -1,44 +1,69 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
+import { RickAndMortyService } from '../../../service/rick-and-morty.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-breadcrumb-nav',
-  imports: [RouterModule, CommonModule],
+  imports: [RouterLink, CommonModule],
   templateUrl: './breadcrumb-nav.component.html',
-  styleUrl: './breadcrumb-nav.component.css'
+  styleUrl: './breadcrumb-nav.component.css',
 })
-export class BreadcrumbNavComponent {
-breadcrumbs: { label: string, url: string }[] = [];
+export class BreadcrumbNavComponent implements OnInit {
+  breadcrumbs: { label: string; url: string; clickable: boolean }[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.breadcrumbs = this.buildBreadcrumb(this.route.root);
-    });
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private rickService: RickAndMortyService
+  ) {}
+
+  ngOnInit(): void {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.buildBreadcrumbs();
+      });
   }
 
-  private buildBreadcrumb(route: ActivatedRoute, url: string = '', breadcrumbs: any[] = []): any[] {
-    const children: ActivatedRoute[] = route.children;
+  private async buildBreadcrumbs() {
+    const root = this.route.root;
+    const segments: string[] = this.router.url.split('/').filter((seg) => seg);
+    const breadcrumbs: { label: string; url: string; clickable: boolean }[] = [];
 
-    if (children.length === 0) {
-      return breadcrumbs;
-    }
+    let accumulatedPath = '';
 
-    for (let child of children) {
-      const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/');
-      if (routeURL !== '') {
-        url += `/${routeURL}`;
-        breadcrumbs.push({
-          label: routeURL.charAt(0).toUpperCase() + routeURL.slice(1), // Capitalize
-          url: url
-        });
+    for (let i = 0; i < segments.length; i++) {
+      const segmentPath = segments[i];
+      accumulatedPath += `/${segmentPath}`;
+
+      let label = this.capitalize(segmentPath);
+      let clickable = i !== segments.length - 1;
+
+      // Si es un ID y el segmento anterior es 'characters'
+      if (
+        i > 0 &&
+        /^\d+$/.test(segmentPath) &&
+        segments[i - 1].toLowerCase() === 'characters'
+      ) {
+        try {
+          const character = await this.rickService
+            .getCharacterById(Number(segmentPath))
+            .toPromise();
+          label = character.name;
+        } catch (error) {
+          console.error('Error al obtener personaje', error);
+        }
       }
-      return this.buildBreadcrumb(child, url, breadcrumbs);
+
+      breadcrumbs.push({ label, url: accumulatedPath, clickable });
     }
 
-    return breadcrumbs;
+    this.breadcrumbs = breadcrumbs;
+  }
+
+  private capitalize(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 }
