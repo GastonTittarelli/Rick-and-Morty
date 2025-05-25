@@ -2,35 +2,46 @@
   <p>Cargando datos...</p>
 </div>
 
-<div class="character-detail-container"  *ngIf="!isLoading && character">
+<div class="characterDetailContainer" *ngIf="!isLoading && character">
+  <div class="characterWrapper">
+    <div class="characteInfoCard">
+      <img [src]="character.image" [alt]="character.name" />
 
-  <div class="character-info-card">
-    <img [src]="character.image" [alt]="character.name" />
-
-    <div class="info-section" >
-      <h3>Character Info</h3>
-      <p><strong>Name:</strong> {{ character.name }}</p>
-      <p><strong>Status:</strong> {{ character.status }}</p>
-      <p><strong>Species:</strong> {{ character.species }}</p>
-      <p><strong>Gender:</strong> {{ character.gender }}</p>
-      <p><strong>Origin:</strong> {{ character.origin?.name }}</p>
-      <p><strong>Location:</strong> {{ character.location?.name }}</p>
+      <div class="infoSection">
+        <h3>Character Info</h3>
+        <p>Name: {{ character.name }}</p>
+        <p>Status: {{ character.status }}</p>
+        <p>Species: {{ character.species }}</p>
+        <p>Gender: {{ character.gender }}</p>
+        <p>Origin: {{ character.origin?.name }}</p>
+        <p>Location: {{ character.location?.name }}</p>
+      </div>
     </div>
-  </div>
 
+    
+    <div class="episodeListContainer">
 
-  <div class="episodes-list-card" >
-  <h3>List of Episodes appearances</h3>
-  <ul>
-    <li  *ngFor="let episode of (showAllEpisodes ? episodes : episodes.slice(0, 21))">
-      <a [routerLink]="['/episode', episode.id]">
-        Episode {{ episode.id }} - {{ episode.name }}
-      </a>
-    </li>
-  </ul>
-
-  <p *ngIf="episodes.length > 21 && !showAllEpisodes" (click)="showAllEpisodes = true">
-    (more)
-  </p>
-</div>
+      <div class="episodeList">
+        <h3>List of Episodes appearances</h3>
+        <ul>
+          <li
+            *ngFor="
+              let episode of showAllEpisodes ? episodes : episodes.slice(0, 21)
+            "
+          >
+            <a [routerLink]="['/episode', episode.id]">
+              Episode {{ episode.id }} - {{ episode.name }}
+            </a>
+          </li>
+        </ul>
+  
+        <p
+          *ngIf="episodes.length > 21 && !showAllEpisodes"
+          (click)="showAllEpisodes = true"
+        >
+          (more)
+        </p>
+      </div>
+    </div>
+    </div>
 </div>

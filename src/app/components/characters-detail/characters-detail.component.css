@@ -1,44 +1,118 @@
-.character-detail-container {
+.characterDetailContainer {
   display: flex;
   gap: 2rem;
-  padding: 2rem;
+  width: 100%;
   color: #ddd;
-  background-color: #1e1e1e;
+  justify-content: center;
 }
 
-.character-info-card,
-.episodes-list-card {
-  background-color: #2c2c2c;
+.characterWrapper{
+  width: 80%;
+  display: grid;
+  grid-template-columns: 400px 1fr;;
+  gap: 1.5rem;
+}
+
+.characteInfoCard{
+  background-color: #212529;
   padding: 1.5rem;
   border-radius: 10px;
-  width: 100%;
-  max-width: 400px;
+  height: 730px;
 }
 
-.character-info-card img {
+.characteInfoCard img {
   width: 100%;
   border-radius: 5px;
   margin-bottom: 1rem;
 }
 
-.info-section p {
-  margin: 0.3rem 0;
+.infoSection{
+  width: 100%;
+  height: 300px;
+  margin-top: 8px;
+  border: solid 1px #818181;
+  border-radius: 5px;
 }
 
-.episodes-list-card ul {
+.infoSection h3{
+  color: #bebebe;
+  padding: 15px 0 15px 20px;
+  border-bottom: solid 1px #818181;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.infoSection p {
+  color: #bebebe;
+  margin: 1px 0;
+  padding-left: 20px;
+}
+
+.episodeListContainer{
+  background-color: #212529;
+  padding: 1.5rem;
+  border-radius: 10px;
+  height: 730px;
+  overflow-y: auto;
+  scrollbar-color: none;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #888 transparent;
+}
+
+
+.episodeList {
+  height: auto;
+  border: solid 1px #818181;
+  border-radius: 5px;
+  padding-bottom: 12px;
+}
+
+.episodeList h3 {
+  color: #bebebe;
+  padding: 15px 0;
+  border-bottom: solid 1px #818181;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+.episodeList ul {
   list-style: none;
-  padding: 0;
+  padding-left: 20px;
+  margin: 0;
 }
 
-.episodes-list-card li {
-  margin: 0.3rem 0;
+.episodeList li {
+  margin: 3px;
 }
 
-.episodes-list-card span {
-  color: #6cf;
+.episodeList a {
+  color: #0D6EDF;
   text-decoration: none;
 }
 
-.episodes-list-card span:hover {
+.episodeList a:hover {
   text-decoration: underline;
+}
+
+.episodeList p {
+  color: #0077ff;
+  margin: 0 0 0 20px;
+  cursor: pointer;
+  width: 50px;
+  text-align: center;
+}
+
+
+/* Estilos para el scroll en lista de episodios */
+.episodeListContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.episodeListContainer::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 4px;
+}
+
+.episodeListContainer::-webkit-scrollbar-track {
+  background: transparent;
 }

@@ -18,15 +18,13 @@ export const routes: Routes = [
         component: CharactersDetailComponent,
         data: { renderMode: 'client' },
       },
-      {
-        path: '404',
-        component: NotFoundComponent,
-      },
-      {
-        path: '**',
-        redirectTo: '',
-        pathMatch: 'full',
-      },
+      // esta ya no es necesaria:
+      // {
+      //   path: '**',
+      //   redirectTo: '',
+      //   pathMatch: 'full',
+      // },
     ]
   }
+
 ];
