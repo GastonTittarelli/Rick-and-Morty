@@ -1,21 +1,31 @@
 <nav>
-  <ul class="navOptions">
+  <div class="hamburger" (click)="toggleMenu()">&#9776;</div>
+
+  <ul
+    class="navOptions"
+    [class.open]="menuOpen"
+    [class.no-transition]="disableTransition"
+  >
     <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-      <a routerLink="/home">Rick & Morty</a>
+      <a routerLink="/home" (click)="closeMenu()">Rick & Morty</a>
     </li>
     <li routerLinkActive="active">
-      <a routerLink="/home/characters">Characters</a>
+      <a routerLink="/home/characters" (click)="closeMenu()">Characters</a>
     </li>
     <li routerLinkActive="active">
-      <a >Locations</a>
+      <a>Locations</a>
     </li>
     <li routerLinkActive="active">
-      <a >Episodes</a>
+      <a>Episodes</a>
     </li>
   </ul>
 
-  <ul class="navUser">
-    <li><a  routerLinkActive="active">Profile</a></li>
-    <li><a  routerLinkActive="active">Logout</a></li>
+  <ul
+    class="navUser"
+    [class.open]="menuOpen"
+    [class.no-transition]="disableTransition"
+  >
+    <li><a routerLinkActive="active">Profile</a></li>
+    <li><a routerLinkActive="active">Logout</a></li>
   </ul>
 </nav>

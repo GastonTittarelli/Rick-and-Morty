@@ -25,7 +25,7 @@ input::placeholder {
   width: 80%;
   display: flex;
   flex-wrap: wrap;
-  gap:20px;
+  gap: 20px;
   justify-content: center;
 }
 
@@ -86,4 +86,35 @@ h5 {
   background-color: #1b1b1b;
   color: #6c757d;
   border-color: #111111;
+}
+
+
+@media screen and (max-width: 500px) {
+  .searchContainer{
+  width: 100%;
+}
+.searchForm{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+  input{
+  max-width: 250px;
+}
+
+.wrapperContainer{
+    width: 90%;
+    flex-direction: column;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+  
+
+
+
+  
 }

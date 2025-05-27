@@ -1,5 +1,5 @@
 <div *ngIf="isLoading">
-  <p>Cargando datos...</p>
+  <p>.</p>
 </div>
 
 <div class="characterDetailContainer" *ngIf="!isLoading && character">
@@ -11,17 +11,17 @@
         <h3>Character Info</h3>
         <p>Name: {{ character.name }}</p>
         <p class="status-text">
-  Status:
-  <span
-    [ngClass]="{
-      'alive': character.status === 'Alive',
-      'dead': character.status === 'Dead',
-      'unknown': character.status === 'unknown'
-    }"
-  >
-    {{ character.status | statusTranslate }}
-  </span>
-</p>
+          Status:
+          <span
+            [ngClass]="{
+              alive: character.status === 'Alive',
+              dead: character.status === 'Dead',
+              unknown: character.status === 'unknown'
+            }"
+          >
+            {{ character.status | statusTranslate }}
+          </span>
+        </p>
         <p>Species: {{ character.species }}</p>
         <p>Gender: {{ character.gender | genderTranslate }}</p>
         <p>

@@ -1,6 +1,6 @@
 .notf{
 background-color: lightcoral;
-width: 100%!important;
+width: 100%;
 }
 
 .notFoundContainer{
@@ -14,11 +14,9 @@ width: 100%!important;
   overflow: hidden;
 }
 
-.notFoundContent{
-  width: 550px;
-}
 
 .notFoundContent {
+  width: 550px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -110,3 +108,43 @@ width: 100%!important;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
+
+@media screen and (max-width: 500px) {
+  
+  .notFoundContainer{
+    height: 650px;
+  }
+
+  .notFoundContent{
+    width: 400px;
+    height: 400px;
+    padding-right: 10px;
+  }
+
+  .notFoundContent img {
+    max-width: 290px;
+  }
+
+  .background-spinner {
+  width: 200vw;
+  height: 200vh;
+  margin-top: -100vh;
+  margin-left: -100vw;
+}
+
+.notFoundContent::before,
+.notFoundContent::after {
+  font-size: 180px;
+}
+
+.notFoundContent::before {
+  left: 10px;
+}
+
+.notFoundContent::after {
+  right: 10px;
+}
+.notFoundMessage{
+  height: auto;
+}
+}

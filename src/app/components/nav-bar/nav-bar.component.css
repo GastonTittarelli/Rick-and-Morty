@@ -1,4 +1,4 @@
-nav{
+nav {
   background-color: rgb(33, 33, 33);
   height: 50px;
   width: 100%;
@@ -6,23 +6,23 @@ nav{
   border-bottom: solid 1px rgb(22, 64, 88);
 }
 
-ul{
+ul {
   list-style: none;
   display: flex;
   gap: 30px;
   height: 100%;
 }
 
-.navOptions{
+.navOptions {
   width: 70%;
 }
 
-.navUser{
+.navUser {
   width: 40%;
   justify-content: flex-end;
 }
 
-li{
+li {
   text-align: center;
   list-style: none;
   display: flex;
@@ -32,19 +32,19 @@ li{
   width: 120px;
 }
 
-li a{
+li a {
   text-decoration: none;
   color: rgb(190, 190, 190);
 }
 
 li a:hover {
-  color: rgb(190, 190, 190); 
-  text-decoration: none; 
+  color: rgb(190, 190, 190);
+  text-decoration: none;
   cursor: pointer;
 }
 
 .navOptions li.active {
-  background-color: #111111; 
+  background-color: #111111;
 }
 
 .navOptions li.active a {
@@ -52,3 +52,64 @@ li a:hover {
   font-weight: 600;
 }
 
+.hamburger {
+  display: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+}
+
+/* --- Responsive --- */
+@media screen and (max-width: 500px) {
+  nav {
+    border-bottom: transparent;
+    position: relative;
+  }
+
+  .hamburger {
+    display: block;
+    margin-left: 10px;
+  }
+
+  .navOptions,
+  .navUser {
+    flex-direction: column;
+    background-color: rgb(33, 33, 33);
+    width: 300px;
+    padding: 10px 0;
+    z-index: 10;
+    padding-left: 30px;
+    border-radius: 0 0 6px 0;
+    height: auto;
+    position: absolute;
+    top: 50px;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .navUser {
+    padding-top: 22px;
+    top: 255px;
+  }
+
+  .navOptions.open,
+  .navUser.open {
+    width: 300px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  ul {
+    margin: 0;
+  }
+
+  .navOptions li.active {
+    background-color: transparent;
+  }
+
+  .no-transition {
+    transition: none;
+  }
+}

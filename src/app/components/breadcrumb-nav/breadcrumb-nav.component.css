@@ -27,3 +27,10 @@
 .breadcrumb-item + .breadcrumb-item::before {
   color: rgb(190, 190, 190);
 }
+
+
+@media screen and (max-width: 500px) {
+.breadcrumbWrapper{
+  width: 90%;
+}
+}
