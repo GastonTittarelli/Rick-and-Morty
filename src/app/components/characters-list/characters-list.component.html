@@ -15,6 +15,9 @@
 </div>
 
   <div class="wrapperContainer">
+    <p class="mt-3" *ngIf="noResults">
+      Oops.. There is no character named "{{ searchTerm }}"
+    </p>
     <div class="card custom-card" *ngFor="let personaje of personajes" (click)="goToDetail(personaje.id)">
       <img
         [src]="personaje.image"

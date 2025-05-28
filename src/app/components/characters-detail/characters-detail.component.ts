@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
-import { RickAndMortyService } from '../../../service/rick-and-morty.service';
+import { RickAndMortyService } from '../../service/rick-and-morty.service';
 import { CommonModule } from '@angular/common';
 import { Observable, lastValueFrom, catchError, of  } from 'rxjs';
 import { StatusTranslatePipe } from '../../shared/pipes/status-translate.pipe';

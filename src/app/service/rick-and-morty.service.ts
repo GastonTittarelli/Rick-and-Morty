@@ -12,7 +12,7 @@ export class RickAndMortyService {
   constructor(private http: HttpClient) {}
 
 getAllCharacters(page: number, name: string = '') {
-  let url = `https://rickandmortyapi.com/api/character/?page=${page}`;
+  let url = `${this.apiUrl}/character/?page=${page}`;
   if (name) {
     url += `&name=${name}`;
   }

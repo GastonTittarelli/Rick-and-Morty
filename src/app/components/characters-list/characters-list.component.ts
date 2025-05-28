@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RickAndMortyService } from '../../../service/rick-and-morty.service';
+import { RickAndMortyService } from '../../service/rick-and-morty.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ export class CharactersComponent implements OnInit {
   personajes: any[] = [];
   currentPage: number = 1;
   totalPages: number = 0;
-  
+  noResults: boolean = false;
   
   constructor(private rickService: RickAndMortyService, private router: Router) {}
 
@@ -25,17 +25,27 @@ export class CharactersComponent implements OnInit {
   }
 
   fetchCharacters(page: number): void {
-  this.rickService.getAllCharacters(page, this.searchTerm).subscribe((data: any) => {
+  this.rickService.getAllCharacters(page, this.searchTerm).subscribe({next: (data: any) => {
     this.personajes = data.results;
     this.totalPages = data.info.pages;
-    this.currentPage = page;
-  });
-}
+    this.noResults = false;
+    this.scrollToTop();
+      },
+      error: (error) => {
+        if (error.status === 404) {
+          this.personajes = [];
+          this.totalPages = 0;
+          this.noResults = true; // ⬅️ activar bandera si no se encuentra nada
+        }
+      }
+    });
+  }
 
   changePage(page: number | string): void {
   if (page === '...' || typeof page !== 'number' || page < 1 || page > this.totalPages) {
     return;
   }
+  this.currentPage = page;
   this.fetchCharacters(page);
 }
   getPageNumbers(): (number | string)[] {
@@ -82,5 +92,12 @@ onInputChange(): void {
 
 goToDetail(id: number): void {
   this.router.navigate(['/home/characters', id]);
+}
+
+scrollToTop(): void {
+  window.scrollTo({
+    top: 0,
+    behavior: "instant",
+  });
 }
 }

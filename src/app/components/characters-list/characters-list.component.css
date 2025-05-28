@@ -55,6 +55,14 @@ h5 {
   font-size: 1.2rem;
 }
 
+/* mensaje de no encontrado */
+.wrapperContainer p{
+  height: 555px;
+  padding-top: 40px;
+  font-size: 1.3rem;
+  color: white;
+}
+
 .paginationContainer {
   width: 100%;
   display: flex;

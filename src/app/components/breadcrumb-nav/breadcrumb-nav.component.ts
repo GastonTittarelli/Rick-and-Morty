@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
-import { RickAndMortyService } from '../../../service/rick-and-morty.service';
+import { RickAndMortyService } from '../../service/rick-and-morty.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
