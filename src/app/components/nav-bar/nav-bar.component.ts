@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -11,6 +11,8 @@ import { RouterModule } from '@angular/router';
 export class NavBarComponent {
   menuOpen = false;
   disableTransition = false;
+
+  constructor(private eRef: ElementRef) {}
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
@@ -24,5 +26,14 @@ export class NavBarComponent {
     setTimeout(() => {
       this.disableTransition = false;
     });
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    if (this.menuOpen && !this.eRef.nativeElement.contains(target)) {
+      this.closeMenu();
+    }
   }
 }
