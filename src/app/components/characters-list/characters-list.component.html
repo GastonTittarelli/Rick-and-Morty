@@ -1,59 +1,31 @@
 <section class="charactersContainer">
-  <div class="searchContainer">
-  <form (submit)="onSearch()" class="d-flex w-100 searchForm">
-    <input
-      [(ngModel)]="searchTerm"
-      name="search"
-      class="form-control me-2 bg-dark text-white"
-      type="search"
-      placeholder="Search..."
-      aria-label="Search"
-      (input)="onInputChange()"
-    />
-    <button class="btn btn-outline-primary" type="submit">Search</button>
-  </form>
-</div>
+  <app-search class="searchContainer" (search)="handleSearch($event)"></app-search>
 
   <div class="wrapperContainer">
     <p class="mt-3" *ngIf="noResults">
       Oops.. There is no character named "{{ searchTerm }}"
     </p>
-    <div class="card custom-card" *ngFor="let personaje of personajes" (click)="goToDetail(personaje.id)">
+    <div
+      class="card custom-card"
+      *ngFor="let character of characters"
+      (click)="goToDetail(character.id)"
+    >
       <img
-        [src]="personaje.image"
+        [src]="character.image"
         class="card-img-top character-img"
-        [alt]="personaje.name"
+        [alt]="character.name"
       />
       <div class="card-body">
-        <h5 class="card-title text-white">{{ personaje.name }}</h5>
+        <h5 class="card-title text-white">{{ character.name }}</h5>
       </div>
     </div>
   </div>
 </section>
 
 <div class="paginationContainer">
-  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-      <li class="page-item" [class.disabled]="currentPage === 1">
-        <a class="page-link" (click)="changePage(currentPage - 1)">Previous</a>
-      </li>
-
-      <li
-        class="page-item"
-        *ngFor="let page of getPageNumbers()"
-        [class.active]="page === currentPage"
-        [class.disabled]="page === '...'"
-      >
-        <a class="page-link" *ngIf="page !== '...'" (click)="changePage(page)">
-          {{ page }}
-        </a>
-        <span class="page-link" *ngIf="page === '...'">...</span>
-      </li>
-
-      <li class="page-item" [class.disabled]="currentPage === totalPages">
-        <a class="page-link" (click)="changePage(currentPage + 1)">Next</a>
-      </li>
-    </ul>
-  </nav>
+  <app-paginator
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChange)="handlePageChange($event)"
+  ></app-paginator>
 </div>
-

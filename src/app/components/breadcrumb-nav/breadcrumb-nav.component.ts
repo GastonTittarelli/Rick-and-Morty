@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, firstValueFrom } from 'rxjs';
 import { RickAndMortyService } from '../../service/rick-and-morty.service';
 import { CommonModule } from '@angular/common';
 
@@ -23,14 +23,25 @@ export class BreadcrumbNavComponent implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
+        // Asegura que los cambios se actualicen
         this.buildBreadcrumbs();
       });
+
+    // Se llamama una vez por si accede directamente
+    this.buildBreadcrumbs();
   }
 
   private async buildBreadcrumbs() {
-    const root = this.route.root;
     const segments: string[] = this.router.url.split('/').filter((seg) => seg);
-    const breadcrumbs: { label: string; url: string; clickable: boolean }[] = [];
+    const breadcrumbs: { label: string; url: string; clickable: boolean }[] =
+      [];
+
+    // Agrego manualmente el "Home"
+    breadcrumbs.push({
+      label: 'Home',
+      url: '/home/characters',
+      clickable: true,
+    });
 
     let accumulatedPath = '';
 
@@ -38,19 +49,24 @@ export class BreadcrumbNavComponent implements OnInit {
       const segmentPath = segments[i];
       accumulatedPath += `/${segmentPath}`;
 
+      // Evita agregar dos veces "home" o "characters"
+      if (segmentPath === 'home' || (i === 0 && segmentPath === 'characters')) {
+        continue;
+      }
+
       let label = this.capitalize(segmentPath);
       let clickable = i !== segments.length - 1;
 
-      // Si es un ID y el segmento anterior es 'characters'
+      // Si es un ID y el segmento anterior es "characters"
       if (
         i > 0 &&
         /^\d+$/.test(segmentPath) &&
         segments[i - 1].toLowerCase() === 'characters'
       ) {
         try {
-          const character = await this.rickService
-            .getCharacterById(Number(segmentPath))
-            .toPromise();
+          const character = await firstValueFrom(
+            this.rickService.getCharacterById(Number(segmentPath))
+          );
           label = character.name;
         } catch (error) {
           console.error('Error al obtener personaje', error);

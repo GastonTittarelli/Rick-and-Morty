@@ -16,46 +16,83 @@ export class CharactersDetailComponent {
   episodes: any[] = [];
   character: any = null;
   isLoading: boolean = true;
-  showAllEpisodes = false;
-  
+  showAllEpisodes: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private rickService: RickAndMortyService,
     private router: Router
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+  ngOnInit(): void {
+    const id = this.getCharacterIdFromRoute();
+    if (!id) {
+      this.redirectTo404();
+      return;
+    }
 
+    this.loadCharacter(id);
+  }
+
+  private getCharacterIdFromRoute(): number | null {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    return isNaN(id) ? null : id;
+  }
+
+  private loadCharacter(id: number): void {
     this.rickService.getCharacterById(id).pipe(
-      catchError(err => {
-        // Si hay error (404, etc), redirige al 404
-        this.router.navigate(['/404']);
+      catchError(() => {
+        this.redirectTo404();
         return of(null);
       })
-    ).subscribe(async (data) => {
-      if (!data) {
-        // Si la API no encontró el personaje
-        this.router.navigate(['/404']);
+    ).subscribe((character) => {
+      if (!character) {
+        this.redirectTo404();
         return;
       }
 
-      this.character = data;
-      const episodeUrls = data.episode;
-
-      const episodeRequests: Observable<any>[] = episodeUrls.map((url: string) =>
-        this.rickService.getEpisodeByUrl(url)
-      );
-
-      const responses = await Promise.all(
-        episodeRequests.map((obs) => lastValueFrom(obs))
-      );
-
-      this.episodes = responses.sort((a: any, b: any) => a.id - b.id);
-      this.isLoading = false;
+      this.character = character;
+      this.loadEpisodes(character.episode);
     });
   }
 
+  private async loadEpisodes(episodeUrls: string[]): Promise<void> {
+    try {
+      const episodeRequests: Observable<any>[] = episodeUrls.map(url =>
+        this.rickService.getEpisodeByUrl(url)
+      );
 
-  
+      const episodes = await Promise.all(
+        episodeRequests.map(obs => lastValueFrom(obs))
+      );
+
+      this.episodes = episodes.sort((a, b) => a.id - b.id);
+    } catch (error) {
+      console.error('Error loading episodes:', error);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  private redirectTo404(): void {
+    this.router.navigate(['/404']);
+  }
+
+  get statusClass(): string {
+    const statusMap: Record<string, string> = {
+      'Alive': 'alive',
+      'Dead': 'dead',
+      'unknown': 'unknown'
+    };
+    return statusMap[this.character?.status] || '';
+  }
+
+  get visibleEpisodes(): any[] {
+    return this.showAllEpisodes ? this.episodes : this.episodes.slice(0, 21);
+  }
+
+  get shouldShowMore(): boolean {
+    return this.episodes.length > 21 && !this.showAllEpisodes;
+  }
+
 }

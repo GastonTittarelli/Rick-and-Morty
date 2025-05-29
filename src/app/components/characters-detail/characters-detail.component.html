@@ -12,13 +12,7 @@
         <p>Name: {{ character.name }}</p>
         <p class="status-text">
           Status:
-          <span
-            [ngClass]="{
-              alive: character.status === 'Alive',
-              dead: character.status === 'Dead',
-              unknown: character.status === 'unknown'
-            }"
-          >
+          <span [ngClass]="statusClass">
             {{ character.status | statusTranslate }}
           </span>
         </p>
@@ -38,21 +32,14 @@
       <div class="episodeList">
         <h3>List of Episodes appearances</h3>
         <ul>
-          <li
-            *ngFor="
-              let episode of showAllEpisodes ? episodes : episodes.slice(0, 21)
-            "
-          >
+          <li *ngFor="let episode of visibleEpisodes">
             <a [routerLink]="['/episode', episode.id]">
               Episode {{ episode.id }} - {{ episode.name }}
             </a>
           </li>
         </ul>
 
-        <p
-          *ngIf="episodes.length > 21 && !showAllEpisodes"
-          (click)="showAllEpisodes = true"
-        >
+        <p *ngIf="shouldShowMore" (click)="showAllEpisodes = true">
           (more)
         </p>
       </div>
