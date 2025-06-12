@@ -10,10 +10,5 @@ import { RouterModule } from '@angular/router';
 })
 export class NotFoundComponent {
 
-  // constructor(private router: Router) {}
-
-  // goBack() {
-  //     this.router.navigate(['/home']);
-  // }
 
 }
