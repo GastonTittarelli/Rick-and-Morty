@@ -6,11 +6,14 @@ import { CharactersDetailComponent } from './components/characters-detail/charac
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthGuard } from './guards/auth.guard';
+import { PublicGuard } from './guards/not-auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -32,9 +35,9 @@ export const routes: Routes = [
     path: 'layout',
     component: AuthLayoutComponent,
     children: [
-      // { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
+      { path: '', redirectTo: 'layout/login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
+      { path: 'register', component: RegisterComponent, canActivate: [PublicGuard] },
     ]
   },
 

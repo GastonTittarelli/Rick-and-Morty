@@ -25,7 +25,9 @@
     [class.open]="menuOpen"
     [class.no-transition]="disableTransition"
   >
-    <li><a routerLinkActive="active">Profile</a></li>
-    <li><a routerLinkActive="active">Logout</a></li>
+    <li class="user-name">
+      <span>{{ userName }}</span>
+    </li>
+    <li><a  (click)="logout()">Logout</a></li>
   </ul>
 </nav>

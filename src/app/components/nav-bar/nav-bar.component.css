@@ -52,6 +52,13 @@ li a:hover {
   font-weight: 600;
 }
 
+.user-name{
+  color: rgb(190, 190, 190);
+  font-weight: 600;
+  font-size: 1.1rem;
+  width: 200px;
+}
+
 .hamburger {
   display: none;
   font-size: 28px;

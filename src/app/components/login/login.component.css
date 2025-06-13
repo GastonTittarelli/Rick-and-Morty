@@ -6,7 +6,10 @@
   justify-content: start;
   min-height: 90vh;
   gap: 30px;
+  position: relative;
 }
+
+
 
 .image-container{
   width: 60%;
@@ -75,6 +78,25 @@
       text-decoration: underline;
     }
   }
+
+
+.alert-message{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+
+  animation: fadeInOut 2s ease-in-out;
+  
+}
+@keyframes fadeInOut {
+  0% { opacity: 0;  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0;}
+}
+
 
 @media screen and (max-width: 1000px) {
 .login-container{

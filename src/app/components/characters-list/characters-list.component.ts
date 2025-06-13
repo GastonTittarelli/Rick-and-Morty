@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SearcherComponent } from '../searcher/searcher.component';
 import { PaginatorComponent } from '../paginator/paginator.component';
+import { MessageService, AlertMessage } from '../../service/auth-messages.service';  // Importa el servicio
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'characters-app',
   imports: [CommonModule, SearcherComponent, PaginatorComponent],
   templateUrl: './characters-list.component.html',
-  styleUrl: './characters-list.component.css',
+  styleUrls: ['./characters-list.component.css', '../../layouts/auth-layout/auth-layout.component.css']
 })
 export class CharactersComponent implements OnInit {
   searchTerm: string = '';
@@ -18,12 +20,16 @@ export class CharactersComponent implements OnInit {
   totalPages: number = 0;
   noResults: boolean = false;
 
+  alert$!: Observable<AlertMessage | null>; 
+
   constructor(
     private rickService: RickAndMortyService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
+    this.alert$ = this.messageService.alert$;
     this.loadCharacters();
   }
 
