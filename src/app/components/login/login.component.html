@@ -1,12 +1,4 @@
 <div class="login-container">
-  <div
-    *ngIf="alert$ | async as alert"
-    class="alert alert-message"
-    [ngClass]="'alert-' + alert.type"
-  >
-    {{ alert.text }}
-  </div>
-
   <section class="image-container">
     <img
       src="/loginImageView.png"
@@ -64,7 +56,7 @@
               (loginForm.get('password')?.errors?.['minlength'] || 
               loginForm.get('password')?.errors?.['pattern'])"
           >
-            Password must be at least 6 characters long and include a letter and a number
+            Password must be at least 8 characters long and include a letter and a number
           </div>
         </div>
 
@@ -86,10 +78,6 @@
           >New around here? Sign up</a
         >
         <a class="text-primary">Forgot password?</a>
-      </div>
-
-      <div *ngIf="errorMessage" class="text-danger mt-2">
-        {{ errorMessage }}
       </div>
     </form>
   </section>

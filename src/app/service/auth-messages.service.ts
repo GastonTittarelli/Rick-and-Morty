@@ -10,57 +10,63 @@ export interface AlertMessage {
   providedIn: 'root',
 })
 export class MessageService {
-  // Observable para que los componentes se suscriban y reciban mensajes
   private alertSubject = new BehaviorSubject<AlertMessage | null>(null);
-  
   alert$ = this.alertSubject.asObservable();
-  
   private timeoutId: any;
-  // Método para enviar mensajes
+
   showMessage(type: AlertMessage['type'], text: string) {
     this.alertSubject.next({ type, text });
   }
 
   showMessageWithTimeout(type: AlertMessage['type'], text: string, duration: number = 2000) {
-  this.showMessage(type, text);
-  
-  if (this.timeoutId) {
-    clearTimeout(this.timeoutId);
+    this.showMessage(type, text);
+
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+
+    this.timeoutId = setTimeout(() => {
+      this.clear();
+      this.timeoutId = null;
+    }, duration);
   }
 
-  this.timeoutId = setTimeout(() => {
-    this.clear();
-    this.timeoutId = null;
-  }, duration);
-}
-  // Método para limpiar mensajes (ej: al navegar o después de x segundos)
   clear() {
     this.alertSubject.next(null);
   }
 
-  // Método para interpretar errores del backend y lanzar mensajes
-  handleError(errorResponse: any) {
-    console.log('handleError', errorResponse);
-    const serverError = errorResponse?.error;
+  processResultCode(resultCode: number, backendMessage?: string): void {
+    switch (resultCode) {
+      case 0:
+        this.showMessageWithTimeout('success', backendMessage || 'Authenticated user');
+        break;
+      // case 2:
+      //   this.showMessageWithTimeout('warning', backendMessage || 'Mail or password is empty');
+      //   break;
+      case 3:
+        this.showMessageWithTimeout('warning', backendMessage || 'User not found');
+        break;
+      case 4:
+        this.showMessageWithTimeout('warning', backendMessage || 'Invalid password');
+        break;
+      default:
+        this.showMessageWithTimeout('danger', backendMessage || 'Unknown error');
+        break;
+    }
+  }
 
-    if (serverError && serverError.header) {
-      switch (serverError.header.resultCode) {
-        case 2:
-          this.showMessageWithTimeout('warning', serverError.header.error || 'Mail or password is empty');
-          break;
-        case 3:
-          this.showMessageWithTimeout('danger', 'User not found');
-          break;
-        case 4:
-          this.showMessageWithTimeout('warning', 'Invalid password');
-          break;
-        default:
-          this.showMessageWithTimeout('danger', 'Server error, try again later');
-      }
+  /**
+   * Método para manejar errores del backend, usando la misma lógica que processResultCode
+   */
+  handleError(errorResponse: any): void {
+    const serverError = errorResponse?.error;
+    const resultCode = serverError?.header?.resultCode;
+    const backendMessage = serverError?.header?.error || serverError?.message;
+
+    if (resultCode !== undefined) {
+      this.processResultCode(resultCode, backendMessage);
     } else {
-      
-      const generic = serverError?.message || 'Server error, try again later';
-    this.showMessageWithTimeout('danger', generic);
+      this.showMessageWithTimeout('danger', backendMessage || 'Server error, try again later');
     }
   }
 }
