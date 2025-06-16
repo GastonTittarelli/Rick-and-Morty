@@ -9,7 +9,7 @@ export class PublicGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(): boolean {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (token) {
       this.router.navigate(['/home/characters']);
       return false;

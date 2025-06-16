@@ -28,7 +28,8 @@ export class LoginComponent {
         Validators.required,
         Validators.minLength(8),
         Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
-  ]]
+  ]],
+  rememberMe: [false]
     });
     this.loginForm.valueChanges.subscribe(() => {
     this.messageService.clear();
@@ -38,7 +39,7 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.loginForm.invalid) return;
 
-    const { mail, password } = this.loginForm.value;
+    const { mail, password, rememberMe } = this.loginForm.value;
 
     this.authService.login(mail, password).subscribe({
       next: (res) => {
@@ -46,10 +47,9 @@ export class LoginComponent {
         const message = res.header.error || res.header.message;
 
       if (code === 0) {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        this.router.navigate(['/home/characters']);
-      }
+  this.authService.saveSession(res.data.token, res.data.user, rememberMe);
+  this.router.navigate(['/home/characters']);
+}
 
       // Siempre mostrar mensaje del backend
       this.messageService.processResultCode(code, message);

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../../service/users.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -13,7 +14,11 @@ export class NavBarComponent {
   disableTransition = false;
   userName: string | null = null;
 
-  constructor(private eRef: ElementRef, private router: Router) {
+  constructor(
+    private eRef: ElementRef, 
+    private router: Router,
+    private authService: AuthService
+) {
   this.setUserName();
 
   this.router.events.subscribe(() => {
@@ -63,8 +68,7 @@ private setUserName() {
   
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    this.authService.logout();
     this.closeMenu();
     this.router.navigate(['/layout/login']);
   }

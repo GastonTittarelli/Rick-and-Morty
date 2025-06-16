@@ -40,9 +40,9 @@ export class MessageService {
       case 0:
         this.showMessageWithTimeout('success', backendMessage || 'Authenticated user');
         break;
-      // case 2:
-      //   this.showMessageWithTimeout('warning', backendMessage || 'Mail or password is empty');
-      //   break;
+      case 1:
+        this.showMessageWithTimeout('warning', backendMessage || 'Mail already Registered');
+        break;
       case 3:
         this.showMessageWithTimeout('warning', backendMessage || 'User not found');
         break;

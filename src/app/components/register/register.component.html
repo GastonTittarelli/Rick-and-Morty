@@ -1,61 +1,245 @@
 <section class="register-container">
-  <div class="register-form bg-dark text-white p-4 rounded shadow" style="max-width: 700px;">
+  <div
+    class="register-form bg-dark text-white p-4 rounded shadow"
+    style="max-width: 700px"
+  >
     <h2 class="text-center mb-4">Register</h2>
-    <form class="row g-3">
-  
+
+    <!-- <div *ngIf="errorMessage" class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div> -->
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="row g-3">
       <div class="col-md-6">
         <label for="fullName" class="form-label">Full Name</label>
-        <input type="text" class="form-control" id="fullName" placeholder="Cosme Fulanito">
+        <input
+          type="text"
+          class="form-control"
+          id="fullName"
+          formControlName="name"
+          placeholder="Cosme Fulanito"
+        />
+
+        <div
+          class="text-danger"
+          *ngIf="
+            registerForm.get('name')?.touched &&
+            registerForm.get('name')?.invalid
+          "
+        >
+          <div *ngIf="registerForm.get('name')?.errors?.['required']">
+            El nombre es obligatorio.
+          </div>
+          <div *ngIf="registerForm.get('name')?.errors?.['minlength']">
+            El nombre debe tener al menos 5 caracteres.
+          </div>
+          <div *ngIf="registerForm.get('name')?.errors?.['maxlength']">
+            El nombre no puede superar los 15 caracteres.
+          </div>
+        </div>
       </div>
-  
+
       <div class="col-md-6">
         <label for="inputEmail" class="form-label">Email</label>
-        <input type="email" class="form-control" id="inputEmail" placeholder="example@example.com">
+        <input
+          type="email"
+          class="form-control"
+          id="inputEmail"
+          formControlName="mail"
+          placeholder="example@example.com"
+        />
+
+        <div
+          class="text-danger"
+          *ngIf="
+            registerForm.get('mail')?.touched &&
+            registerForm.get('mail')?.invalid
+          "
+        >
+          <div *ngIf="registerForm.get('mail')?.errors?.['required']">
+            El email es obligatorio.
+          </div>
+          <div *ngIf="registerForm.get('mail')?.errors?.['email']">
+            Debe ingresar un email válido.
+          </div>
+          <div *ngIf="registerForm.get('mail')?.errors?.['minlength']">
+            El email debe tener al menos 10 caracteres.
+          </div>
+          <div *ngIf="registerForm.get('mail')?.errors?.['maxlength']">
+            El email no puede superar los 50 caracteres.
+          </div>
+        </div>
       </div>
-  
-      <div class="col-md-6">
+
+      <div formGroupName="passwordGroup" class="col-md-6">
         <label for="inputPassword" class="form-label">Password</label>
-        <input type="password" class="form-control" id="inputPassword">
+        <input
+          type="password"
+          class="form-control"
+          id="inputPassword"
+          formControlName="password"
+        />
+
+        <div
+          *ngIf="
+            registerForm.get('passwordGroup')?.get('password')?.touched &&
+            registerForm.get('passwordGroup')?.get('password')?.invalid
+          "
+        >
+          <small
+            *ngIf="registerForm.get('passwordGroup')?.get('password')?.errors?.['required']"
+            class="text-danger"
+          >
+            La contraseña es obligatoria.
+          </small>
+          <small
+            *ngIf="registerForm.get('passwordGroup')?.get('password')?.errors?.['minlength']"
+            class="text-danger"
+          >
+            La contraseña debe tener al menos 8 caracteres
+          </small>
+          <small
+            *ngIf="registerForm.get('passwordGroup')?.get('password')?.errors?.['maxlength']"
+            class="text-danger"
+          >
+            La contraseña no puede superar los 30 caracteres.
+          </small>
+          <small
+            *ngIf="registerForm.get('passwordGroup')?.get('password')?.errors?.['pattern']"
+            class="text-danger"
+          >
+            La contraseña debe contener al menos una letra y un número.
+          </small>
+        </div>
       </div>
-  
-      <div class="col-md-6">
-        <label for="inputRepeatPassword" class="form-label">Repeat Password</label>
-        <input type="password" class="form-control" id="inputRepeatPassword">
+
+      <div formGroupName="passwordGroup" class="col-md-6">
+        <label for="inputRepeatPassword" class="form-label"
+          >Repeat Password</label
+        >
+        <input
+          type="password"
+          class="form-control"
+          id="inputRepeatPassword"
+          formControlName="repeatPassword"
+        />
+
+        <div
+          *ngIf="registerForm.get('passwordGroup')?.errors?.['passwordsDontMatch'] 
+             && registerForm.get('passwordGroup')?.get('repeatPassword')?.touched"
+        >
+          <small class="text-danger">Las contraseñas no coinciden.</small>
+        </div>
       </div>
-  
-      <div class="col-12">
-        <label for="inputAddress" class="form-label">Address</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="Apartment, studio or floor">
+
+      <div formGroupName="address">
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Address</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputAddress"
+            formControlName="street"
+            placeholder="Apartment, studio or floor"
+          />
+
+          <small
+            class="text-danger"
+            *ngIf="
+      registerForm.get('address')?.errors?.['incompleteAddress']
+      && registerForm.get('address.street')?.touched
+      && !registerForm.get('address.street')?.value?.trim()
+    "
+          >
+            Este campo es requerido.
+          </small>
+        </div>
+
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">City</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputCity"
+            formControlName="city"
+          />
+
+          <small
+            class="text-danger"
+            *ngIf="
+      registerForm.get('address')?.errors?.['incompleteAddress']
+      && registerForm.get('address.city')?.touched
+      && !registerForm.get('address.city')?.value?.trim()
+    "
+          >
+            Este campo es requerido.
+          </small>
+        </div>
+
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">State</label>
+          <select id="inputState" class="form-select" formControlName="country">
+            <option value=""></option>
+            <option>Argentina</option>
+            <option>Other</option>
+          </select>
+
+          <small
+            class="text-danger"
+            *ngIf="
+      registerForm.get('address')?.errors?.['incompleteAddress']
+      && registerForm.get('address.country')?.touched
+      && !registerForm.get('address.country')?.value?.trim()
+    "
+          >
+            Este campo es requerido.
+          </small>
+        </div>
+
+        <div class="col-md-2">
+          <label for="inputZip" class="form-label">Zip</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputZip"
+            formControlName="cp"
+          />
+
+          <small
+            class="text-danger"
+            *ngIf="
+      registerForm.get('address')?.errors?.['incompleteAddress']
+      && registerForm.get('address.cp')?.touched
+      && !registerForm.get('address.cp')?.value?.trim()
+    "
+          >
+            Este campo es requerido.
+          </small>
+
+          <small
+  class="text-danger"
+  *ngIf="
+    !registerForm.get('address')?.errors?.['incompleteAddress']
+    && registerForm.get('address.cp')?.touched
+    && registerForm.get('address.cp')?.value?.trim()
+    && registerForm.get('address.cp')?.invalid
+  "
+>
+  El código postal debe tener 4 caracteres.
+</small>
+        </div>
       </div>
-  
-      <div class="col-md-6">
-        <label for="inputCity" class="form-label">City</label>
-        <input type="text" class="form-control" id="inputCity" value="Córdoba">
-      </div>
-  
-      <div class="col-md-4">
-        <label for="inputState" class="form-label">State</label>
-        <select id="inputState" class="form-select">
-          <option selected>Argentina</option>
-          <option>...</option>
-        </select>
-      </div>
-  
-      <div class="col-md-2">
-        <label for="inputZip" class="form-label">Zip</label>
-        <input type="text" class="form-control" id="inputZip" value="5000">
-      </div>
-  
+
       <div class="col-12">
         <button type="submit" class="btn btn-primary">Sing Up</button>
       </div>
-  
-      <hr>
+
+      <hr />
       <div class="col-12 text-center pt-3 loged-user">
-        <a [routerLink]="'/layout/login'" class="text-primary small d-block">Already Signed Up? Sing In</a>
+        <a [routerLink]="'/layout/login'" class="text-primary small d-block"
+          >Already Signed Up? Sing In</a
+        >
       </div>
     </form>
   </div>
-  
 </section>
-
