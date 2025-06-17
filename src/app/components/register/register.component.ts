@@ -108,10 +108,10 @@ export class RegisterComponent {
       address: {
         ...formValue.address,
         location: '-',
-        // street: "-",
-        // city: "-",
-        // country: "-",
-        // cp: "1111"
+        street: "-",
+        city: "-",
+        country: "-",
+        cp: "1111"
       },
       birthday: formValue.birthday || '1900-01-01',
       phone: formValue.phone || '190001012',
