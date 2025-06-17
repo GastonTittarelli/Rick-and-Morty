@@ -28,12 +28,12 @@ export class FormErrorsService {
   static getRegisterMailError(control: AbstractControl | null): string | null {
     if (!control) return null;
     if (control.touched || control.dirty) {
-      if (control.hasError('required')) return 'El email es obligatorio.';
-      if (control.hasError('email')) return 'Debe ingresar un email válido.';
+      if (control.hasError('required')) return 'Email is required.';
+      if (control.hasError('email')) return 'You must enter a valid email.';
       if (control.hasError('minlength'))
-        return 'El email debe tener al menos 10 caracteres.';
+        return 'Email must have at least 10 characters.';
       if (control.hasError('maxlength'))
-        return 'El email no puede superar los 50 caracteres.';
+        return 'Email cannot exceed 50 characters.';
     }
     return null;
   }
@@ -41,11 +41,11 @@ export class FormErrorsService {
   static getNameError(control: AbstractControl | null): string | null {
     if (!control) return null;
     if (control.touched || control.dirty) {
-      if (control.hasError('required')) return 'El nombre es obligatorio.';
+      if (control.hasError('required')) return 'Name is required.';
       if (control.hasError('minlength'))
-        return 'El nombre debe tener al menos 5 caracteres.';
+        return 'Name must have at least 5 characters.';
       if (control.hasError('maxlength'))
-        return 'El nombre no puede superar los 15 caracteres.';
+        return 'Name cannot exceed 15 characters.';
     }
     return null;
   }
@@ -55,13 +55,13 @@ export class FormErrorsService {
   ): string | null {
     if (!control) return null;
     if (control.touched || control.dirty) {
-      if (control.hasError('required')) return 'La contraseña es obligatoria.';
+      if (control.hasError('required')) return 'Password is required.';
       if (control.hasError('minlength'))
-        return 'La contraseña debe tener al menos 8 caracteres.';
+        return 'Password must have at least 8 characters.';
       if (control.hasError('maxlength'))
-        return 'La contraseña no puede superar los 30 caracteres.';
+        return 'Password cannot exceed 30 characters.';
       if (control.hasError('pattern'))
-        return 'La contraseña debe contener al menos una letra y un número.';
+        return 'Password must contain at least one letter and one number.';
     }
     return null;
   }
@@ -77,7 +77,7 @@ export class FormErrorsService {
       (repeatPasswordControl.touched || repeatPasswordControl.dirty)
     ) {
       if (control.hasError('passwordsDontMatch')) {
-        return 'Las contraseñas no coinciden.';
+        return 'Passwords do not match.';
       }
     }
 
@@ -121,7 +121,7 @@ export class FormErrorsService {
       hasValue &&
       (control.errors?.['minlength'] || control.errors?.['maxlength'])
     ) {
-      return 'El código postal debe tener 4 caracteres.';
+      return 'Zip must be 4 characters.';
     }
 
     if (
@@ -129,7 +129,7 @@ export class FormErrorsService {
       !hasValue &&
       (control.touched || control.dirty)
     ) {
-      return 'Este campo es requerido.';
+      return 'This field is required.';
     }
 
     return null;

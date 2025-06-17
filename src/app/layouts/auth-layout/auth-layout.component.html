@@ -7,8 +7,8 @@
     </ul>
   </nav>
 
-  <main class="authContent">
-    <router-outlet></router-outlet>
+  <main class="authContent" [@routeAnimations]="prepareRoute(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
   </main>
 
   <app-footer></app-footer>

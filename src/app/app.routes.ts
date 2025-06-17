@@ -36,8 +36,8 @@ export const routes: Routes = [
     component: AuthLayoutComponent,
     children: [
       { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
-      { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
-      { path: 'register', component: RegisterComponent, canActivate: [PublicGuard] },
+      { path: 'login', component: LoginComponent, canActivate: [PublicGuard], data: { animation: 'LoginPage' }  },
+      { path: 'register', component: RegisterComponent, canActivate: [PublicGuard], data: { animation: 'RegisterPage' }  },
     ]
   },
 

@@ -3,6 +3,8 @@
   grid-template-rows: 50px 1fr 25px;
   width: 100%;
   min-height: 100vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 nav {
@@ -44,6 +46,3 @@ main{
 router-outlet + * {
   width: 100%;
 }
-
-
-
