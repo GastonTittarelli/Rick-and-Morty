@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { AuthService } from '../../service/users.service';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from '../../service/auth-messages.service';
 import { Router, RouterLink } from '@angular/router';
-
+import { FormErrorsService } from '../../service/form-error.service';
 
 @Component({
   selector: 'app-login',
@@ -17,23 +22,35 @@ export class LoginComponent {
   loginForm: FormGroup;
 
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
     private messageService: MessageService
   ) {
     this.loginForm = this.fb.group({
-      mail: ['', [Validators.required, Validators.email]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
-  ]],
-  rememberMe: [false]
+      mail: [
+        '',
+        [
+          Validators.required,
+          Validators.email,
+          Validators.minLength(10),
+          Validators.maxLength(50),
+        ],
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(30),
+          Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
+        ],
+      ],
+      rememberMe: [false],
     });
     this.loginForm.valueChanges.subscribe(() => {
-    this.messageService.clear();
-  });
+      this.messageService.clear();
+    });
   }
 
   onSubmit(): void {
@@ -46,17 +63,29 @@ export class LoginComponent {
         const code = res.header.resultCode;
         const message = res.header.error || res.header.message;
 
-      if (code === 0) {
-  this.authService.saveSession(res.data.token, res.data.user, rememberMe);
-  this.router.navigate(['/home/characters']);
-}
+        if (code === 0) {
+          this.authService.saveSession(
+            res.data.token,
+            res.data.user,
+            rememberMe
+          );
+          this.router.navigate(['/home/characters']);
+        }
 
-      // Siempre mostrar mensaje del backend
-      this.messageService.processResultCode(code, message);
-    },
-    error: (err) => {
-      this.messageService.handleError(err);
-    }
-  });
-}
+        // Siempre mostrar mensaje del backend
+        this.messageService.processResultCode(code, message);
+      },
+      error: (err) => {
+        this.messageService.handleError(err);
+      },
+    });
+  }
+
+  get mailErrors(): string | null {
+    return FormErrorsService.getMailError(this.loginForm.get('mail'));
+  }
+
+  get passwordErrors(): string | null {
+    return FormErrorsService.getPasswordError(this.loginForm.get('password'));
+  }
 }

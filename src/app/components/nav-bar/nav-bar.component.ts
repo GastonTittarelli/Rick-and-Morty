@@ -27,7 +27,7 @@ export class NavBarComponent {
 }
 
 private setUserName() {
-  const userData = localStorage.getItem('user');
+  const userData = localStorage.getItem('user') || sessionStorage.getItem('user');
   if (userData && userData !== 'undefined') {
     try {
       const user = JSON.parse(userData);
@@ -70,6 +70,6 @@ private setUserName() {
   logout() {
     this.authService.logout();
     this.closeMenu();
-    this.router.navigate(['/layout/login']);
+    this.router.navigate(['/auth/login']);
   }
 }

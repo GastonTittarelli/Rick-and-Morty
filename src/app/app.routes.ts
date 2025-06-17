@@ -32,10 +32,10 @@ export const routes: Routes = [
   },
 
   {
-    path: 'layout',
+    path: 'auth',
     component: AuthLayoutComponent,
     children: [
-      { path: '', redirectTo: 'layout/login', pathMatch: 'full' },
+      { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
       { path: 'register', component: RegisterComponent, canActivate: [PublicGuard] },
     ]

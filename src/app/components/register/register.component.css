@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: center;
   min-height: 90vh;
-  
 }
 
 .register-form{
@@ -61,6 +60,15 @@ hr{
   bottom: 35px;
   left: 0;
 }
+
+.address{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  height: 230px;
+}
+
 
 @media screen and (max-width: 700px) {
   .register-container{

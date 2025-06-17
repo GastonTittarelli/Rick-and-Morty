@@ -55,9 +55,7 @@ export class MessageService {
     }
   }
 
-  /**
-   * Método para manejar errores del backend, usando la misma lógica que processResultCode
-   */
+  /* Método para manejar errores del backend */
   handleError(errorResponse: any): void {
     const serverError = errorResponse?.error;
     const resultCode = serverError?.header?.resultCode;

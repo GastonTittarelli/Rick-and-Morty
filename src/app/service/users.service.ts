@@ -29,7 +29,7 @@ interface LoginResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = 'https://api-auth-moby.herokuapp.com/api/user/login';
@@ -42,27 +42,27 @@ export class AuthService {
 
   register(userData: any): Observable<any> {
     const registerUrl = 'https://api-auth-moby.herokuapp.com/api/user/register';
-  return this.http.post(registerUrl, userData);
-}
-
-// Guarda los datos en localStorage o sessionStorage según `rememberMe`
-saveSession(token: string, user: any, remember: boolean): void {
-  if (remember) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-  } else {
-    sessionStorage.setItem('token', token);
-    sessionStorage.setItem('user', JSON.stringify(user));
+    return this.http.post(registerUrl, userData);
   }
-}
 
-//limpia la sesión de ambos lados
-logout(): void {
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-  sessionStorage.removeItem('token');
-  sessionStorage.removeItem('user');
-}
+  // Guarda los datos en localStorage o sessionStorage según `rememberMe`
+  saveSession(token: string, user: any, remember: boolean): void {
+    if (remember) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('user', JSON.stringify(user));
+    }
+  }
+
+  //limpia la sesión de ambos lados
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
+  }
 
   // Devuelve si hay sesión activa
   isLoggedIn(): boolean {
@@ -79,5 +79,4 @@ logout(): void {
     const user = localStorage.getItem('user') || sessionStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
-  
 }

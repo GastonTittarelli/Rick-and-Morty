@@ -39,10 +39,6 @@ li a:hover {
 
 main{
   width: 100%;
-  /* min-height: 750px; */
-  /* display: flex;
-  justify-content: start;
-  align-items: start; */
 }
 
 router-outlet + * {
