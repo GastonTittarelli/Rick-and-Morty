@@ -92,6 +92,11 @@ export class RegisterComponent {
         });
       }
     });
+
+    // ✅ Limpiar mensajes al cambiar valores
+  this.registerForm.valueChanges.subscribe(() => {
+    this.messageService.clear();
+  });
   }
 
   onSubmit(): void {
