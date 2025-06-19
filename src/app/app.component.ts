@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AlertMessage, MessageService } from './service/auth-messages.service';
+import { AlertMessage, MessageService } from './service/messages.service';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 

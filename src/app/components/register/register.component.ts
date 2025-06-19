@@ -6,9 +6,9 @@ import {
   Validators,
   ReactiveFormsModule
 } from '@angular/forms';
-import { AuthService } from '../../service/users.service';
+import { AuthService, RegisterRequest } from '../../service/users.service';
 import { CommonModule } from '@angular/common';
-import { MessageService } from '../../service/auth-messages.service';
+import { MessageService } from '../../service/messages.service';
 import { FormErrorsService } from '../../service/form-error.service';
 
 @Component({
@@ -101,17 +101,17 @@ export class RegisterComponent {
 
     const formValue = this.registerForm.value;
 
-    const payload = {
+    const payload: RegisterRequest = {
       name: formValue.name,
       mail: formValue.mail,
       password: formValue.passwordGroup.password,
       address: {
         ...formValue.address,
-        location: '-',
-        street: "-",
-        city: "-",
-        country: "-",
-        cp: "1111"
+        street: formValue.address.street || '-',
+        city: formValue.address.city || '-',
+        country: formValue.address.country || '-',
+        cp: formValue.address.cp || '1111',
+        location: '-'
       },
       birthday: formValue.birthday || '1900-01-01',
       phone: formValue.phone || '190001012',

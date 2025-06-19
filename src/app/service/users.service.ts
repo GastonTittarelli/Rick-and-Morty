@@ -28,6 +28,47 @@ interface LoginResponse {
   };
 }
 
+export interface RegisterRequest {
+  name: string;
+  mail: string;
+  password: string;
+  address: {
+    street: string;
+    city: string;
+    country: string;
+    cp: string;
+    location: string;
+  };
+  birthday: string;
+  phone: string;
+}
+
+export interface RegisterResponse {
+  header: {
+    message?: string;
+    error?: string;
+    resultCode: number;
+  };
+  data: {
+    user: {
+      id: string;
+      role: string;
+      name: string;
+      mail: string;
+      address: {
+        street: string;
+        location: string;
+        city: string;
+        country: string;
+        cp: string;
+      };
+      birthday: string; // o Date si lo convertís
+      phone: string;
+      date: string; // Fecha de creación
+    };
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -40,10 +81,10 @@ export class AuthService {
     return this.http.post<LoginResponse>(this.apiUrl, { mail, password });
   }
 
-  register(userData: any): Observable<any> {
-    const registerUrl = 'https://api-auth-moby.herokuapp.com/api/user/register';
-    return this.http.post(registerUrl, userData);
-  }
+  register(userData: RegisterRequest): Observable<RegisterResponse> {
+  const registerUrl = 'https://api-auth-moby.herokuapp.com/api/user/register';
+  return this.http.post<RegisterResponse>(registerUrl, userData);
+}
 
   // Guarda los datos en localStorage o sessionStorage según `rememberMe`
   saveSession(token: string, user: any, remember: boolean): void {

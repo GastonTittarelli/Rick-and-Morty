@@ -8,7 +8,7 @@ import {
 import { AuthService } from '../../service/users.service';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MessageService } from '../../service/auth-messages.service';
+import { MessageService } from '../../service/messages.service';
 import { Router, RouterLink } from '@angular/router';
 import { FormErrorsService } from '../../service/form-error.service';
 
@@ -51,7 +51,21 @@ export class LoginComponent {
     this.loginForm.valueChanges.subscribe(() => {
       this.messageService.clear();
     });
+
+    // Recordar correo
+    const rememberedMail: string | null = localStorage.getItem('rememberedMail');
+    if (rememberedMail !== null) {
+      this.loginForm.patchValue({
+        mail: rememberedMail,
+        rememberMe: true,
+      });
+    }
+
+    this.loginForm.valueChanges.subscribe(() => {
+      this.messageService.clear();
+    });
   }
+  
 
   onSubmit(): void {
     if (this.loginForm.invalid) return;
@@ -69,6 +83,12 @@ export class LoginComponent {
             res.data.user,
             rememberMe
           );
+          // Guardar o eliminar mail recordado
+          if (rememberMe) {
+            localStorage.setItem('rememberedMail', mail);
+          } else {
+            localStorage.removeItem('rememberedMail');
+          }
           this.router.navigate(['/home/characters']);
         }
 
