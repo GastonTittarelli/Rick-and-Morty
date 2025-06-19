@@ -6,7 +6,8 @@ import {
   Validators,
   ReactiveFormsModule
 } from '@angular/forms';
-import { AuthService, RegisterRequest } from '../../service/users.service';
+import {  RegisterRequest } from '../../shared/interfaces/auth-interfaces';
+import { AuthService } from '../../service/users.service';
 import { CommonModule } from '@angular/common';
 import { MessageService } from '../../service/messages.service';
 import { FormErrorsService } from '../../service/form-error.service';
