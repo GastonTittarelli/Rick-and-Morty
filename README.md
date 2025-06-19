@@ -1,4 +1,4 @@
-# Rick & Morty App 
+# Rick & Morty App v2.0
 
 Aplicación desarrollada en Angular Node.js y CSS. El proyecto consume la API pública de Rick & Morty y presenta distintos desafíos implementados con buenas prácticas, uso de servicios, componentes, pipes personalizados, manejo de rutas y diseño responsive.
 
@@ -56,8 +56,37 @@ Aplicación desarrollada en Angular Node.js y CSS. El proyecto consume la API p�
 ---
 
 
-### 6. 📱 Responsive design + estilos
+### 6. 🔐 Autenticación de usuarios
+
+- Se implementaron vistas de **Login** y **Register**.
+- Formularios reactivos con validaciones de campos requeridos.
+
+- Guardado de sesión:
+  - Si el usuario selecciona "Recordarme", los datos se almacenan en `localStorage`, permitiendo que la sesión persista incluso al cerrar la pestaña o navegador.
+  - Si no se selecciona esa opción, la sesión se guarda en `sessionStorage` y se elimina al cerrar el navegador.
+  - Además, si se selecciona "Recordarme", el correo se recuerda para próximos ingresos incluso después de cerrar sesión.
+- Uso de `Guards` para proteger rutas:
+  - Usuarios no autenticados no pueden acceder a rutas privadas.
+  - Usuarios autenticados no pueden acceder a vistas de login/register.
+- Animación de transición visual entre las vistas de login y registro para una mejor experiencia de usuario.
+
+---
+
+### 7. 📢 Servicios globales
+
+- Servicio de mensajes centralizado para mostrar mensajes de alerta dependiendo del comportamiento de la aplicación. Mensajes de éxito, error o advertencia obtenidos desde el backend.
+- Servicio de usuarios centralizado para manejar la lógica de autenticación en toda la aplicación.
+- Servicio de API para obtener personajes y detalles desde la API pública de Rick & Morty, con paginación, usando `HttpClient`.
+- Servicio utilitario de formularios (`FormErrorsService`) que gestiona errores y validaciones personalizadas como:
+  - Coincidencia de contraseñas (`passwordMatchValidator`)
+  - Validación de dirección (`addressGroupValidator`)
+
+---
+
+### 8. 📱 Responsive design + estilos
 
 - Bootstrap 5 utilizado como base de diseño.
 - Se agregaron estilos y ajustes personalizados con CSS.
 - Totalmente adaptada para dispositivos móviles y desktop.
+
+---
