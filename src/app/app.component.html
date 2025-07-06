@@ -1,9 +1,0 @@
-<div
-  *ngIf="alert$ | async as alert"
-  class="alert alert-message"
-  [ngClass]="'alert-' + alert.type"
->
-  {{ alert.text }}
-</div>
-
-<router-outlet></router-outlet>
