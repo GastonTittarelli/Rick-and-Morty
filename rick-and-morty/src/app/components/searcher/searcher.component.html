@@ -1,0 +1,14 @@
+<div class="searchWrapper">
+  <form (submit)="onSubmit($event)" class="d-flex w-100 searchForm">
+    <input
+      [(ngModel)]="searchTerm"
+      name="search"
+      class="form-control me-2 bg-dark text-white"
+      type="search"
+      placeholder="Search..."
+      aria-label="Search"
+      (input)="onInputChange()"
+    />
+    <button class="btn btn-outline-primary" type="submit">Search</button>
+  </form>
+</div>

@@ -1,0 +1,175 @@
+.characterDetailContainer {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  color: #ddd;
+  justify-content: center;
+  padding-bottom: 22px;
+}
+
+.characterWrapper{
+  width: 80%;
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 1.5rem;
+}
+
+.characteInfoCard{
+  background-color: #212529;
+  padding: 1.5rem;
+  border-radius: 10px;
+  height: 730px;
+}
+
+.characteInfoCard img {
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+.infoSection{
+  width: 100%;
+  height: 300px;
+  margin-top: 8px;
+  border: solid 1px #818181;
+  border-radius: 5px;
+}
+
+.infoSection h3{
+  color: #bebebe;
+  padding: 15px 0 15px 20px;
+  border-bottom: solid 1px #818181;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.infoSection p {
+  color: #bebebe;
+  margin: 1px 0;
+  padding-left: 20px;
+}
+
+.highlight{
+  color: #0D6EDF;
+}
+
+
+
+.episodeListContainer{
+  background-color: #212529;
+  padding: 1.5rem;
+  border-radius: 10px;
+  height: 730px;
+  overflow-y: auto;
+  scrollbar-color: none;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #888 transparent;
+}
+
+
+.episodeList {
+  height: auto;
+  border: solid 1px #818181;
+  border-radius: 5px;
+  padding-bottom: 12px;
+}
+
+.episodeList h3 {
+  color: #bebebe;
+  padding: 15px 0;
+  border-bottom: solid 1px #818181;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+.episodeList ul {
+  list-style: none;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.episodeList li {
+  margin: 3px;
+}
+
+.episodeList a {
+  color: #0D6EDF;
+  text-decoration: none;
+}
+
+.episodeList a:hover {
+  text-decoration: underline;
+}
+
+.episodeList p {
+  color: #0077ff;
+  margin: 0 0 0 20px;
+  cursor: pointer;
+  width: 50px;
+  text-align: center;
+}
+
+.infoSection .alive {
+  color: green;
+}
+
+.infoSection .dead {
+  color: red;
+}
+
+.infoSection .unknown {
+  color: goldenrod; 
+}
+
+
+/* Estilos para el scroll en lista de episodios */
+.episodeListContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.episodeListContainer::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 4px;
+}
+
+.episodeListContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@media screen and (max-width: 500px) {
+    .characterWrapper{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  .characteInfoCard{
+    width: 90%;
+    height: auto;
+  }
+
+  .infoSection{
+    height: auto;
+    padding-bottom: 15px;
+  }
+  .infoSection p:first-of-type {
+    padding-top: 13px;
+  }
+
+  .infoSection h3, .episodeList h3{
+    text-align: center;
+    padding: 10px 0 10px 0;
+    margin: 0;
+  }
+  
+  .episodeListContainer{
+    width: 90%;
+    margin-bottom: 2rem;
+    height: auto  ;
+  }
+
+  .episodeList ul {
+    padding: 15px 0 0 20px;
+  }
+}

@@ -1,0 +1,48 @@
+<div *ngIf="isLoading">
+  <p>.</p>
+</div>
+
+<div class="characterDetailContainer" *ngIf="!isLoading && character">
+  <div class="characterWrapper">
+    <div class="characteInfoCard">
+      <img [src]="character.image" [alt]="character.name" />
+
+      <div class="infoSection">
+        <h3>Character Info</h3>
+        <p>Name: {{ character.name }}</p>
+        <p class="status-text">
+          Status:
+          <span [ngClass]="statusClass">
+            {{ character.status | statusTranslate }}
+          </span>
+        </p>
+        <p>Species: {{ character.species }}</p>
+        <p>Gender: {{ character.gender | genderTranslate }}</p>
+        <p>
+          Origin: <span class="highlight">{{ character.origin?.name }}</span>
+        </p>
+        <p>
+          Location:
+          <span class="highlight">{{ character.location?.name }}</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="episodeListContainer">
+      <div class="episodeList">
+        <h3>List of Episodes appearances</h3>
+        <ul>
+          <li *ngFor="let episode of visibleEpisodes">
+            <a [routerLink]="['/episode', episode.id]">
+              Episode {{ episode.id }} - {{ episode.name }}
+            </a>
+          </li>
+        </ul>
+
+        <p *ngIf="shouldShowMore" (click)="showAllEpisodes = true">
+          (more)
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
