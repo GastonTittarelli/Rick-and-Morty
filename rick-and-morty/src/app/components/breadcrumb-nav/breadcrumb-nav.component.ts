@@ -57,21 +57,26 @@ export class BreadcrumbNavComponent implements OnInit {
       let label = this.capitalize(segmentPath);
       let clickable = i !== segments.length - 1;
 
-      // Si es un ID y el segmento anterior es "characters"
-      if (
-        i > 0 &&
-        /^\d+$/.test(segmentPath) &&
-        segments[i - 1].toLowerCase() === 'characters'
-      ) {
-        try {
+      // Si es un ID y el segmento anterior es "characters" o "episodes"
+      if (i > 0 && /^\d+$/.test(segmentPath)) {
+      const previousSegment = segments[i - 1].toLowerCase();
+
+      try {
+        if (previousSegment === 'characters') {
           const character = await firstValueFrom(
             this.rickService.getCharacterById(Number(segmentPath))
           );
           label = character.name;
-        } catch (error) {
-          console.error('Error al obtener personaje', error);
+        } else if (previousSegment === 'episodes') {
+          const episode = await firstValueFrom(
+            this.rickService.getEpisodeById(Number(segmentPath))
+          );
+          label = `Episode ${episode.id} - ${episode.name}`;
         }
+      } catch (error) {
+        console.error('Error al obtener datos del breadcrumb', error);
       }
+    }
 
       breadcrumbs.push({ label, url: accumulatedPath, clickable });
     }

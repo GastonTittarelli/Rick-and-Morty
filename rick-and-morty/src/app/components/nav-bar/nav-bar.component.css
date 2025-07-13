@@ -58,6 +58,17 @@ li a:hover {
   font-size: 1.1rem;
   width: 200px;
 }
+.user-name span{
+  cursor: pointer;
+  background-color: rgb(247, 247, 247, 0.2);
+  border-radius: 6px;
+  padding: 0.1rem 0.4rem;
+  transition: color 0.3s ease;
+}
+
+.user-name span:hover {
+  color: white;
+}
 
 .hamburger {
   display: none;

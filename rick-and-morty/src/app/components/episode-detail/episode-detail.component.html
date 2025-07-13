@@ -1,0 +1,18 @@
+<div class="episode-detail" *ngIf="episode">
+  <div class="box">
+    <h3>Info of the episode</h3>
+    <p><strong>Name:</strong> {{ episode.name }}</p>
+    <p><strong>air date:</strong> {{ episode.air_date }}</p>
+    <p><strong>episode code:</strong> {{ episode.episode }}</p>
+  </div>
+
+  <div class="box">
+    <h3>Characters in this episode</h3>
+    <ul class="characters-list">
+      <li *ngFor="let char of characters">
+        <a [routerLink]="['/home/characters', char.id]">{{ char.name }}</a>
+      </li>
+    </ul>
+    
+  </div>
+</div>

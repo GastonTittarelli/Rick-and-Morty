@@ -13,10 +13,10 @@
       <a routerLink="/home/characters" (click)="closeMenu()">Characters</a>
     </li>
     <li routerLinkActive="active">
-      <a>Locations</a>
+      <a routerLink="/home/episodes" >Episodes</a>
     </li>
     <li routerLinkActive="active">
-      <a>Episodes</a>
+      <a>Locations</a>
     </li>
   </ul>
 
@@ -26,7 +26,7 @@
     [class.no-transition]="disableTransition"
   >
     <li class="user-name">
-      <span>{{ userName }}</span>
+      <span routerLink="/home/profile">{{ userName }}</span>
     </li>
     <li><a  (click)="logout()">Logout</a></li>
   </ul>

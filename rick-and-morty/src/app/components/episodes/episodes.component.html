@@ -1,0 +1,21 @@
+<div class="episodes-container">
+
+  <div class="card-container">
+  
+    <div class="episode-card" *ngFor="let ep of displayedEpisodes" (click)="goToEpisode(ep.id)">
+      <h5>Episode {{ ep.id }}</h5>
+      <h4>{{ ep.name }}</h4>
+      <p>{{ ep.episode }}</p>
+      <p>Air Date: {{ ep.air_date }}</p>
+    </div>
+  
+  </div>
+  
+  <app-paginator class="paginator"
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (pageChange)="onPageChange($event)"
+    >
+  </app-paginator>
+  
+</div>

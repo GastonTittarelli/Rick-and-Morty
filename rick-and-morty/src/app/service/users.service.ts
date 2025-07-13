@@ -13,6 +13,7 @@ import {
 })
 export class AuthService {
   private apiUrl = 'https://api-auth-moby.herokuapp.com/api/user/login';
+  // private baseUrl = 'http://localhost:3000/user';
 
   constructor(private http: HttpClient) {}
 
@@ -59,4 +60,10 @@ export class AuthService {
     const user = localStorage.getItem('user') || sessionStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
+
+
+  // getProfile(): Observable<any> {
+  //   const url = `${this.baseUrl}/profile`; 
+  //   return this.http.get(url);
+  // }
 }

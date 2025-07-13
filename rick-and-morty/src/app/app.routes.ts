@@ -8,6 +8,9 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PublicGuard } from './guards/not-auth.guard';
+import { ProfileComponent } from './components/profile/profile.component';
+import { EpisodesComponent } from './components/episodes/episodes.component';
+import { EpisodeDetailComponent } from './components/episode-detail/episode-detail.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +31,16 @@ export const routes: Routes = [
         path: 'home/characters/:id',
         component: CharactersDetailComponent,
       },
+      {
+        path: 'home/episodes',
+        component: EpisodesComponent,
+      },
+      { path: 'home/episodes/:id',
+        component: EpisodeDetailComponent, },
+      { 
+        path: 'home/profile', 
+        component: ProfileComponent,
+      }
     ]
   },
 

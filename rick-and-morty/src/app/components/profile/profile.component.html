@@ -1,0 +1,10 @@
+<div class="profile-card" *ngIf="user">
+  <img [src]="user.profilePicture || 'https://ui-avatars.com/api/?name=' + user.name" alt="Foto de perfil" class="profile-img" />
+
+  <h2>{{ user.name }}</h2>
+  <p><strong>Name:</strong> {{user.name}}</p>
+  <p><strong>Nickname:</strong> {{ user.nickname || 'not available' }}</p>
+  <p><strong>Email:</strong> {{ user.mail }}</p>
+  <p><strong>Birthdate:</strong> {{ user.birthday | date: 'longDate' }}</p>
+  <p><strong>Location:</strong> {{ user.address.city }}, {{ user.address.country }}</p>
+</div>
