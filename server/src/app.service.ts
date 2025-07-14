@@ -14,11 +14,4 @@ export class AppService {
     return this.userRepo.find();
   }
 
-  async createUser(): Promise<User> {
-    const user = this.userRepo.create({
-      email: 'test@example.com',
-      password: '123456',
-    });
-    return this.userRepo.save(user);
-  }
 }

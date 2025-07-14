@@ -12,18 +12,18 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://api-auth-moby.herokuapp.com/api/user/login';
-  // private baseUrl = 'http://localhost:3000/user';
+  // private apiUrl = 'https://api-auth-moby.herokuapp.com/api/user/login';
+  private baseUrl = 'http://localhost:3000/user';
 
   constructor(private http: HttpClient) {}
 
   login(mail: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.apiUrl, { mail, password });
+    return this.http.post<LoginResponse>(`${this.baseUrl}/login`, { mail, password });
   }
 
   register(userData: RegisterRequest): Observable<RegisterResponse> {
-  const registerUrl = 'https://api-auth-moby.herokuapp.com/api/user/register';
-  return this.http.post<RegisterResponse>(registerUrl, userData);
+  // const registerUrl = 'https://api-auth-moby.herokuapp.com/api/user/register';
+  return this.http.post<RegisterResponse>(`${this.baseUrl}/register`, userData);
 }
 
   // Guarda los datos en localStorage o sessionStorage según `rememberMe`
@@ -62,8 +62,23 @@ export class AuthService {
   }
 
 
-  // getProfile(): Observable<any> {
-  //   const url = `${this.baseUrl}/profile`; 
-  //   return this.http.get(url);
-  // }
+  getProfile(): Observable<any> {
+    const token = this.getToken();
+    
+    return this.http.get(`${this.baseUrl}/profile`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  updateProfile(updateData: any): Observable<any> {
+    const token = this.getToken();
+    return this.http.patch(`${this.baseUrl}/update`, updateData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
 }
