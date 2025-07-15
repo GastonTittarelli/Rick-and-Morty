@@ -105,7 +105,7 @@ export class AuthService {
 
     return {
       header: {
-        message: 'authenticated user',
+        message: 'Authenticated user',
         resultCode: 0,
       },
       data: {
@@ -135,7 +135,7 @@ export class AuthService {
   return {
     header: {
       resultCode: 200,
-      message: 'Perfil actualizado',
+      message: 'Profile updated successfully',
     },
     data: {
       user: userWithoutPassword,

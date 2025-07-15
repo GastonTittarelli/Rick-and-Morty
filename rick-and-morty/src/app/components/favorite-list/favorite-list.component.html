@@ -1,0 +1,29 @@
+<div class="favorite-list-container">
+  <h2>My Favorite Episodes</h2>
+  <div *ngIf="favoritesService.getFavorites().length === 0">
+    No favorites yet.
+  </div>
+
+  <div class="favorite-card" *ngFor="let ep of favoritesService.getFavorites()" (click)="goToEpisode(ep.id)">
+    <div class="episode-info">
+      <h5>{{ ep.name }}</h5>
+      
+      <p><strong>({{ ep.episode }})</strong></p>
+    </div>
+    
+    <mat-icon (click)="removeFavorite(ep.id); $event.stopPropagation()">delete</mat-icon>
+    
+
+    <div class="characters-thumbnails">
+    <img
+      *ngFor="let c of charactersMap[ep.id]"
+      loading="lazy"
+      [src]="c.image"
+      [alt]="c.name"
+      title="{{ c.name }}"
+      class="thumbnail"
+    />
+  </div>
+
+  </div>
+</div>

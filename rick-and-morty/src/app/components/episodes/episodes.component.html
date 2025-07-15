@@ -7,6 +7,13 @@
       <h4>{{ ep.name }}</h4>
       <p>{{ ep.episode }}</p>
       <p>Air Date: {{ ep.air_date }}</p>
+
+      
+      <mat-icon (click)="toggleFavorite(ep); $event.stopPropagation()">
+        {{ isFavorite(ep.id) ? 'favorite' : 'favorite_border' }}
+      </mat-icon>
+  
+
     </div>
   
   </div>

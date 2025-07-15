@@ -3,10 +3,12 @@ import { RickAndMortyService } from '../../service/rick-and-morty.service';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FavoritesService } from '../../service/favorites.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-episodes',
-  imports: [PaginatorComponent, CommonModule],
+  imports: [PaginatorComponent, CommonModule, MatIconModule],
   templateUrl: './episodes.component.html',
   styleUrl: './episodes.component.css'
 })
@@ -20,7 +22,8 @@ export class EpisodesComponent implements OnInit {
 
   constructor(
     private apiService: RickAndMortyService,
-    private router: Router
+    private router: Router,
+    private favoritesService: FavoritesService
 ) {}
 
   ngOnInit(): void {
@@ -51,4 +54,17 @@ export class EpisodesComponent implements OnInit {
   goToEpisode(id: number) {
   this.router.navigate(['home/episodes', id]);
 }
+
+toggleFavorite(episode: any): void {
+  if (this.favoritesService.isFavorite(episode.id)) {
+    this.favoritesService.removeFavorite(episode.id);
+  } else {
+    this.favoritesService.addFavorite(episode);
+  }
+}
+
+isFavorite(id: number): boolean {
+  return this.favoritesService.isFavorite(id);
+}
+
 }

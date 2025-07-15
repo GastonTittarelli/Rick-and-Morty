@@ -38,6 +38,7 @@ export class MessageService {
   processResultCode(resultCode: number, backendMessage?: string): void {
     switch (resultCode) {
       case 0:
+      case 200:
         this.showMessageWithTimeout('success', backendMessage || 'Authenticated user');
         break;
       case 1:

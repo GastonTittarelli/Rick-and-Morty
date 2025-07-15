@@ -1,0 +1,51 @@
+.favorite-list-container {
+  padding: 20px;
+  height: 100%;
+  width: 100%;
+  background-color: #646464;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.favorite-card{
+  width: 80%;
+  height: 150px;
+  margin: 10px;
+  padding: 10px;
+  background-color: #949292;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.episode-info{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.characters-thumbnails {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.thumbnail {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.thumbnail:hover {
+  border-color: #3f51b5; /* color primario */
+}

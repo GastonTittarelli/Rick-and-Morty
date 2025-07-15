@@ -134,4 +134,33 @@ export class FormErrorsService {
 
     return null;
   }
+
+
+  static conditionalMinLength(min: number): ValidatorFn {
+    return (control: AbstractControl) => {
+      if (!control.value) return null;
+      return control.value.length >= min
+        ? null
+        : {
+            minlength: {
+              requiredLength: min,
+              actualLength: control.value.length,
+            },
+          };
+    };
+  }
+
+  static conditionalMaxLength(max: number): ValidatorFn {
+    return (control: AbstractControl) => {
+      if (!control.value) return null;
+      return control.value.length <= max
+        ? null
+        : {
+            maxlength: {
+              requiredLength: max,
+              actualLength: control.value.length,
+            },
+          };
+    };
+  }
 }
