@@ -1,6 +1,6 @@
 .favorite-list-container {
   padding: 20px;
-  height: 100%;
+  height: 700px;
   width: 100%;
   background-color: #646464;
   border-radius: 8px;
@@ -8,7 +8,15 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  /* align-items: center; */
+  overflow-y: auto;
+  scrollbar-color: none;
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+.not-favorite{
+  height: 400px;
+  width: 100%;
+  text-align: center;
 }
 
 .favorite-card{
@@ -26,7 +34,19 @@
 .episode-info{
   display: flex;
   gap: 10px;
-  justify-content: center;
+  width: 70%;
+  height: 35px;
+  justify-content: start;
+}
+
+h5{
+  cursor: pointer;
+  transform: color 0.3s ease;
+}
+
+h5:hover {
+  color: black;
+  text-decoration: underline;
 }
 
 .characters-thumbnails {
@@ -47,5 +67,5 @@
 }
 
 .thumbnail:hover {
-  border-color: #3f51b5; /* color primario */
+  border-color: #222222; /* color primario */
 }

@@ -55,4 +55,16 @@ export class FavoriteListComponent implements OnInit {
   goToEpisode(id: number): void {
     this.router.navigate(['home/episodes', id]);
   }
+
+  goToCharacter(url: string): void {
+    const id = this.extractIdFromUrl(url);
+    if (id) {
+      this.router.navigate(['home/characters', id]);
+    }
+  }
+
+  extractIdFromUrl(url: string): number | null {
+    const match = url.match(/\/(\d+)$/);
+    return match ? +match[1] : null;
+  }
 }
