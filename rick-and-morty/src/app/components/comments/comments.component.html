@@ -1,26 +1,87 @@
-<div class="box">
-  <h3>Comments</h3>
+<mat-card class="comments-container">
+  <h2>Comentarios</h2>
 
-  <textarea [(ngModel)]="newComment" rows="3" placeholder="Write your comment here..."></textarea>
-  <button (click)="addComment()" [disabled]="!newComment.trim()">Post Comment</button>
+  <div *ngIf="commentingDisabled" class="comments-disabled-message mat-elevation-z2">
+  <mat-icon color="warn">block</mat-icon>
+  Commenting is currently unavailable.
+</div>
 
-  <div *ngIf="loading">Loading comments...</div>
+  <div *ngIf="isAdmin" class="admin-controls">
+    <button mat-stroked-button color="warn" (click)="toggleComments()">
+      {{ commentingDisabled ? 'Habilitar comentarios' : 'Deshabilitar comentarios' }}
+    </button>
+  </div>
+
+  <mat-form-field appearance="outline" class="comment-field">
+    <mat-label>Escribí tu comentario</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="newComment"
+      rows="3"
+      [disabled]="commentingDisabled"
+    ></textarea>
+  </mat-form-field>
+
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="addComment()"
+    [disabled]="!newComment.trim() || commentingDisabled"
+  >
+    Publicar
+  </button>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner diameter="30"></mat-spinner>
+  </div>
   <div *ngIf="error" class="error">{{ error }}</div>
 
- <div *ngFor="let comment of comments">
-  <div *ngIf="editingCommentId !== comment.id">
-    <strong>{{ comment.user.name }}</strong> - {{ comment.createdAt | date:'short' }}<br />
-    {{ comment.content }}
-    <button *ngIf="comment.user.id === currentUserId" (click)="startEditing(comment)">Edit</button>
-    <button *ngIf="comment.user.id === currentUserId" (click)="deleteComment(comment.id)">Delete</button>
-  </div>
+  <mat-divider class="divider"></mat-divider>
 
-  <div *ngIf="editingCommentId === comment.id">
-    <textarea [(ngModel)]="editContent"></textarea>
-    <button (click)="saveEdit(comment)">Save</button>
-    <button (click)="cancelEdit()">Cancel</button>
+  <div *ngFor="let comment of comments" class="comment">
+    <mat-card>
+      <div *ngIf="editingCommentId !== comment.id">
+        <img
+  [src]="comment.user.profilePicture || 'https://ui-avatars.com/api/?name=' + comment.user.name"
+  alt="Foto de perfil"
+  class="avatar-img"
+  (error)="onCommentImageError($event, comment.user.name)"
+/>
+        <div class="comment-header">
+          <strong>{{ comment.user.name }}</strong>
+          <span class="comment-date">{{ comment.createdAt | date: 'short' }}</span>
+        </div>
+        <div class="comment-content">{{ comment.content }}</div>
+        <div class="comment-actions">
+          <button
+            mat-icon-button
+            *ngIf="comment.user.id === currentUserId"
+            (click)="startEditing(comment)"
+            matTooltip="Editar"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            *ngIf="comment.user.id === currentUserId || isAdmin"
+            (click)="deleteComment(comment.id)"
+            matTooltip="Eliminar"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="editingCommentId === comment.id">
+        <mat-form-field appearance="outline" class="edit-comment-field">
+          <textarea matInput [(ngModel)]="editContent" rows="2"></textarea>
+        </mat-form-field>
+        <div class="edit-actions">
+          <button mat-button color="primary" (click)="saveEdit(comment)">Guardar</button>
+          <button mat-button (click)="cancelEdit()">Cancelar</button>
+        </div>
+      </div>
+    </mat-card>
   </div>
-</div>
-  
-  
-</div>
+</mat-card>

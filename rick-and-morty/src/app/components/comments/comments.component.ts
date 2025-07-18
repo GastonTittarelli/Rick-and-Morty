@@ -2,10 +2,27 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommentsService } from '../../service/comments.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-comments',
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatDividerModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.css'],
 })
@@ -19,12 +36,20 @@ export class CommentsComponent implements OnInit {
   currentUserId: string = '';
   editingCommentId: string | null = null;
   editContent: string = '';
+  commentingDisabled: boolean = false;
+  currentUserRole = '';
+  isAdmin: boolean = false;
 
   constructor(private commentsService: CommentsService) {}
 
   ngOnInit() {
-    this.currentUserId = JSON.parse(localStorage.getItem('user') || '{}').id || '';
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.currentUserId = user.id || '';
+    this.currentUserRole = user.role || '';
+    this.isAdmin = this.currentUserRole === 'admin';
+
     this.loadComments();
+    this.checkIfDisabled();
   }
 
   loadComments() {
@@ -94,5 +119,33 @@ deleteComment(commentId: string) {
       this.error = 'Failed to delete comment';
     },
   });
+}
+
+checkIfDisabled() {
+    this.commentsService.isCommentingDisabled(this.episodeId).subscribe({
+      next: (res) => (this.commentingDisabled = res),
+      error: () => (this.commentingDisabled = false),
+    });
+  }
+
+  toggleComments() {
+    const action = this.commentingDisabled
+      ? this.commentsService.enableComments(this.episodeId)
+      : this.commentsService.disableComments(this.episodeId);
+
+    action.subscribe({
+      next: () => (this.commentingDisabled = !this.commentingDisabled),
+      error: () => (this.error = 'Failed to toggle comments'),
+    });
+  }
+
+
+  onCommentImageError(event: Event, name: string): void {
+  const img = event.target as HTMLImageElement;
+
+  if (!img.dataset['fallbackUsed']) {
+    img.dataset['fallbackUsed'] = 'true';
+    img.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name);
+  }
 }
 }

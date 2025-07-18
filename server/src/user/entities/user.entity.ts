@@ -1,3 +1,4 @@
+import { Role } from 'src/auth/roles/role.enum';
 import { Comment } from 'src/comment/comment.entity';
 import {
   Entity,
@@ -36,8 +37,8 @@ export class User {
   @Column({ length: 15, nullable: true })
   phone: string;
 
-  @Column({ default: 'user' })
-  role: string;
+  @Column({ type: 'enum', enum: Role, default: Role.User })
+  role: Role;
 
   @CreateDateColumn()
   date: Date;

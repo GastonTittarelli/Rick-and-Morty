@@ -5,6 +5,7 @@ import { User } from 'src/user/entities/user.entity';
 import { CreateCommentDto } from 'src/auth/dto/create-comment.dto';
 import { Comment } from './comment.entity';
 import { UpdateCommentDto } from 'src/auth/dto/update-comment.dto';
+import { CommentSetting } from 'src/comment-setting/comment-setting.entity';
 
 @Injectable()
 export class CommentService {
@@ -14,6 +15,9 @@ export class CommentService {
 
     @InjectRepository(User)
     private userRepo: Repository<User>,
+
+    @InjectRepository(CommentSetting)
+    private settingRepo: Repository<CommentSetting>,
   ) {}
 
   async create(createDto: CreateCommentDto, userId: string) {
@@ -21,6 +25,11 @@ export class CommentService {
 
     if (!user) {
       throw new NotFoundException('User not found');
+    }
+
+    const setting = await this.settingRepo.findOneBy({ episodeId: createDto.episodeId });
+    if (setting?.commentsDisabled) {
+      throw new ForbiddenException('Comments are disabled for this episode');
     }
 
     const comment = this.commentRepo.create({
@@ -62,11 +71,36 @@ async delete(commentId: number, userId: string) {
   });
   if (!comment) throw new NotFoundException('Comment not found');
 
-  if (comment.user.id !== userId) {
-    throw new ForbiddenException('You can only delete your own comments');
+  const user = await this.userRepo.findOne({ where: { id: userId } });
+  if (!user) throw new ForbiddenException('User not found');
+
+  if (comment.user.id !== userId && user.role !== 'admin') {
+    throw new ForbiddenException('You can only delete your own comments or you must be admin');
   }
 
   await this.commentRepo.delete(commentId);
   return { message: 'Comment deleted' };
 }
+
+
+async toggleCommenting(episodeId: number, disable: boolean) {
+  console.log(`toggleCommenting → episodeId: ${episodeId}, disable: ${disable}`);
+
+    let setting = await this.settingRepo.findOneBy({ episodeId });
+
+    if (!setting) {
+      console.log('No existe configuración previa, se creará una nueva');
+      setting = this.settingRepo.create({ episodeId, commentsDisabled: disable });
+    } else {
+      console.log('Configuración existente encontrada:', setting);
+      setting.commentsDisabled = disable;
+    }
+
+    return this.settingRepo.save(setting);
+  }
+
+  async isCommentingDisabled(episodeId: number): Promise<boolean> {
+    const setting = await this.settingRepo.findOneBy({ episodeId });
+    return setting?.commentsDisabled ?? false;
+  }
 }

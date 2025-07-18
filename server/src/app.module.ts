@@ -8,10 +8,11 @@ import { AuthModule } from './auth/auth.module';
 import { UserController } from './user/user.controller';
 import { Comment } from './comment/comment.entity';
 import { CommentModule } from './comment/comment.module';
+import { CommentSetting } from './comment-setting/comment-setting.entity';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(), // con esto leo el .env
+    ConfigModule.forRoot({isGlobal: true,}), // con esto leo el .env
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST || 'localhost',
@@ -22,7 +23,7 @@ import { CommentModule } from './comment/comment.module';
       autoLoadEntities: true,
       synchronize: true, // solo en desarrollo
     }),
-    TypeOrmModule.forFeature([User, Comment]), // Importamos las entidades que vamos a usar
+    TypeOrmModule.forFeature([User, Comment, CommentSetting]), // Importamos las entidades que vamos a usar
     AuthModule,
     CommentModule, 
   ],

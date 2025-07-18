@@ -12,3 +12,84 @@
 .comment-card {
   margin-top: 10px;
 }
+
+.comments-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.admin-controls {
+  margin-bottom: 15px;
+  text-align: right;
+}
+
+.comment-field,
+.edit-comment-field {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.comment {
+  margin-top: 20px;
+
+  mat-card {
+    padding: 15px;
+  }
+
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    color: #666;
+  }
+
+  .comment-content {
+    margin: 10px 0;
+    font-size: 1em;
+  }
+
+  .comment-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .edit-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.divider {
+  margin: 30px 0;
+}
+
+.avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comments-disabled-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #b71c1c;
+  background-color: #ffebee;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+

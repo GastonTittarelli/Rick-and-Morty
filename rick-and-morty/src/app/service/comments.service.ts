@@ -55,4 +55,21 @@ deleteComment(id: string): Observable<{ message: string }> {
     headers: this.getAuthHeaders(),
   });
 }
+
+
+isCommentingDisabled(episodeId: number): Observable<boolean> {
+  return this.http.get<boolean>(`${this.baseUrl}/episode/${episodeId}/disabled`);
+}
+
+disableComments(episodeId: number): Observable<any> {
+  return this.http.patch(`${this.baseUrl}/episode/${episodeId}/disable-comments`, {}, {
+    headers: this.getAuthHeaders()
+  });
+}
+
+enableComments(episodeId: number): Observable<any> {
+  return this.http.patch(`${this.baseUrl}/episode/${episodeId}/enable-comments`, {}, {
+    headers: this.getAuthHeaders()
+  });
+}
 }
