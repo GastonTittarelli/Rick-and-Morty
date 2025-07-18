@@ -1,0 +1,14 @@
+.box{
+  background-color: rgba(255, 255, 255, 0.7);
+  min-height: 500px;
+  width: 80%;
+  margin: 0 auto;
+}
+.comment-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.comment-card {
+  margin-top: 10px;
+}

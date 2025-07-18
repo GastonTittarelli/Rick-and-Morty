@@ -1,0 +1,26 @@
+<div class="box">
+  <h3>Comments</h3>
+
+  <textarea [(ngModel)]="newComment" rows="3" placeholder="Write your comment here..."></textarea>
+  <button (click)="addComment()" [disabled]="!newComment.trim()">Post Comment</button>
+
+  <div *ngIf="loading">Loading comments...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+ <div *ngFor="let comment of comments">
+  <div *ngIf="editingCommentId !== comment.id">
+    <strong>{{ comment.user.name }}</strong> - {{ comment.createdAt | date:'short' }}<br />
+    {{ comment.content }}
+    <button *ngIf="comment.user.id === currentUserId" (click)="startEditing(comment)">Edit</button>
+    <button *ngIf="comment.user.id === currentUserId" (click)="deleteComment(comment.id)">Delete</button>
+  </div>
+
+  <div *ngIf="editingCommentId === comment.id">
+    <textarea [(ngModel)]="editContent"></textarea>
+    <button (click)="saveEdit(comment)">Save</button>
+    <button (click)="cancelEdit()">Cancel</button>
+  </div>
+</div>
+  
+  
+</div>

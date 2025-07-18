@@ -68,7 +68,8 @@
               "buildTarget": "mi-proyecto-angular:build:production"
             },
             "development": {
-              "buildTarget": "mi-proyecto-angular:build:development"
+              "buildTarget": "mi-proyecto-angular:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

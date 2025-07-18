@@ -6,10 +6,11 @@ import { Character } from '../../shared/interfaces/characters.interface';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FavoritesService } from '../../service/favorites.service';
+import { CommentsComponent } from '../comments/comments.component';
 
 @Component({
   selector: 'app-episode-detail',
-  imports: [RouterLink, CommonModule, MatIconModule],
+  imports: [RouterLink, CommonModule, MatIconModule, CommentsComponent],
   templateUrl: './episode-detail.component.html',
   styleUrl: './episode-detail.component.css'
 })

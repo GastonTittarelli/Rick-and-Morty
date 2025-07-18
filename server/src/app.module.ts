@@ -6,6 +6,8 @@ import { AppService } from './app.service';
 import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { UserController } from './user/user.controller';
+import { Comment } from './comment/comment.entity';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -20,8 +22,9 @@ import { UserController } from './user/user.controller';
       autoLoadEntities: true,
       synchronize: true, // solo en desarrollo
     }),
-    TypeOrmModule.forFeature([User]),
-    AuthModule, 
+    TypeOrmModule.forFeature([User, Comment]), // Importamos las entidades que vamos a usar
+    AuthModule,
+    CommentModule, 
   ],
   controllers: [AppController, UserController],
   providers: [AppService],
