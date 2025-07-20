@@ -19,6 +19,7 @@ export class EpisodesComponent implements OnInit {
   currentPage = 1;
   episodesPerPage = 10;
   totalEpisodes = 0;
+  favoriteEpisodeIds: Set<number> = new Set();
 
   constructor(
     private apiService: RickAndMortyService,
@@ -28,6 +29,7 @@ export class EpisodesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadEpisodes();
+    this.loadFavorites();
   }
 
   loadEpisodes(): void {
@@ -41,6 +43,14 @@ export class EpisodesComponent implements OnInit {
       this.displayedEpisodes = this.episodes.slice(start, start + this.episodesPerPage);
     });
   }
+
+
+  loadFavorites(): void {
+    this.favoritesService.getFavorites().subscribe(favs => {
+      this.favoriteEpisodeIds = new Set(favs.map(fav => fav.episodeId));
+    });
+  }
+
 
   onPageChange(newPage: number): void {
     this.currentPage = newPage;
@@ -56,15 +66,13 @@ export class EpisodesComponent implements OnInit {
 }
 
 toggleFavorite(episode: any): void {
-  if (this.favoritesService.isFavorite(episode.id)) {
-    this.favoritesService.removeFavorite(episode.id);
-  } else {
-    this.favoritesService.addFavorite(episode);
+    this.favoritesService.toggleFavorite(episode.id).subscribe(() => {
+      this.loadFavorites();
+    });
   }
-}
 
-isFavorite(id: number): boolean {
-  return this.favoritesService.isFavorite(id);
-}
+  isFavorite(id: number): boolean {
+    return this.favoriteEpisodeIds.has(id);
+  }
 
 }

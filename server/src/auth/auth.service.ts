@@ -9,7 +9,6 @@ import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
-import { UnauthorizedException } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
@@ -49,8 +48,6 @@ export class AuthService {
       ...registerDto,
       password: hashedPassword,
     });
-
-    // console.log('New user before save:', newUser);
 
     const savedUser = await this.usersRepo.save(newUser);
 

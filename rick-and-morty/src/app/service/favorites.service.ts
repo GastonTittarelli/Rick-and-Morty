@@ -1,59 +1,37 @@
+// favorites.service.ts
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MessageService } from './messages.service';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class FavoritesService {
-  private favorites: any[] = [];
+  private apiUrl = 'http://localhost:3000/favorites';
 
-  constructor(private messageService: MessageService) {
-    this.loadFavorites();
+  constructor(private http: HttpClient) {}
+
+  private getAuthHeaders() {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
   }
 
-  private loadFavorites(): void {
-    const stored = localStorage.getItem('favorites');
-    if (stored) {
-      try {
-        this.favorites = JSON.parse(stored);
-      } catch {
-        this.favorites = [];
-      }
-    }
+  getFavorites() {
+    return this.http.get<any[]>(this.apiUrl, {
+      headers: this.getAuthHeaders()
+    });
   }
 
-  private saveFavorites(): void {
-    localStorage.setItem('favorites', JSON.stringify(this.favorites));
+  toggleFavorite(episodeId: number) {
+    return this.http.post<any>(`${this.apiUrl}/toggle`, { episodeId }, {
+      headers: this.getAuthHeaders()
+    });
   }
 
-  getFavorites(): any[] {
-    return this.favorites;
-  }
-
-  addFavorite(episode: any): void {
-    if (!this.isFavorite(episode.id)) {
-      this.favorites.push(episode);
-      this.saveFavorites();
-      this.messageService.showMessageWithTimeout(
-        'success',
-        `Added episode to favorites`
-      );
-    }
-  }
-
-  removeFavorite(id: number): void {
-    const removed = this.favorites.find(f => f.id === id);
-    this.favorites = this.favorites.filter(fav => fav.id !== id);
-    this.saveFavorites();
-    if (removed) {
-      this.messageService.showMessageWithTimeout(
-        'info',
-        `Removed episode from favorites`
-      );
-    }
-  }
-
-  isFavorite(id: number): boolean {
-    return this.favorites.some((fav) => fav.id === id);
-  }
+  removeFavorite(episodeId: number) {
+  return this.http.delete(`${this.apiUrl}/${episodeId}`, {
+      headers: this.getAuthHeaders()
+    });
+  
+}
 }

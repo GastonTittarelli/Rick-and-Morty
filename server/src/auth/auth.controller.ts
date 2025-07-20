@@ -19,7 +19,6 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
-  // Ruta protegida con JWT
   @UseGuards(AuthGuard('jwt'))
   @Get('profile')
   async getProfile(@Req() req) {
@@ -34,5 +33,4 @@ export class AuthController {
   async updateProfile(@Req() req, @Body() body: UpdateUserDto) {
     return this.authService.updateProfile(req.user.id, body);
   }
-
 }

@@ -1,12 +1,12 @@
 <div class="episode-detail" *ngIf="episode">
   <div class="box">
     <h3>Info of the episode</h3>
-    <mat-icon 
-      (click)="toggleFavorite()" 
-      [ngClass]="{ 'favorited': isFavorite() }"
+    <mat-icon
+      (click)="toggleFavorite()"
+      [ngClass]="{ favorited: isFavorite }"
       style="cursor: pointer;"
     >
-      {{ isFavorite() ? 'favorite' : 'favorite_border' }}
+      {{ isFavorite ? 'favorite' : 'favorite_border' }}
     </mat-icon>
     <p><strong>Name:</strong> {{ episode.name }}</p>
     <p><strong>air date:</strong> {{ episode.air_date }}</p>

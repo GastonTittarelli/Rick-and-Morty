@@ -12,6 +12,4 @@ export class UserController {
       user: req.user,
     };
   }
-
-  
 }

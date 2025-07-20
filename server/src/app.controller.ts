@@ -9,6 +9,4 @@ export class AppController {
   getUsers() {
     return this.appService.getUsers();
   }
-
-
 }

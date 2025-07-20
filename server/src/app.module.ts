@@ -9,6 +9,8 @@ import { UserController } from './user/user.controller';
 import { Comment } from './comment/comment.entity';
 import { CommentModule } from './comment/comment.module';
 import { CommentSetting } from './comment-setting/comment-setting.entity';
+import { FavoriteEpisode } from './favorite/favorite-episode.entity';
+import { FavoriteEpisodeModule } from './favorite/favorite.module';
 
 @Module({
   imports: [
@@ -23,9 +25,10 @@ import { CommentSetting } from './comment-setting/comment-setting.entity';
       autoLoadEntities: true,
       synchronize: true, // solo en desarrollo
     }),
-    TypeOrmModule.forFeature([User, Comment, CommentSetting]), // Importamos las entidades que vamos a usar
+    TypeOrmModule.forFeature([User, Comment, CommentSetting, FavoriteEpisode]), // Importamos las entidades que vamos a usar
     AuthModule,
-    CommentModule, 
+    CommentModule,
+    FavoriteEpisodeModule, 
   ],
   controllers: [AppController, UserController],
   providers: [AppService],

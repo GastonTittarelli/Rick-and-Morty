@@ -7,8 +7,6 @@ import {
   ValidateIf,
 } from 'class-validator';
 
-
-
 export class UpdateUserDto {
   @IsOptional()
   @IsString()

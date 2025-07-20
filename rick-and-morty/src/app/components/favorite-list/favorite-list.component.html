@@ -2,15 +2,15 @@
 
   <h2>My Favorite Episodes</h2>
 
-  <div class="not-favorite" *ngIf="favoritesService.getFavorites().length === 0">
+  <div *ngIf="favorites.length === 0" class="not-favorite">
     No favorites yet.
   </div>
 
-  <div class="favorite-card" *ngFor="let ep of favoritesService.getFavorites()" (click)="goToEpisode(ep.id)">
+  <div class="favorite-card" *ngFor="let ep of favorites" (click)="goToEpisode(ep.id)">
     <div class="episode-info">
       <h5 (click)="goToEpisode(ep.id); $event.stopPropagation()">{{ ep.name }}</h5>
       
-      <p><strong>({{ ep.episode }})</strong></p>
+      <p *ngIf="ep.episode"><strong>({{ ep.episode }})</strong></p>
     </div>
     
     <mat-icon (click)="removeFavorite(ep.id); $event.stopPropagation()">delete</mat-icon>

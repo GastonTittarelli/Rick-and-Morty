@@ -1,5 +1,6 @@
 import { Role } from 'src/auth/roles/role.enum';
 import { Comment } from 'src/comment/comment.entity';
+import { FavoriteEpisode } from 'src/favorite/favorite-episode.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -54,4 +55,7 @@ export class User {
 
   @OneToMany(() => Comment, (comment) => comment.user)
 comments: Comment[];
+
+@OneToMany(() => FavoriteEpisode, (fav) => fav.user)
+favorites: FavoriteEpisode[];
 }

@@ -39,21 +39,25 @@ export class EpisodeDetailComponent implements OnInit {
         forkJoin(characterRequests).subscribe((res: Character[]) => {
           this.characters = res;
         });
+        this.checkIfFavorite();  // Verifica si el episodio es favorito al cargar
       });
     }
   }
 
   toggleFavorite(): void {
-    if (!this.episode) return;
-    if (this.favoritesService.isFavorite(this.episode.id)) {
-      this.favoritesService.removeFavorite(this.episode.id);
-    } else {
-      this.favoritesService.addFavorite(this.episode);
-    }
-  }
+  if (!this.episode) return;
 
-  isFavorite(): boolean {
-    return this.episode && this.favoritesService.isFavorite(this.episode.id);
-  }
+  this.favoritesService.toggleFavorite(this.episode.id).subscribe(() => {
+    this.checkIfFavorite();  // Actualizo el estado local
+  });
+}
+
+isFavorite: boolean = false;
+
+checkIfFavorite() {
+  this.favoritesService.getFavorites().subscribe((favs) => {
+    this.isFavorite = favs.some(fav => fav.episodeId === this.episode.id);
+  });
+}
   
 }
