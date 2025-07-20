@@ -14,7 +14,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: ['http://localhost:4200', 'https://rick-and-morty-blond-three.vercel.app' ],
     credentials: true,
   });
   await app.listen(process.env.PORT ?? 3000);
