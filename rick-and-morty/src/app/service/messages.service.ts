@@ -39,16 +39,16 @@ export class MessageService {
     switch (resultCode) {
       case 0:
       case 200:
-        this.showMessageWithTimeout('success', backendMessage || 'Authenticated user');
+        this.showMessageWithTimeout('success', backendMessage || 'Success');
         break;
       case 1:
-        this.showMessageWithTimeout('warning', backendMessage || 'Mail already Registered');
+        this.showMessageWithTimeout('warning', backendMessage || 'Operation not allowed');
         break;
       case 3:
-        this.showMessageWithTimeout('warning', backendMessage || 'User not found');
+        this.showMessageWithTimeout('warning', backendMessage || 'Invalid request');
         break;
       case 4:
-        this.showMessageWithTimeout('warning', backendMessage || 'Invalid password');
+        this.showMessageWithTimeout('warning', backendMessage || 'Resource not found');
         break;
       default:
         this.showMessageWithTimeout('danger', backendMessage || 'Unknown error');

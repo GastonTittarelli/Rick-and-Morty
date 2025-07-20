@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MessageService } from '../../service/messages.service';
 
 @Component({
   selector: 'app-comments',
@@ -40,7 +41,10 @@ export class CommentsComponent implements OnInit {
   currentUserRole = '';
   isAdmin: boolean = false;
 
-  constructor(private commentsService: CommentsService) {}
+  constructor(
+    private commentsService: CommentsService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -73,9 +77,10 @@ export class CommentsComponent implements OnInit {
       next: (res) => {
         this.comments.unshift(res);
         this.newComment = '';
+        this.messageService.showMessageWithTimeout('success', 'Comment added successfully');
       },
       error: (err) => {
-        this.error = 'Failed to post comment';
+        this.messageService.handleError(err);
       },
     });
   }
@@ -103,9 +108,10 @@ saveEdit(comment: any) {
         this.comments[index] = updated;
       }
       this.cancelEdit();
+      this.messageService.showMessageWithTimeout('success', 'Comment updated successfully');
     },
     error: (err) => {
-      this.error = 'Failed to update comment';
+      this.messageService.handleError(err);
     },
   });
 }
@@ -114,9 +120,10 @@ deleteComment(commentId: string) {
   this.commentsService.deleteComment(commentId).subscribe({
     next: () => {
       this.comments = this.comments.filter(c => c.id !== commentId);
+      this.messageService.showMessageWithTimeout('success', 'Comment deleted successfully');
     },
     error: (err) => {
-      this.error = 'Failed to delete comment';
+      this.messageService.handleError(err);
     },
   });
 }

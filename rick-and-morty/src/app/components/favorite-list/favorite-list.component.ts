@@ -56,19 +56,19 @@ export class FavoriteListComponent implements OnInit {
   });
 }
 
-  // toggleFavorite(episodeId: number) {
-  //   this.favoritesService.toggleFavorite(episodeId).subscribe(() => {
-  //     this.loadFavorites();
-  //   });
-  // }
-
   removeFavorite(episodeId: number) {
-  this.favoritesService.removeFavorite(episodeId).subscribe(() => {
-    // Eliminamos localmente el favorito de la lista
-    this.favorites = this.favorites.filter(ep => ep.id !== episodeId);
+  this.favoritesService.removeFavorite(episodeId).subscribe({
+    next: (res: any) => {
+      this.favorites = this.favorites.filter(ep => ep.id !== episodeId);
+      delete this.charactersMap[episodeId];
 
-    // También eliminamos los personajes asociados de charactersMap
-    delete this.charactersMap[episodeId];
+      const code = res.header?.resultCode ?? 0;
+      const message = res.header?.message ?? 'Eliminado de favoritos';
+      this.messageService.processResultCode(code, message);
+    },
+    error: (err: any) => {
+      this.messageService.handleError(err);
+    }
   });
 }
 

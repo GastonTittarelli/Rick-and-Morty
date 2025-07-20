@@ -83,15 +83,12 @@ async delete(commentId: number, userId: string) {
 }
 
 async toggleCommenting(episodeId: number, disable: boolean) {
-  console.log(`toggleCommenting → episodeId: ${episodeId}, disable: ${disable}`);
 
     let setting = await this.settingRepo.findOneBy({ episodeId });
 
     if (!setting) {
-      console.log('No existe configuración previa, se creará una nueva');
       setting = this.settingRepo.create({ episodeId, commentsDisabled: disable });
     } else {
-      console.log('Configuración existente encontrada:', setting);
       setting.commentsDisabled = disable;
     }
 

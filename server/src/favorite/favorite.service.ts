@@ -17,13 +17,23 @@ export class FavoriteEpisodeService {
     });
 
     if (existing) {
-      await this.favoriteRepo.remove(existing);
-      return { removed: true };
-    } else {
-      const newFav = this.favoriteRepo.create({ user, episodeId });
-      await this.favoriteRepo.save(newFav);
-      return { added: true };
-    }
+    await this.favoriteRepo.remove(existing);
+    return {
+      header: {
+        message: 'Episode removed from favorites',
+        resultCode: 0
+      }
+    };
+  } else {
+    const newFav = this.favoriteRepo.create({ user, episodeId });
+    await this.favoriteRepo.save(newFav);
+    return {
+      header: {
+        message: 'Favorite list updated',
+        resultCode: 1
+      }
+    };
+  }
   }
 
   async getFavorites(user: User) {
@@ -41,10 +51,20 @@ export class FavoriteEpisodeService {
   });
 
   if (!favorite) {
-    return { message: 'Favorite not found' };
-  }
+  return {
+    header: {
+      message: 'Favorite does not exist',
+      resultCode: 1
+    }
+  };
+}
 
-  await this.favoriteRepo.remove(favorite);
-  return { message: 'Favorite removed successfully' };
+await this.favoriteRepo.remove(favorite);
+return {
+  header: {
+    message: 'Episode removed from favorites',
+    resultCode: 0
+  }
+};
 }
 }

@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FavoritesService } from '../../service/favorites.service';
 import { CommentsComponent } from '../comments/comments.component';
+import { MessageService } from '../../service/messages.service';
 
 @Component({
   selector: 'app-episode-detail',
@@ -23,7 +24,8 @@ export class EpisodeDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private api: RickAndMortyService,
-    public favoritesService: FavoritesService
+    public favoritesService: FavoritesService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -45,10 +47,14 @@ export class EpisodeDetailComponent implements OnInit {
   }
 
   toggleFavorite(): void {
-  if (!this.episode) return;
-
-  this.favoritesService.toggleFavorite(this.episode.id).subscribe(() => {
-    this.checkIfFavorite();  // Actualizo el estado local
+  this.favoritesService.toggleFavorite(this.episode.id).subscribe({
+    next: (res) => {
+      this.checkIfFavorite();
+      this.messageService.showMessageWithTimeout('success', res.message || 'Favorite list updated');
+    },
+    error: (err) => {
+      this.messageService.handleError(err);
+    }
   });
 }
 

@@ -50,7 +50,6 @@ export class CommentController {
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('admin')
   disableComments(@Param('id') episodeId: number) {
-    console.log('PATCH disable-comments ejecutado con episodeId:', episodeId);
     return this.commentService.toggleCommenting(+episodeId, true);
   }
 
@@ -58,7 +57,6 @@ export class CommentController {
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('admin')
   enableComments(@Param('id') episodeId: number) {
-    console.log('PATCH disable-comments ejecutado con episodeId:', episodeId);
     return this.commentService.toggleCommenting(+episodeId, false);
   }
 

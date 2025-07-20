@@ -129,7 +129,9 @@ export class RegisterComponent {
         const message = res.header.message;
 
         this.messageService.processResultCode(code, message);
-        this.router.navigate(['/auth/login']);
+        setTimeout(() => {
+          this.router.navigate(['/auth/login']);
+        }, 1500);
       },
       error: (err) => {
         this.messageService.handleError(err);
