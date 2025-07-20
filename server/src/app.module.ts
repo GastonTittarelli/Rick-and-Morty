@@ -24,6 +24,7 @@ import { FavoriteEpisodeModule } from './favorite/favorite.module';
       database: process.env.DB_NAME || 'teslo_db',
       autoLoadEntities: true,
       synchronize: true, // solo en desarrollo
+      ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
     }),
     TypeOrmModule.forFeature([User, Comment, CommentSetting, FavoriteEpisode]), // Importamos las entidades que vamos a usar
     AuthModule,

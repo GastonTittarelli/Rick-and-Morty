@@ -17,7 +17,8 @@ interface CommentResponse {
   providedIn: 'root',
 })
 export class CommentsService {
-  private baseUrl = 'http://localhost:3000/comments';
+  // private baseUrl = 'http://localhost:3000/comments';
+  private baseUrl = 'https://rick-and-morty-qxca.onrender.com/comments'; 
 
   constructor(private http: HttpClient) {}
 
