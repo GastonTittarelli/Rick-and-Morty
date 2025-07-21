@@ -4,12 +4,14 @@
   
     <div class="episode-card" *ngFor="let ep of displayedEpisodes" (click)="goToEpisode(ep.id)">
       <h5>Episode {{ ep.id }}</h5>
-      <h4>{{ ep.name }}</h4>
-      <p>{{ ep.episode }}</p>
-      <p>Air Date: {{ ep.air_date }}</p>
+      <h4><span>{{ ep.name }}</span></h4>
+      <div class="episode-details">
+        <p>{{ ep.episode }}</p>
+        <p>Air Date: {{ ep.air_date }}</p>
+      </div>
 
       
-      <mat-icon (click)="toggleFavorite(ep); $event.stopPropagation()">
+      <mat-icon class="favorite-button" (click)="toggleFavorite(ep); $event.stopPropagation()">
         {{ isFavorite(ep.id) ? 'favorite' : 'favorite_border' }}
       </mat-icon>
   

@@ -12,8 +12,8 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'https://rick-and-morty-qxca.onrender.com/user'; 
-  // private baseUrl = 'http://localhost:3000/user';
+  // private baseUrl = 'https://rick-and-morty-qxca.onrender.com/user'; 
+  private baseUrl = 'http://localhost:3000/user';
 
   constructor(private http: HttpClient) {}
 
@@ -22,7 +22,6 @@ export class AuthService {
   }
 
   register(userData: RegisterRequest): Observable<RegisterResponse> {
-  // const registerUrl = 'https://api-auth-moby.herokuapp.com/api/user/register';
   return this.http.post<RegisterResponse>(`${this.baseUrl}/register`, userData);
 }
 

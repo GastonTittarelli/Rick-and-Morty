@@ -1,19 +1,22 @@
 <mat-card class="comments-container">
-  <h2>Comentarios</h2>
+  <h2>Comments</h2>
 
-  <div *ngIf="commentingDisabled" class="comments-disabled-message mat-elevation-z2">
-  <mat-icon color="warn">block</mat-icon>
-  Commenting is currently unavailable.
-</div>
+  <div
+    *ngIf="commentingDisabled"
+    class="comments-disabled-message mat-elevation-z2"
+  >
+    <mat-icon color="warn">block</mat-icon>
+    Commenting is currently unavailable.
+  </div>
 
   <div *ngIf="isAdmin" class="admin-controls">
     <button mat-stroked-button color="warn" (click)="toggleComments()">
-      {{ commentingDisabled ? 'Habilitar comentarios' : 'Deshabilitar comentarios' }}
+      {{ commentingDisabled ? "Enable comments" : "Disable comments" }}
     </button>
   </div>
 
   <mat-form-field appearance="outline" class="comment-field">
-    <mat-label>Escribí tu comentario</mat-label>
+    <mat-label>Write your comments here</mat-label>
     <textarea
       matInput
       [(ngModel)]="newComment"
@@ -23,12 +26,13 @@
   </mat-form-field>
 
   <button
+    class="submit-comment-button"
     mat-flat-button
     color="primary"
     (click)="addComment()"
     [disabled]="!newComment.trim() || commentingDisabled"
   >
-    Publicar
+    Publish
   </button>
 
   <div *ngIf="loading" class="loading">
@@ -38,18 +42,28 @@
 
   <mat-divider class="divider"></mat-divider>
 
+  <div *ngIf="!comments?.length && !loading && !error" class="no-comments-message">
+    <p>There's nothing! Not a single comment...</p>
+    <img src="searching.png" alt="not comments message" />
+  </div>
+
   <div *ngFor="let comment of comments" class="comment">
     <mat-card>
-      <div *ngIf="editingCommentId !== comment.id">
+      <div class="comment-info" *ngIf="editingCommentId !== comment.id">
         <img
-  [src]="comment.user.profilePicture || 'https://ui-avatars.com/api/?name=' + comment.user.name"
-  alt="Foto de perfil"
-  class="avatar-img"
-  (error)="onCommentImageError($event, comment.user.name)"
-/>
+          [src]="
+            comment.user.profilePicture ||
+            'https://ui-avatars.com/api/?name=' + comment.user.name
+          "
+          alt="Foto de perfil"
+          class="avatar-img"
+          (error)="onCommentImageError($event, comment.user.name)"
+        />
         <div class="comment-header">
           <strong>{{ comment.user.name }}</strong>
-          <span class="comment-date">{{ comment.createdAt | date: 'short' }}</span>
+          <span class="comment-date">{{
+            comment.createdAt | date : "short"
+          }}</span>
         </div>
         <div class="comment-content">{{ comment.content }}</div>
         <div class="comment-actions">
@@ -78,10 +92,13 @@
           <textarea matInput [(ngModel)]="editContent" rows="2"></textarea>
         </mat-form-field>
         <div class="edit-actions">
-          <button mat-button color="primary" (click)="saveEdit(comment)">Guardar</button>
-          <button mat-button (click)="cancelEdit()">Cancelar</button>
+          <button mat-button color="primary" (click)="saveEdit(comment)">
+            Save
+          </button>
+          <button mat-button (click)="cancelEdit()">Cancel</button>
         </div>
       </div>
     </mat-card>
   </div>
 </mat-card>
+

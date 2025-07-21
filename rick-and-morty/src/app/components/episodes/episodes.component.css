@@ -1,6 +1,6 @@
 .episodes-container{
   width: 100%;
-  height: 80vh;
+  height: 81.8vh;
   display: flex;
   flex-direction: column;
 }
@@ -10,31 +10,60 @@
   flex-wrap: wrap;
   width: 80%;
   margin: 0 auto;
-  gap: 2rem;
+  gap: 2.9rem;
   justify-content: center;
   min-height: 450px;
 }
 
 .episode-card {
-  width: 250px;
-  height: 190px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 270px;
+  height: 200px;
   background-color: #3a3a3a;
   color: #ccc;
   padding: 1rem;
   border-radius: 8px;
+  position: relative;
   transition: transform 0.3s ease, background-color 0.3s ease;
 
 }
 h5 {
   color: #fff;
-  margin-bottom: 0.2rem;
 }
+
+
 
 h4 {
-  margin: 0.5rem 0;
-  font-size: 1.1rem;
+  height:50px;
+  align-items: center;
+  display: flex;
+  font-size: 1.4rem;
+  width: 100%;
+  
 }
 
+h4 span{
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2; /* esta es la versión estándar sugerida */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.episode-details{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.episode-details p{
+  width: 100%;
+  margin: 0;
+  font-size: 1.1rem;
+}
 .episode-card:hover{
   background-color: #444;
   transform: translateY(-4px);
@@ -42,4 +71,12 @@ h4 {
 
 .paginator{
   margin-top: 2rem!important;
+}
+
+.favorite-button{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }

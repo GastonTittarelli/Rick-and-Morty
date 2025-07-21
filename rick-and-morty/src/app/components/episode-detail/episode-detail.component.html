@@ -4,13 +4,12 @@
     <mat-icon
       (click)="toggleFavorite()"
       [ngClass]="{ favorited: isFavorite }"
-      style="cursor: pointer;"
     >
       {{ isFavorite ? 'favorite' : 'favorite_border' }}
     </mat-icon>
-    <p><strong>Name:</strong> {{ episode.name }}</p>
-    <p><strong>air date:</strong> {{ episode.air_date }}</p>
-    <p><strong>episode code:</strong> {{ episode.episode }}</p>
+    <p class="episode-title"><strong>Name:</strong> {{ episode.name }}</p>
+    <p><strong>Air date:</strong> {{ episode.air_date }}</p>
+    <p><strong>Episode code:</strong> {{ episode.episode }}</p>
   </div>
 
   <div class="box">
@@ -23,4 +22,7 @@
     
   </div>
 </div>
-<app-comments *ngIf="episode" [episodeId]="episode.id"></app-comments>
+
+<div class="comments-section">
+  <app-comments *ngIf="episode" [episodeId]="episode.id"></app-comments>
+</div>
