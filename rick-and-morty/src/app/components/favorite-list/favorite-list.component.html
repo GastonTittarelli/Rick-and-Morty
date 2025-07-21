@@ -3,17 +3,18 @@
   <h2>My Favorite Episodes</h2>
 
   <div *ngIf="favorites.length === 0" class="not-favorite">
-    No favorites yet.
+    <p>No favorites yet.</p>
+    <button routerLink="/home/episodes">Go to episodes</button>
   </div>
 
-  <div class="favorite-card" *ngFor="let ep of favorites" (click)="goToEpisode(ep.id)">
+  <div class="favorite-card" *ngFor="let ep of favorites">
     <div class="episode-info">
       <h5 (click)="goToEpisode(ep.id); $event.stopPropagation()">{{ ep.name }}</h5>
       
       <p *ngIf="ep.episode"><strong>({{ ep.episode }})</strong></p>
     </div>
     
-    <mat-icon (click)="removeFavorite(ep.id); $event.stopPropagation()">delete</mat-icon>
+    <mat-icon class="delete-button" (click)="removeFavorite(ep.id); $event.stopPropagation()">delete</mat-icon>
     
 
     <div class="characters-thumbnails">

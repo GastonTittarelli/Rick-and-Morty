@@ -8,13 +8,14 @@
             (error)="onViewImageError($event)"
       />
     
-  
-    <h2>{{ user.name }}</h2>
+      <h2>{{ user.name }}</h2>
+  <div class="profile-info">
     <p><strong>Name:</strong> {{user.name}}</p>
     <p><strong>Nickname:</strong> {{ user.nickname || '-' }}</p>
     <p><strong>Email:</strong> {{ user.mail }}</p>
     <p><strong>Birthdate:</strong> {{ user.birthday | date: 'longDate' }}</p>
     <p><strong>Location:</strong> {{ user.location || '-' }}</p>
+  </div>
   
     <button (click)="isEditing = true">Editar perfil</button>
   </div> 
@@ -32,7 +33,7 @@
     </div>
   
     <h2>{{ user.name }}</h2>
-    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <form class="profile-form" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
       <label>
         Nickname:
         <input formControlName="nickname" />
@@ -51,8 +52,10 @@
         <div class="error" *ngIf="locationError">{{ locationError }}</div>
       </label>
   
-      <button type="submit">Guardar cambios</button>
-      <button type="button" (click)="isEditing = false">Cancelar</button>
+      <div class="profile-form-actions">
+        <button type="submit">Guardar cambios</button>
+        <button type="button" (click)="isEditing = false">Cancelar</button>
+      </div>
       
     </form>
   </div>

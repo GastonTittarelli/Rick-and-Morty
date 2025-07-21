@@ -1,9 +1,8 @@
-# Rick & Morty App v2.0
+# Rick & Morty App v3.0
 
-Aplicación desarrollada en Angular Node.js y CSS. El proyecto consume la API pública de Rick & Morty y presenta distintos desafíos implementados con buenas prácticas, uso de servicios, componentes, pipes personalizados, manejo de rutas y diseño responsive.
+Aplicación desarrollada en Angular, NestJS y CSS, con base de datos PostgreSQL. El proyecto consume la API pública de Rick & Morty y extiende sus funcionalidades con autenticación, favoritos y comentarios personalizados. Se trabajó con buenas prácticas, arquitectura modular, servicios reutilizables, interceptores, guards, pipes personalizados, diseño responsive y backend propio.
 
 ---
-
 
 ## 🔗 Enlaces
 
@@ -11,6 +10,19 @@ Aplicación desarrollada en Angular Node.js y CSS. El proyecto consume la API p�
 
 ---
 
+## ✨ Funcionalidades desarrolladas
+
+# Rick & Morty App v3.0
+
+Aplicación desarrollada en Angular, NestJS y CSS, con base de datos PostgreSQL. El proyecto consume la API pública de Rick & Morty y extiende sus funcionalidades con autenticación, favoritos y comentarios personalizados. Se trabajó con buenas prácticas, arquitectura modular, servicios reutilizables, validaciones a nivel frontend y backend, interceptores, guards, pipes personalizados, diseño responsive y backend propio con persistencia de datos.
+
+---
+
+## 🔗 Enlaces
+
+- **Deploy en Vercel:** https://rick-and-morty-blond-three.vercel.app/
+
+---
 
 ## ✨ Funcionalidades desarrolladas
 
@@ -33,7 +45,6 @@ Aplicación desarrollada en Angular Node.js y CSS. El proyecto consume la API p�
 
 ---
 
-
 ### 3. ❌ Vista 404 personalizada (`/404`)
 
 - Página personalizada que informa que la ruta no fue encontrada.
@@ -41,26 +52,40 @@ Aplicación desarrollada en Angular Node.js y CSS. El proyecto consume la API p�
 
 ---
 
+### 4. 📺 Sección de episodios (`/episodes`)
 
-### 4. 🌐 Pipes personalizados
-
-- Se creó un pipe llamado `TranslateStatusPipe` para traducir el estado (`status`) y género (`gender`) del personaje del inglés al español.
-
----
-
-
-### 5. 🎨 Colores dinámicos con `ngClass`
-
-- Según el estado del personaje (`status`), el color de fondo cambia
+- Nueva sección donde se listan todos los episodios de la serie.
+- Cada episodio se muestra en una card con nombre y número.
+- Al hacer clic se accede al detalle del episodio (`/episodes/:id`).
+- Se visualizan los personajes que participan en ese episodio.
+- Permite **marcar como favorito** un episodio, relacionándolo con el usuario autenticado.
 
 ---
 
+### 5. 💬 Comentarios en episodios
 
-### 6. 🔐 Autenticación de usuarios
+- En la vista de cada episodio, los usuarios pueden:
+  - Agregar comentarios.
+  - Editar o eliminar sus propios comentarios.
+- Los usuarios administradores pueden:
+  - Eliminar cualquier comentario.
+  - Habilitar o deshabilitar la sección de comentarios.
 
-- Se implementaron vistas de **Login** y **Register**.
+---
+
+### 6. 👤 Vista de perfil de usuario (`/profile`)
+
+- Vista accesible para usuarios autenticados.
+- Muestra los datos del usuario logueado.
+- Permite editar su información personal y subir una foto de perfil.
+- Muestra la lista de episodios marcados como favoritos.
+
+---
+
+### 7. 🔐 Autenticación de usuarios
+
+- Se implementaron vistas de **Login** y **Register** conectadas al backend.
 - Formularios reactivos con validaciones de campos requeridos.
-
 - Guardado de sesión:
   - Si el usuario selecciona "Recordarme", los datos se almacenan en `localStorage`, permitiendo que la sesión persista incluso al cerrar la pestaña o navegador.
   - Si no se selecciona esa opción, la sesión se guarda en `sessionStorage` y se elimina al cerrar el navegador.
@@ -72,21 +97,56 @@ Aplicación desarrollada en Angular Node.js y CSS. El proyecto consume la API p�
 
 ---
 
-### 7. 📢 Servicios globales
+### 8. ⚙️ Backend y base de datos
 
-- Servicio de mensajes centralizado para mostrar mensajes de alerta dependiendo del comportamiento de la aplicación. Mensajes de éxito, error o advertencia obtenidos desde el backend.
-- Servicio de usuarios centralizado para manejar la lógica de autenticación en toda la aplicación.
-- Servicio de API para obtener personajes y detalles desde la API pública de Rick & Morty, con paginación, usando `HttpClient`.
-- Servicio utilitario de formularios (`FormErrorsService`) que gestiona errores y validaciones personalizadas como:
-  - Coincidencia de contraseñas (`passwordMatchValidator`)
-  - Validación de dirección (`addressGroupValidator`)
+- Backend desarrollado con **NestJS** y base de datos relacional **PostgreSQL**.
+- Configuración completa de **módulos**, **controladores**, **servicios** y **entidades** para cada funcionalidad (usuarios, favoritos, comentarios).
+- Validaciones a nivel backend mediante **DTOs**, decoradores y `ValidationPipe`.
+- Implementación de **JWT** para autenticación:
+  - Generación y validación de tokens.
+  - Protección de rutas mediante `Guards`.
+- Uso de **Docker** para levantar la base de datos localmente.
+- Persistencia garantizada con:
+  - **Render** para el backend.
+  - **Neon** para la base de datos en la nube.
 
 ---
 
-### 8. 📱 Responsive design + estilos
+### 9. 🔄 Interceptor HTTP
+
+- Se implementó un **interceptor global** para capturar las respuestas del backend.
+- Permite mostrar mensajes de éxito, error o advertencia en función de la respuesta del servidor.
+
+---
+
+### 10. 🛠️ Servicios globales
+
+- **Servicio de mensajes** centralizado para mostrar alertas personalizadas según comportamiento de la app.
+- **Servicio de usuarios** para gestionar login, registro, sesión, perfil y favoritos.
+- **Servicio de API** para obtener personajes y episodios desde la API pública, con paginación, usando `HttpClient`.
+- **Servicio de formularios** (`FormErrorsService`) que gestiona errores y validaciones personalizadas como:
+  - Coincidencia de contraseñas (`passwordMatchValidator`).
+  - Validación de grupos de campos (`addressGroupValidator`).
+
+---
+
+### 11. 🌐 Pipes personalizados
+
+- Se creó un pipe llamado `TranslateStatusPipe` para traducir el estado (`status`) y género (`gender`) del personaje del inglés al español.
+
+---
+
+### 12. 🎨 Colores dinámicos con `ngClass`
+
+- Según el estado del personaje (`status`), el color de fondo cambia dinámicamente.
+
+---
+
+### 13. 📱 Responsive design + estilos
 
 - Bootstrap 5 utilizado como base de diseño.
 - Se agregaron estilos y ajustes personalizados con CSS.
-- Totalmente adaptada para dispositivos móviles y desktop.
+- Totalmente adaptada para dispositivos móviles y pantallas de escritorio.
 
 ---
+

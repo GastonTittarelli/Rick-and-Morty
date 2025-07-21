@@ -42,9 +42,12 @@
 
   <mat-divider class="divider"></mat-divider>
 
-  <div *ngIf="!comments?.length && !loading && !error" class="no-comments-message">
+  <div
+    *ngIf="!comments?.length && !loading && !error"
+    class="no-comments-message"
+  >
+  <img src="rick.gif" alt="not comments message" />
     <p>There's nothing! Not a single comment...</p>
-    <img src="searching.png" alt="not comments message" />
   </div>
 
   <div *ngFor="let comment of comments" class="comment">
@@ -101,4 +104,3 @@
     </mat-card>
   </div>
 </mat-card>
-

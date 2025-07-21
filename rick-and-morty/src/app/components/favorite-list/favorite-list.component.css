@@ -3,6 +3,7 @@
   height: 700px;
   width: 100%;
   background-color: #646464;
+  background-color: #212529;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -13,15 +14,42 @@
   scrollbar-width: thin;
   scrollbar-color: #888 transparent;
 }
+
+h2{
+  color: rgb(231, 231, 231);
+}
+
 .not-favorite{
   height: 400px;
   width: 100%;
   text-align: center;
+  color: rgb(231, 231, 231);
+  font-size: 1.4rem;
 }
+
+.not-favorite button {
+  background-color: #0B5ED7;
+  color: white;
+  padding: 12px 24px;
+  font-weight: bold;
+  width: 190px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: width .5s ease-out;
+}
+
+.not-favorite button:hover {
+  width: 205px;
+}
+
 
 .favorite-card{
   width: 80%;
-  height: 150px;
+  height: 115px;
   margin: 10px;
   padding: 10px;
   background-color: #949292;
@@ -29,13 +57,14 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  position: relative;
 }
 
 .episode-info{
   display: flex;
   gap: 10px;
   width: 70%;
-  height: 35px;
+  height: 25px;
   justify-content: start;
 }
 
@@ -49,11 +78,27 @@ h5:hover {
   text-decoration: underline;
 }
 
+.delete-button{
+  cursor: pointer;
+  transition: color 0.1s ease;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+}
+
+.delete-button:hover {
+  color: #f44336; 
+}
+
 .characters-thumbnails {
   display: flex;
+  align-items: center;
+  margin-top: 7px;
   gap: 5px;
-  margin-top: 10px;
   width: 100%;
+  height: 65px;
 }
 
 .thumbnail {
