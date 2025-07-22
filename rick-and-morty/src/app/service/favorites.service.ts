@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class FavoritesService {
-  private apiUrl = 'http://localhost:3000/favorites';
-  // private apiUrl = 'https://rick-and-morty-qxca.onrender.com/favorites'; 
+  // private apiUrl = 'http://localhost:3000/favorites';
+  private apiUrl = 'https://rick-and-morty-qxca.onrender.com/favorites'; 
 
   constructor(private http: HttpClient) {}
 
