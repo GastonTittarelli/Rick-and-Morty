@@ -8,8 +8,8 @@
       {{ isFavorite ? 'favorite' : 'favorite_border' }}
     </mat-icon>
     <p class="episode-title"><strong>Name:</strong> {{ episode.name }}</p>
-    <p><strong>Air date:</strong> {{ episode.air_date }}</p>
-    <p><strong>Episode code:</strong> {{ episode.episode }}</p>
+    <p data-testid="episode-air-date"><strong>Air date:</strong> {{ episode.air_date }}</p>
+    <p data-testid="episode-code"><strong>Episode code:</strong> {{ episode.episode }}</p>
   </div>
 
   <div class="box">

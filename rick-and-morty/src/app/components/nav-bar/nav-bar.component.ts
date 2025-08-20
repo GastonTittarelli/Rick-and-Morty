@@ -31,7 +31,7 @@ private setUserName() {
   if (userData && userData !== 'undefined') {
     try {
       const user = JSON.parse(userData);
-      this.userName = user.name;
+      this.userName = user?.name || null;
     } catch (error) {
       console.error('Error al parsear user del localStorage', error);
       this.userName = null;

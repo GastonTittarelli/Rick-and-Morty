@@ -1,7 +1,7 @@
 <nav aria-label="Page navigation">
   <ul class="pagination justify-content-center">
     <li class="page-item" [class.disabled]="currentPage === 1">
-      <a class="page-link" (click)="changePage(currentPage - 1)">Previous</a>
+      <a class="page-link" (click)="changePage(currentPage - 1)" [attr.aria-disabled]="currentPage === 1 ? 'true' : null">Previous</a>
     </li>
 
     <li
@@ -10,14 +10,19 @@
       [class.active]="page === currentPage"
       [class.disabled]="page === '...'"
     >
-      <a class="page-link" *ngIf="page !== '...'" (click)="onPageClick(page)">
+      <a class="page-link" *ngIf="page !== '...'" (click)="onPageClick(page)" [attr.aria-current]="page === currentPage ? 'page' : null">
         {{ page }}
       </a>
       <span class="page-link" *ngIf="page === '...'">...</span>
     </li>
 
     <li class="page-item" [class.disabled]="currentPage === totalPages">
-      <a class="page-link" (click)="changePage(currentPage + 1)">Next</a>
+      <a class="page-link" (click)="changePage(currentPage + 1)" [attr.aria-disabled]="currentPage === totalPages ? 'true' : null">Next</a>
     </li>
   </ul>
 </nav>
+
+<!--aria-disabled en los tres botones: [attr.aria-disabled]="currentPage === totalPages ? 'true' : null"
+  Se detectó su necesidad al pasar los tests del componente. Sirve para que lectores de pantalla reconozcan que el botón Next está deshabilitado cuando estamos en la última página, sin afectar el comportamiento visual o funcional del paginador de Bootstrap.-->
+
+<!-- Sin esto, podría testear la clase active y la funcionalidad de cambio de página, pero me quedo sin testear la accesibilidad. -->

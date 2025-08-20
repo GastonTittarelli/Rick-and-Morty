@@ -8,9 +8,8 @@ describe('FooterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FooterComponent]
-    })
-    .compileComponents();
+      imports: [FooterComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FooterComponent);
     component = fixture.componentInstance;
@@ -19,5 +18,12 @@ describe('FooterComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('debería renderizar el párrafo con la marca', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const p = compiled.querySelector('footer p');
+    expect(p).toBeTruthy();
+    expect(p?.textContent).toContain('©Rick & Morty Wiki');
   });
 });

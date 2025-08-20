@@ -8,6 +8,9 @@ export class FormErrorsService {
     if (control.touched || control.dirty) {
       if (control.hasError('required')) return 'Email is required';
       if (control.hasError('email')) return 'Email is not valid';
+      // detectado con el test del login, no validaba los caracteres
+      if (control.hasError('minlength')) return 'Email must be at least 10 characters long';
+      if (control.hasError('maxlength')) return 'Email must be at most 50 characters long';
     }
     return null;
   }
@@ -19,6 +22,10 @@ export class FormErrorsService {
       if (control.hasError('minlength') || control.hasError('pattern')) {
         return 'Password must be at least 8 characters long and include a letter and a number';
       }
+      // detectado con el test del login, no validaba los caracteres
+      if (control.hasError('maxlength')) {
+      return 'Password must be at most 30 characters long';
+    }
     }
     return null;
   }
