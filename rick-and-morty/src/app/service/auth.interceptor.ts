@@ -1,4 +1,3 @@
-// auth.interceptor.ts
 import { inject } from '@angular/core';
 import {
   HttpInterceptorFn,
@@ -24,15 +23,16 @@ export const authInterceptor: HttpInterceptorFn = (
   const messageService = inject(MessageService); 
 
   const token = authService.getToken();
+  const isValidToken = token && typeof token === 'string' && token.trim() !== '';
 
-  const authReq = token
+  const authReq = isValidToken
     ? request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
         },
       })
     : request;
-
+try {
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401 || error.status === 403) {
@@ -51,4 +51,8 @@ export const authInterceptor: HttpInterceptorFn = (
       return throwError(() => error);
     })
   );
+} catch (err) {
+    // Fallback seguro
+    return throwError(() => new Error('Interceptor error'));
+  }
 };

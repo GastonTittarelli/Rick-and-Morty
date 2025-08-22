@@ -1,5 +1,4 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-// import { passwordMatchValidator } from '../validators/register-form-validators';
 
 export class FormErrorsService {
   // Login component

@@ -44,7 +44,7 @@ describe('LoginComponent', () => {
           location: 'Test Location',
           city: 'Test City',
           country: 'Test Country',
-          cp: '12345',
+          cp: '1234',
         },
         birthday: '1990-01-01',
         phone: '123456789',
@@ -88,27 +88,25 @@ describe('LoginComponent', () => {
     ) as jasmine.SpyObj<MessageService>;
     formBuilder = TestBed.inject(FormBuilder);
     router = TestBed.inject(Router);
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('debería crearse', () => {
+  it('debe crearse el componente Login', () => {
     expect(component).toBeTruthy();
   });
 
   describe('inicialización del Formulario', () => {
-    it('debería inicializar loginForm con valores vacíos', () => {
+    it('debe inicializar loginForm con valores vacíos', () => {
       expect(component.loginForm).toBeDefined();
       expect(component.loginForm.get('mail')?.value).toBe('');
       expect(component.loginForm.get('password')?.value).toBe('');
       expect(component.loginForm.get('rememberMe')?.value).toBe(false);
     });
 
-    it('debería recordar el mail si está en localStorage', () => {
+    it('debe recordar el mail si está en localStorage', () => {
       const rememberedMail = 'test@example.com';
       spyOn(localStorage, 'getItem').and.returnValue(rememberedMail);
 
@@ -122,49 +120,49 @@ describe('LoginComponent', () => {
   });
 
   describe('Form Validation', () => {
-    it('el campo mail debería ser obligatorio', () => {
+    it('el campo mail debe ser obligatorio', () => {
       const mailControl = component.loginForm.get('mail');
       mailControl?.setValue('');
       expect(mailControl?.hasError('required')).toBeTrue();
     });
 
-    it('debería validar el formato del mail', () => {
+    it('debe validar el formato del mail', () => {
       const mailControl = component.loginForm.get('mail');
       mailControl?.setValue('invalid-email');
       expect(mailControl?.hasError('email')).toBeTrue();
     });
 
-    it('debería validar los campos mínimos del mail', () => {
+    it('debe validar los campos mínimos del mail', () => {
       const mailControl = component.loginForm.get('mail');
       mailControl?.setValue('a@b.c');
       expect(mailControl?.hasError('minlength')).toBeTrue();
     });
 
-    it('debería validar los campos máximos del mail', () => {
+    it('debe validar los campos máximos del mail', () => {
       const mailControl = component.loginForm.get('mail');
       mailControl?.setValue('a'.repeat(51) + '@example.com');
       expect(mailControl?.hasError('maxlength')).toBeTrue();
     });
 
-    it('el campo password debería ser obligatorio', () => {
+    it('el campo password debe ser obligatorio', () => {
       const passwordControl = component.loginForm.get('password');
       passwordControl?.setValue('');
       expect(passwordControl?.hasError('required')).toBeTrue();
     });
 
-    it('debería validar la longitud mínima del password', () => {
+    it('debe validar la longitud mínima del password', () => {
       const passwordControl = component.loginForm.get('password');
       passwordControl?.setValue('short');
       expect(passwordControl?.hasError('minlength')).toBeTrue();
     });
 
-    it('debería validar la longitud máxima del password', () => {
+    it('debe validar la longitud máxima del password', () => {
       const passwordControl = component.loginForm.get('password');
       passwordControl?.setValue('a'.repeat(31));
       expect(passwordControl?.hasError('maxlength')).toBeTrue();
     });
 
-    it('debería validar el patrón del password (al menos una letra y un número)', () => {
+    it('debe validar el patrón del password (al menos una letra y un número)', () => {
       const passwordControl = component.loginForm.get('password');
       passwordControl?.setValue('password'); // sin número
       expect(passwordControl?.hasError('pattern')).toBeTrue();
@@ -178,13 +176,13 @@ describe('LoginComponent', () => {
   });
 
   describe('onSubmit', () => {
-    it('no debería llamar a authService.login si el formulario es inválido', () => {
+    it('no debe llamar a authService.login si el formulario es inválido', () => {
       component.loginForm.setErrors({ invalid: true });
       component.onSubmit();
       expect(authService.login).not.toHaveBeenCalled();
     });
 
-    it('debería llamar a authService.login con los valores del formulario cuando el formulario es válido', () => {
+    it('debe llamar a authService.login con los valores del formulario cuando el formulario es válido', () => {
       const testMail = 'test@example.com';
       const testPassword = 'password123';
       const rememberMe = true;
@@ -205,7 +203,7 @@ describe('LoginComponent', () => {
       expect(authService.login).toHaveBeenCalledWith(testMail, testPassword);
     });
 
-    it('debería guardar la sesión y navegar a home tras un login exitoso', fakeAsync(() => {
+    it('deber guardar la sesión y navegar a home tras un login exitoso', fakeAsync(() => {
       const testMail = 'test@example.com';
       const testPassword = 'password123';
       const rememberMe = true;
@@ -239,7 +237,7 @@ describe('LoginComponent', () => {
       );
     }));
 
-    it('debería manejar errores de login', fakeAsync(() => {
+    it('debe manejar errores de login', fakeAsync(() => {
       const error = new Error('Login failed');
       component.loginForm.patchValue({
         mail: 'test@example.com',
@@ -254,7 +252,7 @@ describe('LoginComponent', () => {
       expect(messageService.handleError).toHaveBeenCalledWith(error);
     }));
 
-    it('debería eliminar el mail recordado de localStorage si rememberMe es falso', fakeAsync(() => {
+    it('debe eliminar el mail recordado de localStorage si rememberMe es falso', fakeAsync(() => {
       const testMail = 'test@example.com';
       const testPassword = 'password123';
 
@@ -273,7 +271,7 @@ describe('LoginComponent', () => {
       expect(localStorage.removeItem).toHaveBeenCalledWith('rememberedMail');
     }));
 
-    it('debería manejar la respuesta de error del backend', fakeAsync(() => {
+    it('debe manejar la respuesta de error del backend', fakeAsync(() => {
       const errorResponse: LoginResponse = {
         header: {
           resultCode: 1,
@@ -318,7 +316,7 @@ describe('LoginComponent', () => {
   });
 
   describe('Error Messages', () => {
-    it('debería devolver los mensajes correctos de error para mail', () => {
+    it('debe devolver los mensajes correctos de error para mail', () => {
       const mailControl = component.loginForm.get('mail');
 
       mailControl?.setValue('');
@@ -346,7 +344,7 @@ describe('LoginComponent', () => {
       ); // mensaje real para maxLength
     });
 
-    it('debería devolver los mensajes correctos de error para password', () => {
+    it('debe devolver los mensajes correctos de error para password', () => {
       const passwordControl = component.loginForm.get('password');
 
       passwordControl?.setValue('');
@@ -376,7 +374,7 @@ describe('LoginComponent', () => {
       );
     });
 
-    it('debería llamar a FormErrorsService para los errores de mail y password', () => {
+    it('debe llamar a FormErrorsService para los errores de mail y password', () => {
       spyOn(FormErrorsService, 'getMailError').and.returnValue(
         'Test Mail Error'
       );
@@ -388,7 +386,7 @@ describe('LoginComponent', () => {
       expect(component.passwordErrors).toBe('Test Password Error');
     });
 
-    it('debería procesar el mensaje del backend incluso sin la propiedad de error', fakeAsync(() => {
+    it('debe procesar el mensaje del backend incluso sin la propiedad de error', fakeAsync(() => {
       const response: LoginResponse = {
         header: { resultCode: 2, message: 'Generic error' },
         data: {
@@ -429,13 +427,13 @@ describe('LoginComponent', () => {
   });
 
   describe('Form Interaction', () => {
-    it('debería limpiar los mensajes al cambiar los valores del formulario', () => {
+    it('debe limpiar los mensajes al cambiar los valores del formulario', () => {
       component.loginForm.patchValue({ mail: 'test@example.com' });
       expect(messageService.clear).toHaveBeenCalled();
     });
   });
 
-  it('debería alternar el valor de rememberMe al hacer clic en el checkbox', () => {
+  it('debe alternar el valor de rememberMe al hacer clic en el checkbox', () => {
     const checkbox: HTMLInputElement =
       fixture.nativeElement.querySelector('#rememberMe');
     expect(checkbox.checked).toBeFalse();
@@ -445,7 +443,7 @@ describe('LoginComponent', () => {
     expect(component.loginForm.get('rememberMe')?.value).toBeTrue();
   });
 
-  it('debería navegar a registro al hacer click en el enlace “Sign up”', fakeAsync(() => {
+  it('debe navegar a registro al hacer click en el enlace “Sign up”', fakeAsync(() => {
     const link: HTMLAnchorElement = fixture.nativeElement.querySelector(
       'a[href="/auth/register"]'
     );

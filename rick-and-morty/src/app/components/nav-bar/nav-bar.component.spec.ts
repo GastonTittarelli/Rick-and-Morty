@@ -1,6 +1,17 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { NavBarComponent } from './nav-bar.component';
-import { Router, RouterModule, Event, ActivatedRoute, provideRouter } from '@angular/router';
+import {
+  Router,
+  RouterModule,
+  Event,
+  ActivatedRoute,
+  provideRouter,
+} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../service/users.service';
 import { of } from 'rxjs';
@@ -22,7 +33,7 @@ describe('NavBarComponent', () => {
       providers: [
         provideRouter([]), // Router real de pruebas
         { provide: AuthService, useClass: MockAuthService },
-        { provide: ActivatedRoute, useValue: { snapshot: {}, params: of({}) } }
+        { provide: ActivatedRoute, useValue: { snapshot: {}, params: of({}) } },
       ],
     }).compileComponents();
   });
@@ -31,7 +42,7 @@ describe('NavBarComponent', () => {
     fixture = TestBed.createComponent(NavBarComponent);
     component = fixture.componentInstance;
     authService = TestBed.inject(AuthService) as unknown as MockAuthService;
-    router = TestBed.inject(Router); // ahora tenemos Router real
+    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 
@@ -40,12 +51,12 @@ describe('NavBarComponent', () => {
     sessionStorage.clear();
   });
 
-  it('debería crearse el componente', () => {
+  it('debe crear el componente NavComponent', () => {
     expect(component).toBeTruthy();
   });
 
   describe('toggleMenu', () => {
-    it('debería abrir/cerrar el menú', () => {
+    it('debe abrir y cerrar el menú', () => {
       expect(component.menuOpen).toBeFalse();
       component.toggleMenu();
       expect(component.menuOpen).toBeTrue();
@@ -55,7 +66,7 @@ describe('NavBarComponent', () => {
   });
 
   describe('closeMenu', () => {
-    it('debería cerrar el menú y resetear disableTransition después de un tiempo', fakeAsync(() => {
+    it('debe cerrar el menú y resetear disableTransition después de un tiempo', fakeAsync(() => {
       component.menuOpen = true;
       component.disableTransition = false;
 
@@ -69,7 +80,7 @@ describe('NavBarComponent', () => {
   });
 
   describe('onClickOutside', () => {
-    it('debería cerrar el menú si se hace click fuera', () => {
+    it('debe cerrar el menú si se hace click fuera', () => {
       component.menuOpen = true;
       const fakeEvent = {
         target: document.createElement('div'),
@@ -80,7 +91,7 @@ describe('NavBarComponent', () => {
       expect(component.closeMenu).toHaveBeenCalled();
     });
 
-    it('no debería cerrarse si el click es dentro del componente', () => {
+    it('no deber cerrarse si el click es dentro del componente', () => {
       component.menuOpen = true;
       const fakeEvent = {
         target: fixture.nativeElement, // simula click dentro
@@ -93,39 +104,42 @@ describe('NavBarComponent', () => {
   });
 
   describe('setUserName', () => {
-    it('debería asignar el nombre desde localStorage', () => {
+    it('debe asignar el nombre desde localStorage', () => {
       localStorage.setItem('user', JSON.stringify({ name: 'Rick' }));
       component['setUserName']();
       expect(component.userName).toBe('Rick');
     });
 
-    it('debería asignar el nombre desde sessionStorage si no está en localStorage', () => {
+    it('debe asignar el nombre desde sessionStorage si no está en localStorage', () => {
       sessionStorage.setItem('user', JSON.stringify({ name: 'Morty' }));
       component['setUserName']();
       expect(component.userName).toBe('Morty');
     });
 
-    it('debería asignar null si no hay user', () => {
+    it('debe asignar null si no hay user', () => {
       component['setUserName']();
       expect(component.userName).toBeNull();
     });
 
-    it('debería asignar null si el JSON está malformado', () => {
-    // El spy del console.error:  
-    // 1) Evitar que el mensaje de error aparezca en el log durante la prueba (lo captura). 
-    // 2) Verificar que el componente maneja correctamente el error de parseo.
-    spyOn(console, 'error');
-    
-    localStorage.setItem('user', '{ bad json }');
-    component['setUserName']();
-    
-    expect(component.userName).toBeNull();
-    expect(console.error).toHaveBeenCalledWith('Error al parsear user del localStorage', jasmine.any(Error));
-  });
+    it('debe asignar null si el JSON está malformado', () => {
+      // El spy del console.error:
+      // 1) Evitar que el mensaje de error aparezca en el log durante la prueba (lo captura).
+      // 2) Verificar que el componente maneja correctamente el error de parseo.
+      spyOn(console, 'error');
+
+      localStorage.setItem('user', '{ bad json }');
+      component['setUserName']();
+
+      expect(component.userName).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Error al parsear user del localStorage',
+        jasmine.any(Error)
+      );
+    });
   });
 
   describe('logout', () => {
-    it('debería llamar al logout, cerrar el menú y navegar a login', () => {
+    it('debe llamar al logout, cerrar el menú y navegar a login', () => {
       spyOn(component, 'closeMenu');
       spyOn(router, 'navigate'); // espio al router real
 
@@ -137,21 +151,20 @@ describe('NavBarComponent', () => {
     });
 
     it('logout funciona aunque menuOpen sea false', () => {
-  component.menuOpen = false;
-  spyOn(component, 'closeMenu').and.callThrough();
-  spyOn(router, 'navigate');
+      component.menuOpen = false;
+      spyOn(component, 'closeMenu').and.callThrough();
+      spyOn(router, 'navigate');
 
-  component.logout();
+      component.logout();
 
-  expect(authService.logout).toHaveBeenCalled();
-  expect(component.closeMenu).toHaveBeenCalled();
-  expect(router.navigate).toHaveBeenCalledWith(['/auth/login']);
-});
-
+      expect(authService.logout).toHaveBeenCalled();
+      expect(component.closeMenu).toHaveBeenCalled();
+      expect(router.navigate).toHaveBeenCalledWith(['/auth/login']);
+    });
   });
 
   describe('router.events', () => {
-    it('debería actualizar el userName cuando hay un cambio de ruta', () => {
+    it('debe actualizar el userName cuando hay un cambio de ruta', () => {
       localStorage.setItem('user', JSON.stringify({ name: 'Summer' }));
 
       // El router real emite eventos cuando se navega, así que en test podés forzar manualmente
@@ -162,7 +175,7 @@ describe('NavBarComponent', () => {
   });
 
   describe('template', () => {
-    it('debería renderizar el userName en el HTML', () => {
+    it('debe renderizar el userName en el HTML', () => {
       component.userName = 'Beth';
       fixture.detectChanges();
       const userNameEl = fixture.debugElement.query(By.css('.user-name span'))
@@ -171,11 +184,11 @@ describe('NavBarComponent', () => {
     });
   });
 
-  it('muestra vacío el span del userName si es null', () => {
-  component.userName = null;
-  fixture.detectChanges();
-  const userNameEl = fixture.debugElement.query(By.css('.user-name span'))
-    .nativeElement as HTMLElement;
-  expect(userNameEl.textContent?.trim()).toBe('');
-});
+  it('debe mostrar el span del userName vacío si es null', () => {
+    component.userName = null;
+    fixture.detectChanges();
+    const userNameEl = fixture.debugElement.query(By.css('.user-name span'))
+      .nativeElement as HTMLElement;
+    expect(userNameEl.textContent?.trim()).toBe('');
+  });
 });

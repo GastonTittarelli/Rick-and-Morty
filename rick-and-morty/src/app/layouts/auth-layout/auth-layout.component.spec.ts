@@ -28,12 +28,12 @@ describe('AuthLayoutComponent', () => {
     fixture.detectChanges();
   });
 
-  it('debería crearse el componente', () => {
+  it('debe crearse el componente auth-layout', () => {
     expect(component).toBeTruthy();
   });
 
   describe('Template structure', () => {
-    it('debería renderizar en la vista los enlaces "Rick & Morty" y "Log as Guest', () => {
+    it('debe renderizar en la vista los enlaces "Rick & Morty" y "Log as Guest', () => {
       const navElement =
         fixture.debugElement.nativeElement.querySelector('nav');
       expect(navElement).toBeTruthy();
@@ -44,19 +44,19 @@ describe('AuthLayoutComponent', () => {
       expect(links[1].textContent).toContain('Log as Guest');
     });
 
-    it('debería renderizar el router outlet', () => {
+    it('debe renderizar el router outlet', () => {
       const routerOutlet =
         fixture.debugElement.nativeElement.querySelector('router-outlet');
       expect(routerOutlet).toBeTruthy();
     });
 
-    it('debería renderizar el componente Footer', () => {
+    it('debe renderizar el componente Footer', () => {
       const footer =
         fixture.debugElement.nativeElement.querySelector('app-footer');
       expect(footer).toBeTruthy();
     });
 
-    it('debería tener un elemento de contenido principal', () => {
+    it('debe tener un elemento de contenido principal', () => {
       const mainElement =
         fixture.debugElement.nativeElement.querySelector('main.authContent');
       expect(mainElement).toBeTruthy();
@@ -64,52 +64,50 @@ describe('AuthLayoutComponent', () => {
   });
 
   describe('prepareRoute method', () => {
-    it('debería devolver la animación correcta del outlet', () => {
+    it('debe devolver la animación correcta del outlet', () => {
       const mockOutlet = createMockOutlet('slideIn');
       const result = component.prepareRoute(mockOutlet);
       expect(result).toBe('slideIn');
     });
 
-    it('debería devolver null cuando activatedRouteData es null (no tiene datos)', () => {
+    it('debe devolver null cuando activatedRouteData es null (no tiene datos)', () => {
       const mockOutlet = createMockOutlet();
       (mockOutlet as any).activatedRouteData = null;
 
       const result = component.prepareRoute(mockOutlet);
 
+      // La función devuelve null, porque no hay nada que mostrar.
       expect(result).toBeNull();
     });
 
-    it('debería devolver undefined cuando no existe la propiedad de animación', () => {
+    it('debe devolver undefined cuando no existe la propiedad de animación', () => {
       const mockOutlet = createMockOutlet();
       const result = component.prepareRoute(mockOutlet);
+      // La función devuelve undefined porque la animación no está definida
       expect(result).toBeUndefined(); 
     });
 
-    it('debería devolver null cuando el outlet es null', () => {
+    it('debe devolver null cuando el outlet es null', () => {
       const result = component.prepareRoute(null as any);
+      // La función devuelve null porque no hay objeto para revisar.
       expect(result).toBeNull();
     });
 
-    it('debería manejar valores inesperados de activatedRouteData de manera adecuada', () => {
+    it('debe manejar valores inesperados de activatedRouteData de manera adecuada', () => {
       const mockOutlet = createMockOutlet() as any;
-      mockOutlet.activatedRouteData = { animation: 123 }; // valor inesperado
+      mockOutlet.activatedRouteData = { animation: 123 }; // cualquier valor
 
       const result = component.prepareRoute(mockOutlet);
+      // La función devuelve exactamente lo que encuentra.
       expect(result).toBe(123);
     });
   });
 
   describe('CSS classes', () => {
-    it('debería tener la clase authLayout en el contenedor principal', () => {
+    it('debe tener la clase authLayout en el contenedor principal', () => {
       const container =
         fixture.debugElement.nativeElement.querySelector('.authLayout');
       expect(container).toBeTruthy();
-    });
-
-    it('debería tener la clase authContent en el elemento principal', () => {
-      const mainElement =
-        fixture.debugElement.nativeElement.querySelector('.authContent');
-      expect(mainElement).toBeTruthy();
     });
   });
 });

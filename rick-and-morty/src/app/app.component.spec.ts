@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { MessageService } from './service/messages.service';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { of, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { AlertMessage } from './service/messages.service';
 
 // Mock del servicio MessageService
@@ -47,21 +47,21 @@ describe('AppComponent', () => {
     fixture.detectChanges();
   });
 
-  it('debería crear el componente', () => {
+  it('debe crear el componente App', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería tener el título "mi-proyecto-angular"', () => {
+  it('debe tener el título "mi-proyecto-angular"', () => {
     expect(component.title).toBe('mi-proyecto-angular');
   });
 
-  it('debería inicializar alert$ desde MessageService', () => {
+  it('debe inicializar alert$ desde MessageService', () => {
     expect(component.alert$).toBeDefined();
     expect(component.alert$).toEqual(messageService.alert$);
   });
 
-  it('debería mostrar la alerta cuando alert$ emite un valor', fakeAsync(() => {
-    // Simular una alerta de éxito
+  it('debe mostrar la alerta cuando alert$ emite un valor', fakeAsync(() => {
+    // Simula la alerta de éxito
     const testAlert: AlertMessage = {
       type: 'success',
       text: 'Operación exitosa',
@@ -77,7 +77,7 @@ describe('AppComponent', () => {
     expect(alertElement.classList).toContain('alert-success');
   }));
 
-  it('no debería mostrar la alerta cuando alert$ emite null', fakeAsync(() => {
+  it('no debe mostrar la alerta cuando alert$ emite null', fakeAsync(() => {
     messageService.setAlert(null);
     tick();
     fixture.detectChanges();
@@ -86,7 +86,7 @@ describe('AppComponent', () => {
     expect(alertElement).toBeFalsy();
   }));
 
-  it('debería aplicar la clase CSS correcta según el tipo de alerta', fakeAsync(() => {
+  it('debe aplicar la clase CSS correcta según el tipo de alerta', fakeAsync(() => {
     const testAlerts: AlertMessage[] = [
       { type: 'success', text: 'Éxito' },
       { type: 'danger', text: 'Error' },
@@ -109,7 +109,7 @@ describe('AppComponent', () => {
     });
   }));
 
-  it('debería manejar múltiples emisiones de alerta correctamente', fakeAsync(() => {
+  it('debe manejar múltiples emisiones de alerta correctamente', fakeAsync(() => {
     // Primera alerta
     const firstAlert: AlertMessage = {
       type: 'success',
@@ -144,7 +144,7 @@ describe('AppComponent', () => {
     expect(alertElement).toBeFalsy();
   }));
 
-  it('debería contener router-outlet', () => {
+  it('debe contener el router-outlet', () => {
     const routerOutlet = fixture.nativeElement.querySelector('router-outlet');
     expect(routerOutlet).toBeTruthy();
   });

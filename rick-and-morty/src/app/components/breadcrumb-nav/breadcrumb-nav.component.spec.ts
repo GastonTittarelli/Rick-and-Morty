@@ -58,11 +58,11 @@ describe('BreadcrumbNavComponent', () => {
     fixture.detectChanges();
   });
 
-  it('debería crearse el componente', () => {
+  it('debe crearse el componente Breadcrumb', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería generar el breadcrumb básico con "Home"', async () => {
+  it('debe generar el breadcrumb básico con "Home"', async () => {
     (router as any).url = '/home';
     await (component as any).buildBreadcrumbs();
     fixture.detectChanges();
@@ -71,7 +71,7 @@ describe('BreadcrumbNavComponent', () => {
     expect(component.breadcrumbs[0].url).toBe('/home/characters');
   });
 
-  it('debería obtener el nombre del personaje si el segmento anterior es "characters"', async () => {
+  it('debe obtener el nombre del personaje si el segmento anterior es "characters"', async () => {
     (router as any).url = '/home/characters/1';
     await (component as any).buildBreadcrumbs();
     fixture.detectChanges();
@@ -80,7 +80,7 @@ describe('BreadcrumbNavComponent', () => {
     expect(last.label).toBe('Rick Sanchez');
   });
 
-  it('debería obtener el nombre del episodio si el segmento anterior es "episodes"', async () => {
+  it('debe obtener el nombre del episodio si el segmento anterior es "episodes"', async () => {
     (router as any).url = '/home/episodes/10';
     await (component as any).buildBreadcrumbs();
     fixture.detectChanges();
@@ -89,7 +89,7 @@ describe('BreadcrumbNavComponent', () => {
     expect(last.label).toContain('Episode 10 - Pilot');
   });
 
-  it('debería renderizar correctamente los breadcrumbs en el HTML', async () => {
+  it('debe renderizar correctamente los breadcrumbs en el HTML', async () => {
     (router as any).url = '/home/characters/1';
     await (component as any).buildBreadcrumbs();
     fixture.detectChanges();
@@ -136,7 +136,7 @@ describe('BreadcrumbNavComponent - servicio que falla', () => {
     fixture.detectChanges();
   });
 
-  it('debería manejar errores del servicio sin romper el breadcrumb', () => {
+  it('debe manejar errores del servicio sin romper el breadcrumb', () => {
     expect(component.breadcrumbs.length).toBeGreaterThan(0);
     const last = component.breadcrumbs[component.breadcrumbs.length - 1];
     expect(last.label).toBe('999'); // fallback: usa el ID
@@ -147,7 +147,7 @@ describe('BreadcrumbNavComponent - servicio que falla', () => {
 // Bloque de tests extra para BreadcrumbNavComponent
 describe('BreadcrumbNavComponent - casos extra', () => {
 
-  it('debería capitalizar correctamente segmentos de texto', async () => {
+  it('debe capitalizar correctamente segmentos de texto', async () => {
     const routerMock = {
       url: '/home/locations/earth',
       events: new Subject<any>().asObservable(),
@@ -175,7 +175,7 @@ describe('BreadcrumbNavComponent - casos extra', () => {
     expect(last.label).toBe('Earth'); // capitalizado correctamente
   });
 
-  it('debería generar breadcrumb correcto para un episodio', async () => {
+  it('debe generar breadcrumb correcto para un episodio', async () => {
     const routerMock = {
       url: '/home/episodes/15',
       events: new Subject<any>().asObservable(),

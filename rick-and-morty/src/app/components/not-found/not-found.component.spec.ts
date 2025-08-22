@@ -29,11 +29,11 @@ describe('NotFoundComponent', () => {
     fixture.detectChanges();
   });
 
-  it('debería crearse el componente', () => {
+  it('debe crearse el componente NotFound', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería mostrar la imagen correcta', () => {
+  it('debe mostrar la imagen correcta', () => {
     const imgElement = fixture.debugElement.query(By.css('img'));
     expect(imgElement).toBeTruthy();
     
@@ -44,7 +44,7 @@ describe('NotFoundComponent', () => {
     expect(imgAlt).toBe('Rick and Motry absorbing by a portal');
   });
 
-  it('debería mostrar el mensaje de error correcto', () => {
+  it('debe mostrar el mensaje de error correcto', () => {
     const messageElement = fixture.debugElement.query(By.css('.notFoundMessage p'));
     expect(messageElement).toBeTruthy();
     expect(messageElement.nativeElement.textContent).toContain(
@@ -52,7 +52,7 @@ describe('NotFoundComponent', () => {
     );
   });
 
-  it('debería tener un botón de inicio con el routerLink correcto', () => {
+  it('debe tener un botón de inicio con el routerLink correcto', () => {
     const buttonElement = fixture.debugElement.query(By.css('.customBtn'));
     expect(buttonElement).toBeTruthy();
     
@@ -76,7 +76,7 @@ describe('NotFoundComponent', () => {
     expect(notFoundMessage).toBeTruthy();
   });
 
-  it('debería tener una estructura de sección adecuada', () => {
+  it('debe tener una estructura de sección adecuada', () => {
     const mainSection = fixture.debugElement.query(By.css('section.notf'));
     expect(mainSection).toBeTruthy();
     
@@ -84,7 +84,7 @@ describe('NotFoundComponent', () => {
     expect(innerSection).toBeTruthy();
   });
 
-  it('debería navegar a /home/characters cuando se hace clic en el botón', () => {
+  it('debe navegar a /home/characters cuando se hace clic en el botón', () => {
   const router = TestBed.inject(Router);
   spyOn(router, 'navigateByUrl');
   

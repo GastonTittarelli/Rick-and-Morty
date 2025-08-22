@@ -1,4 +1,4 @@
-<nav aria-label="Page navigation">
+<nav aria-label="Characters page navigation">
   <ul class="pagination justify-content-center">
     <li class="page-item" [class.disabled]="currentPage === 1">
       <a class="page-link" (click)="changePage(currentPage - 1)" [attr.aria-disabled]="currentPage === 1 ? 'true' : null">Previous</a>
@@ -22,7 +22,7 @@
   </ul>
 </nav>
 
-<!--aria-disabled en los tres botones: [attr.aria-disabled]="currentPage === totalPages ? 'true' : null"
-  Se detectó su necesidad al pasar los tests del componente. Sirve para que lectores de pantalla reconozcan que el botón Next está deshabilitado cuando estamos en la última página, sin afectar el comportamiento visual o funcional del paginador de Bootstrap.-->
+<!--aria-disabled en los dos botones: [attr.aria-disabled]
+  Se detectó su necesidad al pasar los tests del componente. Sirve para que lectores de pantalla reconozcan que el botón Next está deshabilitado cuando estamos en la última página, o botón Previous cuando estamos en la primera página, sin afectar el comportamiento visual o funcional del paginador de Bootstrap.-->
 
 <!-- Sin esto, podría testear la clase active y la funcionalidad de cambio de página, pero me quedo sin testear la accesibilidad. -->

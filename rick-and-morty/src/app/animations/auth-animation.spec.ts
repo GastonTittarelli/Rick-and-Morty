@@ -1,54 +1,79 @@
-// import { authAnimations } from './auth-animation';
-// import { trigger, transition } from '@angular/animations';
+import { authAnimations } from './auth-animation';
+import { trigger, transition } from '@angular/animations';
 
-// describe('authAnimations', () => {
-//   it('should define a trigger named "routeAnimations"', () => {
-//     expect(authAnimations.name).toBe('routeAnimations');
-//   });
+describe('authAnimations', () => {
+  it('debería definir un trigger llamado "routeAnimations"', () => {
+    expect(authAnimations.name).toBe('routeAnimations');
+  });
 
-//   it('should contain two transitions', () => {
-//     expect((authAnimations.definitions as any).length).toBe(2);
-//   });
+  it('debería contener dos transiciones', () => {
+    expect((authAnimations.definitions as any).length).toBe(2);
+  });
 
-//   it('should define LoginPage => RegisterPage transition', () => {
-//     const loginToRegister = (authAnimations.definitions as any).find(
-//       (t: any) => t.expr === 'LoginPage => RegisterPage'
-//     );
-//     expect(loginToRegister).toBeTruthy();
-//     expect(loginToRegister.animation.steps.length).toBeGreaterThan(0);
-//   });
+  it('debería definir la transición de LoginPage a RegisterPage', () => {
+    const loginToRegister = (authAnimations.definitions as any).find(
+      (t: any) => t.expr === 'LoginPage => RegisterPage'
+    );
+    expect(loginToRegister).toBeTruthy();
+    expect(loginToRegister.animation.length).toBeGreaterThan(0);
+  });
 
-//   it('should define RegisterPage => LoginPage transition', () => {
-//     const registerToLogin = (authAnimations.definitions as any).find(
-//       (t: any) => t.expr === 'RegisterPage => LoginPage'
-//     );
-//     expect(registerToLogin).toBeTruthy();
-//     expect(registerToLogin.animation.steps.length).toBeGreaterThan(0);
-//   });
+  it('debería definir la transición de RegisterPage a LoginPage', () => {
+    const registerToLogin = (authAnimations.definitions as any).find(
+      (t: any) => t.expr === 'RegisterPage => LoginPage'
+    );
+    expect(registerToLogin).toBeTruthy();
+    expect(registerToLogin.animation.length).toBeGreaterThan(0);
+  });
 
-//   it('LoginPage => RegisterPage should include enter/leave queries and group animations', () => {
-//     const loginToRegister = (authAnimations.definitions as any).find(
-//       (t: any) => t.expr === 'LoginPage => RegisterPage'
-//     );
+  function collectSelectors(steps: any[]): string[] {
+    let selectors: string[] = [];
+    for (const s of steps) {
+      if (s.type === 11 && s.selector) {
+        selectors.push(s.selector);
+      }
+      if (s.steps) {
+        selectors = selectors.concat(collectSelectors(s.steps));
+      }
+    }
+    return selectors;
+  }
 
-//     const steps = JSON.stringify(loginToRegister.animation);
-//     expect(steps).toContain(':enter');
-//     expect(steps).toContain(':leave');
-//     expect(steps).toContain('group');
-//     expect(steps).toContain('translateX(100%)');
-//     expect(steps).toContain('translateX(-100%)');
-//   });
+  it('debería incluir consultas de entrada/salida y animaciones de grupo para LoginPage => RegisterPage', () => {
+  const loginToRegister = (authAnimations.definitions as any).find(
+    (t: any) => t.expr === 'LoginPage => RegisterPage'
+  );
 
-//   it('RegisterPage => LoginPage should include enter/leave queries and group animations', () => {
-//     const registerToLogin = (authAnimations.definitions as any).find(
-//       (t: any) => t.expr === 'RegisterPage => LoginPage'
-//     );
+  // animación como estructura interna
+  const steps = loginToRegister.animation;
 
-//     const steps = JSON.stringify(registerToLogin.animation);
-//     expect(steps).toContain(':enter');
-//     expect(steps).toContain(':leave');
-//     expect(steps).toContain('group');
-//     expect(steps).toContain('translateX(-100%)');
-//     expect(steps).toContain('translateX(100%)');
-//   });
-// });
+  // Debe contener un group (type:3)
+  const hasGroup = steps.some((s: any) => s.type === 3);
+  expect(hasGroup).toBeTrue();
+
+  const selectors = collectSelectors(steps);
+    expect(selectors).toContain(':enter');
+    expect(selectors).toContain(':leave');
+  });
+
+
+  it('debería incluir consultas de entrada/salida y animaciones de grupo para RegisterPage => LoginPage', () => {
+  const registerToLogin = (authAnimations.definitions as any).find(
+    (t: any) => t.expr === 'RegisterPage => LoginPage'
+  );
+
+  const steps = registerToLogin.animation;
+
+  const hasGroup = steps.some((s: any) => s.type === 3);
+  expect(hasGroup).toBeTrue();
+
+  const selectors = collectSelectors(steps);
+    expect(selectors).toContain(':enter');
+    expect(selectors).toContain(':leave');
+
+    // Buscar strings de transform en los estilos
+    const styles = JSON.stringify(steps);
+    expect(styles).toContain('translateX(-100%)');
+    expect(styles).toContain('translateX(100%)');
+  });
+});
