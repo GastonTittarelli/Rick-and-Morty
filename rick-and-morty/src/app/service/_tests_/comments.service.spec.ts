@@ -30,11 +30,11 @@ describe('CommentsService', () => {
     sessionStorage.clear();
   });
 
-  it('should be created', () => {
+  it('debe crearse el servicio de comments', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get comments by episode with correct headers', () => {
+  it('dado un episodio con un token válido, cuando se solicitan los comentarios, entonces se deben obtener los comentarios con el header Authorization correcto', () => {
     const episodeId = 1;
     const mockComments = [{ id: '1', content: 'Test', episodeId, createdAt: 'now', user: { id: 'u1', name: 'User1' } }];
 
@@ -48,7 +48,7 @@ describe('CommentsService', () => {
     req.flush(mockComments);
   });
 
-  it('should create a comment with correct headers', () => {
+  it('dado un episodio y un contenido con un token válido, cuando se crea un comentario, entonces se debe enviar la petición POST con los datos y headers correctos y devolver el comentario creado.', () => {
     const episodeId = 1;
     const content = 'New comment';
     const mockResponse = { id: '1', content, episodeId, createdAt: 'now', user: { id: 'u1', name: 'User1' } };
@@ -64,7 +64,7 @@ describe('CommentsService', () => {
     req.flush(mockResponse);
   });
 
-  it('should update a comment with correct headers', () => {
+  it('dado un comentario existente con un token válido, cuando se actualiza su contenido, entonces se debe enviar la petición PATCH con los datos y headers correctos y devolver el comentario actualizado.', () => {
     const id = '1';
     const content = 'Updated comment';
     const mockResponse = { id, content, episodeId: 1, createdAt: 'now', user: { id: 'u1', name: 'User1' } };
@@ -80,7 +80,7 @@ describe('CommentsService', () => {
     req.flush(mockResponse);
   });
 
-  it('should delete a comment with correct headers', () => {
+  it('dado un comentario existente con un token válido, cuando se elimina, entonces se debe enviar la petición DELETE con el header correcto y devolver el mensaje de confirmación.', () => {
     const id = '1';
     const mockResponse = { message: 'Deleted' };
 
@@ -94,7 +94,7 @@ describe('CommentsService', () => {
     req.flush(mockResponse);
   });
 
-  it('should check if commenting is disabled', () => {
+  it('dado un episodio, cuando se consulta si los comentarios están deshabilitados, entonces se debe devolver la respuesta correspondiente (true/false).', () => {
     const episodeId = 1;
 
     service.isCommentingDisabled(episodeId).subscribe(res => {
@@ -106,7 +106,7 @@ describe('CommentsService', () => {
     req.flush(true);
   });
 
-  it('should disable comments', () => {
+  it('dado un episodio con un token válido, cuando se deshabilitan los comentarios, entonces se debe enviar la petición PATCH con el header correcto y devolver una respuesta vacía.', () => {
     const episodeId = 1;
 
     service.disableComments(episodeId).subscribe(res => {
@@ -119,7 +119,7 @@ describe('CommentsService', () => {
     req.flush({});
   });
 
-  it('should enable comments', () => {
+  it('dado un episodio con un token válido, cuando se habilitan los comentarios, entonces se debe enviar la petición PATCH con el header correcto y devolver una respuesta vacía', () => {
     const episodeId = 1;
 
     service.enableComments(episodeId).subscribe(res => {

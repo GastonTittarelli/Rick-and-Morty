@@ -28,11 +28,11 @@ describe('FavoritesService', () => {
     localStorage.clear();
   });
 
-  it('should be created', () => {
+  it('debe crearse el servicio de favoritos', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get favorites with correct headers', () => {
+  it('dado que existe un usuario con un token válido, cuando se solicitan los favoritos, entonces se debe enviar la petición GET con el header Authorization correcto y devolver la lista de favoritos', () => {
     const mockFavorites = [{ episodeId: 1 }];
     const url = (service as any)['apiUrl'];
 
@@ -46,7 +46,7 @@ describe('FavoritesService', () => {
     req.flush(mockFavorites);
   });
 
-  it('should toggle favorite with correct headers and body', () => {
+  it('dado un episodio y un token válido, cuando se alterna su estado de favorito, entonces se debe enviar la petición POST con el body y header correctos y devolver la respuesta esperada.', () => {
     const episodeId = 1;
     const mockResponse = { episodeId };
     const url = (service as any)['apiUrl'];
@@ -62,7 +62,7 @@ describe('FavoritesService', () => {
     req.flush(mockResponse);
   });
 
-  it('should remove favorite with correct headers', () => {
+  it('dado un episodio y un token válido, cuando se elimina de favoritos, entonces se debe enviar la petición DELETE con el header correcto y devolver una respuesta vacía.', () => {
     const episodeId = 1;
     const url = (service as any)['apiUrl'];
 

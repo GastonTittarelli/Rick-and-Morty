@@ -3,18 +3,18 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 describe('FormErrorsService', () => {
   describe('getMailError', () => {
-    it('should return null if control is null', () => {
+    it('dado que el campo de email no existe, cuando se obtiene el error, entonces el resultado debe ser null ', () => {
       expect(FormErrorsService.getMailError(null)).toBeNull();
     });
 
-    it('should return required error', () => {
+    it('dado que el campo de email está vacío y es requerido, cuando se obtiene el error, entonces debe indicar que el email es requerido', () => {
       const control = new FormControl('', { validators: [] });
       control.markAsTouched();
       control.setErrors({ required: true });
       expect(FormErrorsService.getMailError(control)).toBe('Email is required');
     });
 
-    it('should return email error', () => {
+    it('dado que el campo de email tiene un formato inválido, cuando se obtiene el error, entonces debe indicar que el email no es válido.', () => {
       const control = new FormControl('invalid');
       control.markAsTouched();
       control.setErrors({ email: true });
@@ -23,7 +23,7 @@ describe('FormErrorsService', () => {
       );
     });
 
-    it('should return minlength error', () => {
+    it('dado que el campo de email es demasiado corto, cuando se obtiene el error, entonces debe indicar que debe tener al menos 10 caracteres.', () => {
       const control = new FormControl('short');
       control.markAsTouched();
       control.setErrors({ minlength: true });
@@ -32,7 +32,7 @@ describe('FormErrorsService', () => {
       );
     });
 
-    it('should return maxlength error', () => {
+    it('dado que el campo de email es demasiado largo, cuando se obtiene el error, entonces debe indicar que debe tener como máximo 50 caracteres', () => {
       const control = new FormControl('long'.repeat(20));
       control.markAsTouched();
       control.setErrors({ maxlength: true });
@@ -41,7 +41,7 @@ describe('FormErrorsService', () => {
       );
     });
 
-    it('should return null if no relevant errors', () => {
+    it('dado que el campo de email es válido, cuando se obtiene el error, entonces el resultado debe ser null (no hay errores).', () => {
       const control = new FormControl('valid@email.com');
       control.markAsTouched();
       control.setErrors(null);
@@ -50,7 +50,7 @@ describe('FormErrorsService', () => {
   });
 
   describe('getPasswordGroupError and passwordMatchValidator', () => {
-    it('should detect passwords dont match', () => {
+    it('dado que las contraseñas no coinciden, cuando se valida el formulario, entonces debe mostrar un error indicando que las contraseñas no coinciden', () => {
       const group = new FormGroup({
         password: new FormControl('12345678'),
         repeatPassword: new FormControl('87654321'),
@@ -67,7 +67,7 @@ describe('FormErrorsService', () => {
       );
     });
 
-    it('should return null if passwords match', () => {
+    it('dado que las contraseñas coinciden, cuando se valida el formulario, entonces el resultado debe ser null (no hay errores)', () => {
       const group = new FormGroup({
         password: new FormControl('12345678'),
         repeatPassword: new FormControl('12345678'),
@@ -78,7 +78,7 @@ describe('FormErrorsService', () => {
   });
 
   describe('addressGroupValidator and getAddressFieldError', () => {
-    it('should return incompleteAddress error if some fields missing', () => {
+    it('dado que la dirección está incompleta y un campo fue tocado, cuando se valida, entonces debe mostrar un error indicando que el campo es requerido', () => {
       const group = new FormGroup({
         street: new FormControl(''),
         city: new FormControl('City'),
@@ -98,7 +98,7 @@ describe('FormErrorsService', () => {
       );
     });
 
-    it('should return null if all fields empty', () => {
+    it('dado que todos los campos de dirección están vacíos, cuando se valida, entonces el resultado debe ser null (no hay errores)', () => {
       const group = new FormGroup({
         street: new FormControl(''),
         city: new FormControl(''),
@@ -108,7 +108,7 @@ describe('FormErrorsService', () => {
       expect(FormErrorsService.addressGroupValidator(group)).toBeNull();
     });
 
-    it('should return null if all fields filled', () => {
+    it('dado que la dirección está completa, cuando se valida, entonces el resultado debe ser null (no hay errores)', () => {
       const group = new FormGroup({
         street: new FormControl('Main St'),
         city: new FormControl('City'),
@@ -120,7 +120,7 @@ describe('FormErrorsService', () => {
   });
 
   describe('conditionalMinLength and conditionalMaxLength', () => {
-    it('should validate min length', () => {
+    it('dado que un campo tiene menos caracteres que el mínimo requerido, cuando se valida, entonces debe devolver un error de longitud mínima; y si cumple la longitud o está vacío, el resultado debe ser null.', () => {
       const validator = FormErrorsService.conditionalMinLength(5);
       expect(validator(new FormControl('1234'))).toEqual({
         minlength: { requiredLength: 5, actualLength: 4 },
@@ -129,7 +129,7 @@ describe('FormErrorsService', () => {
       expect(validator(new FormControl(''))).toBeNull();
     });
 
-    it('should validate max length', () => {
+    it('dado que un campo tiene más caracteres que el máximo permitido, cuando se valida, entonces debe devolver un error de longitud máxima; y si cumple la longitud o está vacío, el resultado debe ser null.', () => {
       const validator = FormErrorsService.conditionalMaxLength(5);
       expect(validator(new FormControl('123456'))).toEqual({
         maxlength: { requiredLength: 5, actualLength: 6 },

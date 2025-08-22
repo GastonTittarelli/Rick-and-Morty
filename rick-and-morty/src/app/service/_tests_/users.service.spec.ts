@@ -47,11 +47,11 @@ describe('AuthService', () => {
     sessionStorage.clear();
   });
 
-  it('should be created', () => {
+  it('debe crearse el servicio de autenticación', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should login and return response', () => {
+  it('dado un usuario con credenciales válidas, cuando se llama a login, entonces debe enviarse la petición POST con los datos correctos y devolver la respuesta esperada.', () => {
     const mockResponse: LoginResponse = {
       header: { resultCode: 200 },
       data: {
@@ -70,7 +70,7 @@ describe('AuthService', () => {
     req.flush(mockResponse);
   });
 
-  it('should register a new user', () => {
+  it('dado un usuario con datos válidos, cuando se llama a register, entonces debe enviarse la petición POST con el cuerpo correcto y devolver la respuesta esperada.', () => {
     const userData: RegisterRequest = {
       name: 'User',
       mail: 'test@mail.com',
@@ -106,21 +106,21 @@ describe('AuthService', () => {
     req.flush(mockResponse);
   });
 
-  it('should save session in localStorage when remember is true', () => {
+  it('dado un token y un usuario, cuando se guarda la sesión con remember = true, entonces los datos deben almacenarse en localStorage.', () => {
     service.saveSession(dummyToken, dummyUser, true);
     expect(localStorage.getItem('token')).toBe(dummyToken);
     expect(localStorage.getItem('user')).toBe(JSON.stringify(dummyUser));
     expect(sessionStorage.getItem('token')).toBeNull();
   });
 
-  it('should save session in sessionStorage when remember is false', () => {
+  it('dado un token y un usuario, cuando se guarda la sesión con remember = false, entonces los datos deben almacenarse en sessionStorage.', () => {
     service.saveSession(dummyToken, dummyUser, false);
     expect(sessionStorage.getItem('token')).toBe(dummyToken);
     expect(sessionStorage.getItem('user')).toBe(JSON.stringify(dummyUser));
     expect(localStorage.getItem('token')).toBeNull();
   });
 
-  it('should logout and clear storage', () => {
+  it('dado que existen datos de sesión en localStorage y sessionStorage, cuando se ejecuta logout, entonces toda la información debe eliminarse.', () => {
     localStorage.setItem('token', dummyToken);
     sessionStorage.setItem('token', dummyToken);
 
@@ -132,7 +132,7 @@ describe('AuthService', () => {
     expect(sessionStorage.getItem('user')).toBeNull();
   });
 
-  it('should return correct isLoggedIn value', () => {
+  it('dado que no hay un token en localStorage ni en sessionStorage, cuando se llama a isLoggedIn, entonces debe devolver false', () => {
     expect(service.isLoggedIn()).toBeFalse();
     localStorage.setItem('token', dummyToken);
     expect(service.isLoggedIn()).toBeTrue();
@@ -141,7 +141,7 @@ describe('AuthService', () => {
     expect(service.isLoggedIn()).toBeTrue();
   });
 
-  it('should return token from storage', () => {
+  it('dado que no hay un token en localStorage ni en sessionStorage, cuando se llama a getToken, entonces debe devolver null.', () => {
     expect(service.getToken()).toBeNull();
     localStorage.setItem('token', dummyToken);
     expect(service.getToken()).toBe(dummyToken);
@@ -150,7 +150,7 @@ describe('AuthService', () => {
     expect(service.getToken()).toBe(dummyToken);
   });
 
-  it('should return user from storage', () => {
+  it('dado que no hay un usuario en localStorage ni en sessionStorage, cuando se llama a getUser, entonces debe devolver null.', () => {
     expect(service.getUser()).toBeNull();
     localStorage.setItem('user', JSON.stringify(dummyUser));
     expect(service.getUser()).toEqual(dummyUser);
@@ -159,7 +159,7 @@ describe('AuthService', () => {
     expect(service.getUser()).toEqual(dummyUser);
   });
 
-  it('should get profile with Authorization header', () => {
+  it('dado un usuario autenticado con token válido, cuando se llama a getProfile, entonces debe enviarse una petición GET con el header Authorization correcto y devolver el perfil.', () => {
     localStorage.setItem('token', dummyToken);
     const mockProfile = { profile: 'data' };
 
@@ -173,7 +173,7 @@ describe('AuthService', () => {
     req.flush(mockProfile);
   });
 
-  it('should update profile with Authorization header', () => {
+  it('dado un usuario autenticado con token válido, cuando se llama a updateProfile, entonces debe enviarse una petición PATCH con el header y cuerpo correctos y devolver la respuesta.', () => {
     localStorage.setItem('token', dummyToken);
     const updateData = { name: 'Updated User' };
     const mockResponse = { updated: true };

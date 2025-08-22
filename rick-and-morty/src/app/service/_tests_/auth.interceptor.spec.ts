@@ -65,7 +65,7 @@ describe('authInterceptor', () => {
     };
   });
 
-  it('should add Authorization header when token exists', (done) => {
+  it('dado que existe un token válido, cuando se hace una petición, entonces se debe agregar la Authorization del header con el token.', (done) => {
     // Arrange
     mockAuthService.getToken.and.returnValue('test-token-123');
     const testRequest = new HttpRequest('GET', '/api/test');
@@ -85,7 +85,7 @@ describe('authInterceptor', () => {
     originalInterceptorLogic(testRequest, mockHandler).subscribe();
   });
 
-  it('should not add Authorization header when token is null', (done) => {
+  it('dado que no existe un token, cuando se hace una petición, entonces no se debe agregar la Authorization del header.', (done) => {
     // Arrange
     mockAuthService.getToken.and.returnValue(null);
     const testRequest = new HttpRequest('GET', '/api/test');
@@ -104,7 +104,7 @@ describe('authInterceptor', () => {
     originalInterceptorLogic(testRequest, mockHandler).subscribe();
   });
 
-  it('should not add Authorization header when token is empty string', (done) => {
+  it('dado que el token es un string vacío, cuando se hace una petición, entonces no se debe agregar la Authorization del header.', (done) => {
     // Arrange
     mockAuthService.getToken.and.returnValue('');
     const testRequest = new HttpRequest('GET', '/api/test');
@@ -122,7 +122,7 @@ describe('authInterceptor', () => {
     originalInterceptorLogic(testRequest, mockHandler).subscribe();
   });
 
-  it('should handle 401 error and redirect to login', (done) => {
+  it('dado que la respuesta es un error 401 (Unauthorized), cuando se hace la petición, entonces se debe cerrar la sesión y redirigir al login mostrando un mensaje de sesión expirada', (done) => {
     // Arrange
     mockAuthService.getToken.and.returnValue('test-token');
     const testRequest = new HttpRequest('GET', '/api/test');
@@ -153,7 +153,7 @@ describe('authInterceptor', () => {
     });
   });
 
-  it('should handle 403 error and redirect to login', (done) => {
+  it('dado que la respuesta es un error 403 (Forbidden), cuando se hace la petición, entonces se debe cerrar la sesión y redirigir al login mostrando un mensaje de sesión expirada', (done) => {
     // Arrange
     mockAuthService.getToken.and.returnValue('test-token');
     const testRequest = new HttpRequest('GET', '/api/test');
@@ -184,7 +184,7 @@ describe('authInterceptor', () => {
     });
   });
 
-  it('should rethrow non-401/403 errors without processing', (done) => {
+  it('dado que la respuesta es un error distinto de 401 o 403, cuando se hace la petición, entonces se debe relanzar el error sin procesarlo ni cerrar la sesión.', (done) => {
     // Arrange
     mockAuthService.getToken.and.returnValue('test-token');
     const testRequest = new HttpRequest('GET', '/api/test');
@@ -211,7 +211,7 @@ describe('authInterceptor', () => {
     });
   });
 
-  it('should handle successful requests without errors', (done) => {
+  it('dado que la respuesta es exitosa, cuando se hace la petición, entonces se debe devolver la respuesta sin cerrar la sesión ni mostrar errores.', (done) => {
     // Arrange
     mockAuthService.getToken.and.returnValue('test-token');
     const testRequest = new HttpRequest('GET', '/api/test');
@@ -235,7 +235,7 @@ describe('authInterceptor', () => {
     });
   });
 
-  it('should preserve original request headers when adding Authorization', (done) => {
+  it('dado que la petición tiene headers originales, cuando se agrega el token en el header Authorization, entonces se deben preservar los headers existentes.', (done) => {
     // Arrange
     mockAuthService.getToken.and.returnValue('test-token');
     const testRequest = new HttpRequest('GET', '/api/test', null, {

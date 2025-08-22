@@ -9,11 +9,11 @@ describe('MessageService', () => {
     service = TestBed.inject(MessageService);
   });
 
-  it('should be created', () => {
+  it('debe crearse el servicio de mensajes', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should emit message via showMessage', (done) => {
+  it('dado que se muestra un mensaje, cuando se llama a showMessage, entonces debe emitirse el mensaje con el tipo y texto correcto.', (done) => {
     const testMessage: AlertMessage = { type: 'success', text: 'Test' };
     service.alert$.subscribe(msg => {
       if (msg) {
@@ -24,7 +24,7 @@ describe('MessageService', () => {
     service.showMessage(testMessage.type, testMessage.text);
   });
 
-  it('should emit message and clear after timeout via showMessageWithTimeout', fakeAsync(() => {
+  it('dado que se muestra un mensaje y se establece un tiempo de espera, cuando se llama a showMessageWithTimeout, entonces debe emitirse el mensaje y luego limpiarse después del tiempo de espera.', fakeAsync(() => {
     const testMessage: AlertMessage = { type: 'warning', text: 'Timeout Test' };
     let emitted: AlertMessage | null = null;
 
@@ -37,7 +37,7 @@ describe('MessageService', () => {
     expect(emitted).toBeNull();
   }));
 
-  it('should clear message manually', (done) => {
+  it('dado que hay un mensaje mostrado, cuando se limpia manualmente con clear, entonces debe emitirse null y detenerse la suscripción.', (done) => {
     service.showMessage('info', 'Info test');
     service.alert$.subscribe(msg => {
       if (msg === null) {
@@ -48,7 +48,7 @@ describe('MessageService', () => {
     service.clear();
   });
 
-  it('should processResultCode correctly for known codes', fakeAsync(() => {
+  it('dado que se procesa un código de resultado conocido, cuando se llama a processResultCode, entonces debe emitirse el mensaje correspondiente y desaparecer después del timeout', fakeAsync(() => {
     const codes = [
       { code: 0, expectedType: 'success', expectedText: 'Success' },
       { code: 200, expectedType: 'success', expectedText: 'Success' },
@@ -69,7 +69,7 @@ describe('MessageService', () => {
     });
   }));
 
-  it('should handle backend error with resultCode', fakeAsync(() => {
+  it('dado que ocurre un error desde backend con un resultCode, cuando se maneja el error, entonces debe emitirse el mensaje de error proporcionado y desaparecer después del timeout.', fakeAsync(() => {
     const errorResponse = {
       error: {
         header: {
@@ -88,7 +88,7 @@ describe('MessageService', () => {
     expect(emitted).toBeNull();
   }));
 
-  it('should handle backend error without resultCode', fakeAsync(() => {
+  it('dado que ocurre un error desde backend sin resultCode pero con un mensaje, cuando se maneja el error, entonces debe emitirse un mensaje de tipo danger con ese texto', fakeAsync(() => {
     const errorResponse = {
       error: {
         message: 'Server failed'
@@ -104,7 +104,7 @@ describe('MessageService', () => {
     expect(emitted).toBeNull();
   }));
 
-  it('should handle backend error without any message', fakeAsync(() => {
+  it('dado que ocurre un error desde backend sin resultCode ni mensaje, cuando se maneja el error, entonces debe emitirse un mensaje genérico indicando error de servidor', fakeAsync(() => {
     const errorResponse = { error: {} };
 
     let emitted: AlertMessage | null = null;
