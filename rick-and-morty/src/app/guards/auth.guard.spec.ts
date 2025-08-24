@@ -24,23 +24,23 @@ describe('AuthGuard', () => {
     sessionStorage.clear();
   });
 
-  it('debería crearse', () => {
+  it('debe crearse el auth-guard', () => {
     expect(guard).toBeTruthy();
   });
 
-  it('debería retornar true si existe token en localStorage', () => {
+  it('debe retornar true si existe token en localStorage', () => {
     localStorage.setItem('token', '123456');
     const result = guard.canActivate();
     expect(result).toBeTrue();
   });
 
-  it('debería retornar true si existe token en sessionStorage', () => {
+  it('debe retornar true si existe token en sessionStorage', () => {
     sessionStorage.setItem('token', 'abcdef');
     const result = guard.canActivate();
     expect(result).toBeTrue();
   });
 
-  it('debería redirigir a /auth/login si no hay token', () => {
+  it('debe redirigir a /auth/login si no hay token', () => {
     const mockUrlTree = {} as UrlTree;
     routerSpy.parseUrl.and.returnValue(mockUrlTree);
 
@@ -50,7 +50,7 @@ describe('AuthGuard', () => {
     expect(result).toBe(mockUrlTree);
   });
 
-  it('debería dar prioridad al token de localStorage sobre sessionStorage', () => {
+  it('debe dar prioridad al token de localStorage sobre sessionStorage', () => {
     localStorage.setItem('token', 'local');
     sessionStorage.setItem('token', 'session');
     const result = guard.canActivate();

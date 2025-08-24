@@ -68,18 +68,18 @@ describe('MainLayoutComponent', () => {
     fixture.detectChanges();
   });
 
-  it('debería crear el componente', () => {
+  it('debe crear el componente MainLayout', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería llamar a getProfile en ngOnInit', fakeAsync(() => {
+  it('debe llamar a getProfile en ngOnInit', fakeAsync(() => {
     const spy = spyOn(authService, 'getProfile').and.callThrough();
     component.ngOnInit();
     tick();
     expect(spy).toHaveBeenCalled();
   }));
 
-  it('debería cerrar sesión y navegar en caso de error en getProfile', fakeAsync(() => {
+  it('debe cerrar sesión y navegar en caso de error en getProfile', fakeAsync(() => {
     spyOn(authService, 'getProfile').and.returnValue(
       throwError(() => new Error('Token inválido'))
     );
@@ -92,7 +92,7 @@ describe('MainLayoutComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/auth/login']);
   }));
 
-  it('no debería llamar a logout si getProfile tiene éxito', fakeAsync(() => {
+  it('no debe llamar a logout si getProfile tiene éxito', fakeAsync(() => {
     spyOn(authService, 'getProfile').and.returnValue(of({}));
     const logoutSpy = spyOn(authService, 'logout').and.callThrough();
 
@@ -103,26 +103,26 @@ describe('MainLayoutComponent', () => {
     expect(router.navigate).not.toHaveBeenCalled();
   }));
 
-  it('debería renderizar los componentes hijos', () => {
+  it('debe renderizar los componentes hijos', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('app-nav-bar')).toBeTruthy();
     expect(compiled.querySelector('app-breadcrumb-nav')).toBeTruthy();
     expect(compiled.querySelector('app-footer')).toBeTruthy();
   });
 
-  it('debería tener la clase mainLayout en el contenedor', () => {
+  it('debe tener la clase mainLayout en el contenedor', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('div.mainLayout')?.classList).toContain(
       'mainLayout'
     );
   });
 
-  it('debería contener router-outlet', () => {
+  it('debe contener router-outlet', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 
-  it('debería llamar a getProfile solo una vez', fakeAsync(() => {
+  it('debe llamar a getProfile solo una vez', fakeAsync(() => {
     const spy = spyOn(authService, 'getProfile').and.callThrough();
     component.ngOnInit();
     component.ngOnInit(); // llamar dos veces
@@ -130,7 +130,7 @@ describe('MainLayoutComponent', () => {
     expect(spy).toHaveBeenCalledTimes(2); // Si realmente se invoca por cada ngOnInit
   }));
 
-  it('debería manejar el error de red en getProfile', fakeAsync(() => {
+  it('debe manejar el error de red en getProfile', fakeAsync(() => {
     spyOn(authService, 'getProfile').and.returnValue(
       throwError(() => ({ status: 500 }))
     );
@@ -143,7 +143,7 @@ describe('MainLayoutComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/auth/login']);
   }));
 
-  it('debería comportarse correctamente si ngOnInit se llama varias veces', fakeAsync(() => {
+  it('debe comportarse correctamente si ngOnInit se llama varias veces', fakeAsync(() => {
     spyOn(authService, 'getProfile').and.returnValue(of({}));
     const logoutSpy = spyOn(authService, 'logout');
 

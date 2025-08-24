@@ -22,17 +22,17 @@ describe('PublicGuard', () => {
     sessionStorage.clear();
   });
 
-  it('debería crearse', () => {
+  it('debe crearse el PublicGuard', () => {
     expect(guard).toBeTruthy();
   });
 
-  it('debería retornar true si no hay token en localStorage ni en sessionStorage', () => {
+  it('debe retornar true si no hay token en localStorage ni en sessionStorage', () => {
     const result = guard.canActivate();
     expect(result).toBeTrue();
     expect(routerSpy.navigate).not.toHaveBeenCalled();
   });
 
-  it('debería retornar false y navegar a /home/characters si existe token en localStorage', () => {
+  it('debe retornar false y navegar a /home/characters si existe token en localStorage', () => {
     localStorage.setItem('token', '123456');
     const result = guard.canActivate();
 
@@ -40,7 +40,7 @@ describe('PublicGuard', () => {
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/home/characters']);
   });
 
-  it('debería retornar false y navegar a /home/characters si existe token en sessionStorage', () => {
+  it('debe retornar false y navegar a /home/characters si existe token en sessionStorage', () => {
     sessionStorage.setItem('token', 'abcdef');
     const result = guard.canActivate();
 
@@ -48,7 +48,7 @@ describe('PublicGuard', () => {
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/home/characters']);
   });
 
-  it('debería dar prioridad al token de localStorage si existe en ambos', () => {
+  it('debe dar prioridad al token de localStorage si existe en ambos', () => {
     localStorage.setItem('token', 'local');
     sessionStorage.setItem('token', 'session');
     const result = guard.canActivate();

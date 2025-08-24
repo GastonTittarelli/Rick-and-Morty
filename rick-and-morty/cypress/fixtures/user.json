@@ -1,0 +1,11 @@
+{
+  "email": "userTest@mail.com",
+  "password": "Test1315125sAx",
+  "name": "Tester Sr",
+  "address": {
+    "street": "Calle Falsa 123",
+    "city": "Córdoba",
+    "country": "Argentina",
+    "cp": "5000"
+  }
+}
