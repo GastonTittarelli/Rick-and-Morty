@@ -80,3 +80,14 @@ h4 span{
   cursor: pointer;
   transition: color 0.3s ease;
 }
+
+@media screen and (max-width: 1400px) {
+  .episodes-container {
+    height: auto;
+    padding: 1.5rem 0 1.5rem 0;
+  }
+
+  .card-container {
+    width: 95%;
+  }
+}

@@ -81,6 +81,15 @@ h5 {
   100% { opacity: 0;}
 }
 
+@media screen and (max-width: 1400px) {
+  .charactersContainer {
+    padding-bottom: 1.5rem;
+  }
+
+  .wrapperContainer {
+    width: 95%;
+  }
+}
 
 @media screen and (max-width: 500px) {
   .searchContainer {
