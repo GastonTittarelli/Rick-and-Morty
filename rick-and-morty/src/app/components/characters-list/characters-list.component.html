@@ -1,4 +1,4 @@
-<section class="charactersContainer">
+<section class="charactersContainer" data-cy="characters-container">
 
   <app-search
     class="searchContainer"
@@ -13,6 +13,7 @@
       class="card custom-card"
       *ngFor="let character of characters"
       (click)="goToDetail(character.id)"
+      data-cy="character-card"
     >
       <img
         [src]="character.image"

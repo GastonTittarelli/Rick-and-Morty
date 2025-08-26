@@ -14,6 +14,7 @@
           id="fullName"
           formControlName="name"
           placeholder="Cosme Fulanito"
+          data-cy="register-name"
         />
 
         <div class="text-danger" style="min-height: 1.5em">{{ nameError }}</div>
@@ -27,6 +28,7 @@
           id="inputEmail"
           formControlName="mail"
           placeholder="example@example.com"
+          data-cy="register-mail"
         />
 
         <div class="text-danger">{{ mailError }}</div>
@@ -39,6 +41,7 @@
           class="form-control"
           id="inputPassword"
           formControlName="password"
+          data-cy="register-password"
         />
 
         <div class="text-danger" style="min-height: 1.5em">{{ passwordError || '' }}</div>
@@ -53,6 +56,7 @@
           class="form-control"
           id="inputRepeatPassword"
           formControlName="repeatPassword"
+          data-cy="register-repeat-password"
         />
 
         <div class="text-danger">{{ passwordGroupError || '' }}</div>
@@ -67,6 +71,7 @@
             id="inputAddress"
             formControlName="street"
             placeholder="Apartment, studio or floor"
+            data-cy="register-street"
           />
 
           
@@ -83,6 +88,7 @@
             class="form-control"
             id="inputCity"
             formControlName="city"
+            data-cy="register-city"
           />
 
           <small class="text-danger"  style="min-height: 1.5em;"  *ngIf="getAddressError('city')">
@@ -92,7 +98,7 @@
 
         <div class="col-md-3">
           <label for="inputState" class="form-label">State</label>
-          <select id="inputState" class="form-select" formControlName="country">
+          <select id="inputState" class="form-select" formControlName="country" data-cy="register-country">
             <option value=""></option>
             <option>Argentina</option>
             <option>Other</option>
@@ -110,6 +116,7 @@
             class="form-control"
             id="inputZip"
             formControlName="cp"
+            data-cy="register-cp"
           />
 
           
@@ -121,7 +128,7 @@
       </div>
 
       <div class="col-12">
-        <button type="submit" class="btn btn-primary registrar">Sign Up</button>
+        <button type="submit" data-cy="register-submit" class="btn btn-primary registrar">Sign Up</button>
       </div>
 
       <hr />
