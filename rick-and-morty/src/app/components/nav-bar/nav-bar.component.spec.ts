@@ -91,7 +91,7 @@ describe('NavBarComponent', () => {
       expect(component.closeMenu).toHaveBeenCalled();
     });
 
-    it('no deber cerrarse si el click es dentro del componente', () => {
+    it('no debe cerrarse si el click es dentro del componente', () => {
       component.menuOpen = true;
       const fakeEvent = {
         target: fixture.nativeElement, // simula click dentro

@@ -22,28 +22,28 @@ describe('SearcherComponent', () => {
     fixture.detectChanges();
   });
 
-  it('debería crearse el componente', () => {
+  it('debe crearse el componente', () => {
     expect(component).toBeTruthy();
   });
 
   describe('Initial state', () => {
-    it('debería tener searchTerm vacío inicialmente', () => {
+    it('debe tener searchTerm vacío inicialmente', () => {
       expect(component.searchTerm).toBe('');
     });
 
-    it('debería renderizar el input con valor vacío', () => {
+    it('debe renderizar el input con valor vacío', () => {
       const input = fixture.debugElement.query(By.css('input'));
       expect(input.nativeElement.value).toBe('');
     });
 
-    it('debería renderizar el botón de búsqueda', () => {
+    it('debe renderizar el botón de búsqueda', () => {
       const button = fixture.debugElement.query(By.css('button'));
       expect(button.nativeElement.textContent.trim()).toBe('Search');
     });
   });
 
   describe('Input functionality', () => {
-    it('debería actualizar searchTerm cuando cambia el valor del input', fakeAsync(() => {
+    it('debe actualizar searchTerm cuando cambia el valor del input', fakeAsync(() => {
       const input = fixture.debugElement.query(By.css('input'));
       const testValue = 'test search';
 
@@ -55,7 +55,7 @@ describe('SearcherComponent', () => {
       expect(component.searchTerm).toBe(testValue);
     }));
 
-    it('debería reflejar el valor de searchTerm en el input', fakeAsync(() => {
+    it('debe reflejar el valor de searchTerm en el input', fakeAsync(() => {
       component.searchTerm = 'angular';
       fixture.detectChanges();
       tick();
@@ -66,7 +66,7 @@ describe('SearcherComponent', () => {
   });
 
   describe('onInputChange()', () => {
-    it('debería emitir una cadena vacía cuando searchTerm está vacío', () => {
+    it('debe emitir una cadena vacía cuando searchTerm está vacío', () => {
       const emitSpy = spyOn(component.search, 'emit');
       component.searchTerm = '';
 
@@ -75,7 +75,7 @@ describe('SearcherComponent', () => {
       expect(emitSpy).toHaveBeenCalledWith('');
     });
 
-    it('no debería emitir cuando searchTerm no está vacío', () => {
+    it('no debe emitir cuando searchTerm no está vacío', () => {
       const emitSpy = spyOn(component.search, 'emit');
       component.searchTerm = 'test';
 
@@ -84,7 +84,7 @@ describe('SearcherComponent', () => {
       expect(emitSpy).not.toHaveBeenCalled();
     });
 
-    it('no debería emitir una cadena vacía si searchTerm tiene texto válido con espacios', () => {
+    it('no debe emitir una cadena vacía si searchTerm tiene texto válido con espacios', () => {
       const emitSpy = spyOn(component.search, 'emit');
       component.searchTerm = ' valid ';
       component.onInputChange();
@@ -93,7 +93,7 @@ describe('SearcherComponent', () => {
   });
 
   describe('onSubmit()', () => {
-    it('debería emitir el término de búsqueda sin espacios', () => {
+    it('debe emitir el término de búsqueda sin espacios', () => {
       const emitSpy = spyOn(component.search, 'emit');
       component.searchTerm = '  test  ';
 
@@ -102,14 +102,14 @@ describe('SearcherComponent', () => {
       expect(emitSpy).toHaveBeenCalledWith('test');
     });
 
-    it('debería emitir una cadena vacía si searchTerm contiene solo espacios', () => {
+    it('debe emitir una cadena vacía si searchTerm contiene solo espacios', () => {
       const emitSpy = spyOn(component.search, 'emit');
       component.searchTerm = '   ';
       component.onSubmit();
       expect(emitSpy).toHaveBeenCalledWith('');
     });
 
-    it('debería prevenir el comportamiento por defecto si se proporciona un evento', () => {
+    it('debe prevenir el comportamiento por defecto si se proporciona un evento', () => {
       const event = new Event('submit');
       const preventDefaultSpy = spyOn(event, 'preventDefault');
 
@@ -118,7 +118,7 @@ describe('SearcherComponent', () => {
       expect(preventDefaultSpy).toHaveBeenCalled();
     });
 
-    it('debería funcionar sin el parámetro del evento', () => {
+    it('debe funcionar sin el parámetro del evento', () => {
       const emitSpy = spyOn(component.search, 'emit');
       component.searchTerm = 'test';
 
@@ -128,7 +128,7 @@ describe('SearcherComponent', () => {
   });
 
   describe('clearSearch()', () => {
-    it('debería limpiar searchTerm y emitir una cadena vacía', () => {
+    it('debe limpiar searchTerm y emitir una cadena vacía', () => {
       const emitSpy = spyOn(component.search, 'emit');
       component.searchTerm = 'previous value';
 
@@ -138,7 +138,7 @@ describe('SearcherComponent', () => {
       expect(emitSpy).toHaveBeenCalledWith('');
     });
 
-    it('debería evitar la acción por defecto del evento al limpiar la búsqueda', () => {
+    it('debe evitar la acción por defecto del evento al limpiar la búsqueda', () => {
       const event = new Event('click');
       const preventDefaultSpy = spyOn(event, 'preventDefault');
 
@@ -149,7 +149,7 @@ describe('SearcherComponent', () => {
   });
 
   describe('Template interactions', () => {
-    it('debería llamar a onSubmit cuando se envía el formulario', () => {
+    it('debe llamar a onSubmit cuando se envía el formulario', () => {
       const onSubmitSpy = spyOn(component, 'onSubmit');
       const form = fixture.debugElement.query(By.css('form'));
 
@@ -158,7 +158,7 @@ describe('SearcherComponent', () => {
       expect(onSubmitSpy).toHaveBeenCalled();
     });
 
-    it('debería llamar a onInputChange cuando cambia el input', () => {
+    it('debe llamar a onInputChange cuando cambia el input', () => {
       const onInputChangeSpy = spyOn(component, 'onInputChange');
       const input = fixture.debugElement.query(By.css('input'));
 
@@ -167,7 +167,7 @@ describe('SearcherComponent', () => {
       expect(onInputChangeSpy).toHaveBeenCalled();
     });
 
-    it('debería emitir el evento de búsqueda al escribir y luego enviar el formulario', fakeAsync(() => {
+    it('debe emitir el evento de búsqueda al escribir y luego enviar el formulario', fakeAsync(() => {
       const emitSpy = spyOn(component.search, 'emit');
       const input = fixture.debugElement.query(By.css('input'));
       const form = fixture.debugElement.query(By.css('form'));
@@ -180,7 +180,7 @@ describe('SearcherComponent', () => {
   });
 
   describe('Output events', () => {
-    it('debería emitir el evento de búsqueda con el valor correcto al enviar', () => {
+    it('debe emitir el evento de búsqueda con el valor correcto al enviar', () => {
       const emitSpy = spyOn(component.search, 'emit');
       component.searchTerm = 'angular testing';
 
@@ -189,7 +189,7 @@ describe('SearcherComponent', () => {
       expect(emitSpy).toHaveBeenCalledWith('angular testing');
     });
 
-    it('debería emitir el evento de búsqueda al cambiar el input cuando el término está vacío', () => {
+    it('debe emitir el evento de búsqueda al cambiar el input cuando el término está vacío', () => {
       const emitSpy = spyOn(component.search, 'emit');
       component.searchTerm = '';
 

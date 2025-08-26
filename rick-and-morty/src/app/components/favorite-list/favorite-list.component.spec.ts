@@ -64,11 +64,11 @@ describe('FavoriteListComponent', () => {
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
   });
 
-  it('debería crear el componente', () => {
+  it('debe crear el componente FavoriteList', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería cargar los favoritos al iniciar', fakeAsync(() => {
+  it('debe cargar los favoritos al iniciar', fakeAsync(() => {
     const favMock = [{ id: 1, episodeId: 1 }];
 
     favoritesService.getFavorites.and.returnValue(of(favMock));
@@ -83,28 +83,28 @@ describe('FavoriteListComponent', () => {
     expect(component.charactersMap[1][0].name).toBe('Rick');
   }));
 
-  it('debería navegar al episodio al hacer click', () => {
+  it('debe navegar al episodio al hacer click', () => {
     component.goToEpisode(42);
     expect(router.navigate).toHaveBeenCalledWith(['home/episodes', 42]);
   });
 
-  it('debería navegar al personaje al hacer click', () => {
+  it('debe navegar al personaje al hacer click', () => {
     component.goToCharacter(characterMock.url);
     expect(router.navigate).toHaveBeenCalledWith(['home/characters', 1]);
   });
 
-  it('debería devolver null si extractIdFromUrl falla', () => {
+  it('debe devolver null si extractIdFromUrl falla', () => {
     const result = component.extractIdFromUrl('invalid-url');
     expect(result).toBeNull();
   });
 
-  it('debería extraer el ID de una URL de personaje válida', () => {
+  it('debe extraer el ID de una URL de personaje válida', () => {
   const url = 'https://rickandmortyapi.com/api/character/42';
   const id = component.extractIdFromUrl(url);
   expect(id).toBe(42);
 });
 
-  it('debería eliminar un favorito correctamente', fakeAsync(() => {
+  it('debe eliminar un favorito correctamente', fakeAsync(() => {
     component.favorites = [episodeMock];
     component.charactersMap = { 1: [characterMock] };
 
@@ -118,7 +118,7 @@ describe('FavoriteListComponent', () => {
     expect(messageService.processResultCode).toHaveBeenCalledWith(200, 'Deleted');
   }));
 
-  it('debería manejar errores al eliminar un favorito', fakeAsync(() => {
+  it('debe manejar errores al eliminar un favorito', fakeAsync(() => {
     favoritesService.removeFavorite.and.returnValue(throwError(() => new Error('fail')));
 
     component.removeFavorite(1);
@@ -127,7 +127,7 @@ describe('FavoriteListComponent', () => {
     expect(messageService.handleError).toHaveBeenCalled();
   }));
 
-  it('debería mostrar el mensaje "No hay favoritos" cuando esté vacío', () => {
+  it('debe mostrar el mensaje "No hay favoritos" cuando esté vacío', () => {
     favoritesService.getFavorites.and.returnValue(of([]));
     fixture.detectChanges();
 
@@ -135,7 +135,7 @@ describe('FavoriteListComponent', () => {
     expect(noFavElem.nativeElement.textContent).toContain('No favorites yet.');
   });
 
-  it('debería llamar a goToEpisode al hacer clic en el nombre del episodio', () => {
+  it('debe llamar a goToEpisode al hacer clic en el nombre del episodio', () => {
   favoritesService.getFavorites.and.returnValue(of([])); 
   spyOn(component, 'goToEpisode');
 
@@ -148,7 +148,7 @@ describe('FavoriteListComponent', () => {
   expect(component.goToEpisode).toHaveBeenCalledWith(1);
 });
 
-  it('debería llamar a goToCharacter al hacer clic en el personaje', () => {
+  it('debe llamar a goToCharacter al hacer clic en el personaje', () => {
   favoritesService.getFavorites.and.returnValue(of([]));
   spyOn(component, 'goToCharacter');
 
@@ -164,14 +164,14 @@ describe('FavoriteListComponent', () => {
   expect(component.goToCharacter).toHaveBeenCalledWith(characterMock.url);
 });
 
-it('debería extraer el ID de una URL de personaje válida', () => {
+it('debe extraer el ID de una URL de personaje válida', () => {
   const url = 'https://rickandmortyapi.com/api/character/42';
   const id = component.extractIdFromUrl(url);
   expect(id).toBe(42);
 });
 
 //evita navegación accidental
-it('no debería navegar al hacer clic en el ícono de eliminar', () => {
+it('no debe navegar al hacer clic en el ícono de eliminar', () => {
   spyOn(component, 'goToEpisode');
   
   favoritesService.getFavorites.and.returnValue(of([]));

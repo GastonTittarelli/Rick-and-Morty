@@ -5,7 +5,11 @@ describe('Flujo E2E: Autenticación', () => {
   // Cargar datos del usuario desde el fixture antes de cada test
   beforeEach(() => {
     cy.fixture('user.json').then((user) => {
-      testUser = user;
+      const timestamp = Date.now() % 100000;// para crear un email único y evitar que tengamos que cambiarlo desde el json
+      testUser = {
+        ...user,
+        email: `test${timestamp}@mail.com`,
+      };
     });
   });
 

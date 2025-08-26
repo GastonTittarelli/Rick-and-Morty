@@ -106,15 +106,15 @@ describe('ProfileComponent', () => {
   });
 
   describe('Initialization', () => {
-    it('debería crear el componente', () => {
+    it('debe crear el componente Profile', () => {
       expect(component).toBeTruthy();
     });
 
-    it('debería cargar el usuario desde AuthService', () => {
+    it('debe cargar el usuario desde AuthService', () => {
       expect(component.user).toEqual(mockUser);
     });
 
-    it('debería inicializar el formulario con los datos del usuario', () => {
+    it('debe inicializar el formulario con los datos del usuario', () => {
       const form = component.profileForm;
       expect(form.value.nickname).toBe(mockUser.nickname);
       expect(form.value.profilePicture).toBe(mockUser.profilePicture);
@@ -123,7 +123,7 @@ describe('ProfileComponent', () => {
   });
 
   describe('View mode', () => {
-    it('"debería mostrar la información del perfil cuando no se está editando', () => {
+    it('"debe mostrar la información del perfil cuando no se está editando', () => {
       component.isEditing = false;
       fixture.detectChanges();
       const nicknameEl = fixture.debugElement.query(
@@ -132,7 +132,7 @@ describe('ProfileComponent', () => {
       expect(nicknameEl.nativeElement.textContent).toContain(mockUser.nickname);
     });
 
-    it('debería cambiar al modo edición cuando se hace click en el botón Editar', () => {
+    it('debe cambiar al modo edición cuando se hace click en el botón Editar', () => {
       component.isEditing = false;
       fixture.detectChanges();
       const editBtn = fixture.debugElement.query(By.css('button'));
@@ -141,14 +141,14 @@ describe('ProfileComponent', () => {
       expect(component.isEditing).toBeTrue();
     });
 
-    it('debería renderizar el componente FavoriteList', () => {
+    it('debe renderizar el componente FavoriteList', () => {
       const favoriteListEl = fixture.debugElement.query(
         By.css('app-favorite-list')
       );
       expect(favoriteListEl).toBeTruthy();
     });
 
-    it('debería mostrar la fecha de nacimiento formateada', () => {
+    it('debe mostrar la fecha de nacimiento formateada', () => {
       const birthdayEl = fixture.debugElement.query(
         By.css('.profile-info p:nth-child(4)')
       ).nativeElement;
@@ -162,7 +162,7 @@ describe('ProfileComponent', () => {
       fixture.detectChanges();
     });
 
-    it('debería mostrar un error en el nickname si es muy corto (menos de 3 caracteres)', () => {
+    it('debe mostrar un error en el nickname si es muy corto (menos de 3 caracteres)', () => {
       const nicknameCtrl = component.profileForm.get('nickname');
       nicknameCtrl!.setValue('ab');
       nicknameCtrl!.markAsDirty();
@@ -170,7 +170,7 @@ describe('ProfileComponent', () => {
       expect(component.nicknameError).toContain('at least 3 characters');
     });
 
-    it('debería mostrar un error en el nickname si es muy largo (más de 15 caracteres)', () => {
+    it('debe mostrar un error en el nickname si es muy largo (más de 15 caracteres)', () => {
       const nicknameCtrl = component.profileForm.get('nickname');
       nicknameCtrl!.setValue('a'.repeat(16));
       nicknameCtrl!.markAsDirty();
@@ -178,7 +178,7 @@ describe('ProfileComponent', () => {
       expect(component.nicknameError).toContain('cannot exceed 15 characters');
     });
 
-    it('debería mostrar un error en el profilePicture si no es una URL válida', () => {
+    it('debe mostrar un error en el profilePicture si no es una URL válida', () => {
       const ctrl = component.profileForm.get('profilePicture');
       ctrl!.setValue('not-a-url');
       ctrl!.markAsDirty();
@@ -188,7 +188,7 @@ describe('ProfileComponent', () => {
       );
     });
 
-    it('debería mostrar un error en la ubicación si es muy corta (menos de 3 caracteres)', () => {
+    it('debe mostrar un error en la ubicación si es muy corta (menos de 3 caracteres)', () => {
       const ctrl = component.profileForm.get('location');
       ctrl!.setValue('ab');
       ctrl!.markAsDirty();
@@ -196,7 +196,7 @@ describe('ProfileComponent', () => {
       expect(component.locationError).toContain('at least 3 characters');
     });
 
-    it('debería retornar null para nicknameError si el campo no ha sido tocado', () => {
+    it('debe retornar null para nicknameError si el campo no ha sido tocado', () => {
       const ctrl = component.profileForm.get('nickname')!;
       ctrl.setValue('ValidName');
       expect(component.nicknameError).toBeNull();
@@ -206,7 +206,7 @@ describe('ProfileComponent', () => {
   describe('Form submission', () => {
     beforeEach(() => (component.isEditing = true));
 
-    it('no debería enviarse si el campo nickname tiene entre 1 y 2 caracteres', () => {
+    it('no debe enviarse si el campo nickname tiene entre 1 y 2 caracteres', () => {
       const nicknameCtrl = component.profileForm.get('nickname');
       nicknameCtrl!.setValue('ab');
       nicknameCtrl!.markAsTouched();
@@ -222,7 +222,7 @@ describe('ProfileComponent', () => {
       expect(mockAuthService.updateProfile).not.toHaveBeenCalled();
     });
 
-    it('no debería enviarse si el campo nickname tiene más de 15 caracteres', () => {
+    it('no debe enviarse si el campo nickname tiene más de 15 caracteres', () => {
       const nicknameCtrl = component.profileForm.get('nickname');
       nicknameCtrl!.setValue('a'.repeat(16));
       nicknameCtrl!.markAsTouched();
@@ -238,7 +238,7 @@ describe('ProfileComponent', () => {
       expect(mockAuthService.updateProfile).not.toHaveBeenCalled();
     });
 
-    it('debería enviar un formulario válido y actualizar el usuario', fakeAsync(() => {
+    it('debe enviar un formulario válido y actualizar el usuario', fakeAsync(() => {
       component.profileForm.patchValue({
         nickname: 'Nuevo',
         profilePicture: 'https://example.com/new.jpg',
@@ -255,7 +255,7 @@ describe('ProfileComponent', () => {
       );
     }));
 
-    it('debería manejar el error de actualización', fakeAsync(() => {
+    it('debe manejar el error de actualización', fakeAsync(() => {
       mockAuthService.updateProfile.and.returnValue(
         throwError(() => new Error('fail'))
       );
@@ -264,7 +264,7 @@ describe('ProfileComponent', () => {
       expect(mockMessageService.handleError).toHaveBeenCalled();
     }));
 
-    it('no debería enviarse si la profilePicture no es una URL de imagen válida', () => {
+    it('no debe enviarse si la profilePicture no es una URL de imagen válida', () => {
       const pictureCtrl = component.profileForm.get('profilePicture');
       pictureCtrl!.setValue('not-a-valid-image-url');
       pictureCtrl!.markAsTouched();
@@ -280,7 +280,7 @@ describe('ProfileComponent', () => {
       expect(mockAuthService.updateProfile).not.toHaveBeenCalled();
     });
 
-    it('no debería enviarse si la location tiene entre 1 y 2 caracteres', () => {
+    it('no debe enviarse si la location tiene entre 1 y 2 caracteres', () => {
       const locationCtrl = component.profileForm.get('location');
       locationCtrl!.setValue('ab');
       locationCtrl!.markAsTouched();
@@ -296,7 +296,7 @@ describe('ProfileComponent', () => {
       expect(mockAuthService.updateProfile).not.toHaveBeenCalled();
     });
 
-    it('debería enviarse la url con campos opcionales vacíos', fakeAsync(() => {
+    it('debe enviarse la url con campos opcionales vacíos', fakeAsync(() => {
       component.profileForm.patchValue({
         nickname: '',
         profilePicture: 'https://example.com/valid.jpg',
@@ -313,7 +313,7 @@ describe('ProfileComponent', () => {
       expect(mockAuthService.updateProfile).toHaveBeenCalled();
     }));
 
-    it('debería enviarse la url con nickname vacío pero location válida', fakeAsync(() => {
+    it('debe enviarse la url con nickname vacío pero location válida', fakeAsync(() => {
       component.profileForm.patchValue({
         nickname: '',
         profilePicture: 'https://example.com/img.png',
@@ -330,7 +330,7 @@ describe('ProfileComponent', () => {
       expect(mockAuthService.updateProfile).toHaveBeenCalled();
     }));
 
-    it('debería enviarse la url con location vacía pero nickname válido', fakeAsync(() => {
+    it('debe enviarse la url con location vacía pero nickname válido', fakeAsync(() => {
       component.profileForm.patchValue({
         nickname: 'Juanito',
         profilePicture: 'https://example.com/avatar.jpg',
@@ -347,7 +347,7 @@ describe('ProfileComponent', () => {
       expect(mockAuthService.updateProfile).toHaveBeenCalled();
     }));
 
-    it('debería enviarse la url sin cambios', fakeAsync(() => {
+    it('debe enviarse la url sin cambios', fakeAsync(() => {
       component.isEditing = true;
       fixture.detectChanges();
       component.onSubmit();
@@ -357,26 +357,26 @@ describe('ProfileComponent', () => {
   });
 
   describe('Image handling', () => {
-    it('debería establecer imageError en true en onImageError', () => {
+    it('debe establecer imageError en true en onImageError', () => {
       component.imageError = false;
       component.onImageError();
       expect(component.imageError).toBeTrue();
     });
 
-    it('debería restablecer imageError en onImageInputChange', () => {
+    it('debe restablecer imageError en onImageInputChange', () => {
       component.imageError = true;
       component.onImageInputChange();
       expect(component.imageError).toBeFalse();
     });
 
-    it('debería usar la imagen de fallback en onViewImageError', () => {
+    it('debe usar la imagen de fallback en onViewImageError', () => {
       const event = { target: { src: '', dataset: {} } } as any;
       component.onViewImageError(event);
       expect(event.target.src).toContain('https://ui-avatars.com/api/?name=');
       expect(event.target.dataset['fallbackUsed']).toBe('true');
     });
 
-    it('debería mostrar la imagen de fallback después de una entrada de profilePicture inválida', () => {
+    it('debe mostrar la imagen de fallback después de una entrada de profilePicture inválida', () => {
       component.isEditing = true;
       fixture.detectChanges();
 
@@ -394,7 +394,7 @@ describe('ProfileComponent', () => {
       );
     });
 
-    it('debería no reemplazar la imagen si ya se utilizó la imagen de fallback', () => {
+    it('debe no reemplazar la imagen si ya se utilizó la imagen de fallback', () => {
       const event = {
         target: { src: '', dataset: { fallbackUsed: 'true' } },
       } as any;
@@ -404,7 +404,7 @@ describe('ProfileComponent', () => {
   });
 
   describe('Buttons', () => {
-    it('debería cancelar la edición', () => {
+    it('debe cancelar la edición', () => {
       component.isEditing = true;
       fixture.detectChanges();
       const cancelBtn = fixture.debugElement.queryAll(By.css('button'))[1];
@@ -414,7 +414,7 @@ describe('ProfileComponent', () => {
     });
   });
 
-  it('debería mostrar el botón "Editar perfil" solo cuando no se está editando', () => {
+  it('debe mostrar el botón "Editar perfil" solo cuando no se está editando', () => {
     component.isEditing = false;
     fixture.detectChanges();
     const btn = fixture.debugElement.query(By.css('button'));

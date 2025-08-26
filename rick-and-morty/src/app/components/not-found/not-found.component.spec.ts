@@ -62,7 +62,7 @@ describe('NotFoundComponent', () => {
     expect(routerLink).toBe('/home/characters');
   });
 
-  it('debería tener las clases CSS correctas', () => {
+  it('debe tener las clases CSS correctas', () => {
     const notFoundContainer = fixture.debugElement.query(By.css('.notFoundContainer'));
     expect(notFoundContainer).toBeTruthy();
     

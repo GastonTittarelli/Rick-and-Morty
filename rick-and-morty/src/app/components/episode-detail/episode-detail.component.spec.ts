@@ -103,11 +103,11 @@ describe('EpisodeDetailComponent', () => {
     mockCommentsService.isCommentingDisabled.and.returnValue(of(false)); // Mock this method
   });
 
-  it('debería crearse', () => {
+  it('debe crearse el componente EpisodeDetail', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería inicializarse con los datos del episodio y los personajes', fakeAsync(() => {
+  it('debe inicializarse con los datos del episodio y los personajes', fakeAsync(() => {
     fixture.detectChanges();
     tick();
 
@@ -118,7 +118,7 @@ describe('EpisodeDetailComponent', () => {
     expect(mockRickAndMortyService.getByUrl).toHaveBeenCalledTimes(2);
   }));
 
-  it('debería verificar si el episodio es favorito al inicializarse', fakeAsync(() => {
+  it('debe verificar si el episodio es favorito al inicializarse', fakeAsync(() => {
     fixture.detectChanges();
     tick();
 
@@ -126,7 +126,7 @@ describe('EpisodeDetailComponent', () => {
     expect(component.isFavorite).toBeTrue();
   }));
 
-  it('debería alternar el estado de favorito', fakeAsync(() => {
+  it('debe alternar el estado de favorito', fakeAsync(() => {
     fixture.detectChanges();
     tick();
 
@@ -141,7 +141,7 @@ describe('EpisodeDetailComponent', () => {
     );
   }));
 
-  it('debería manejar el error al alternar el estado de favorito', fakeAsync(() => {
+  it('debe manejar el error al alternar el estado de favorito', fakeAsync(() => {
     const error = new Error('No se pudo cambiar el estado de favorito');
     mockFavoritesService.toggleFavorite.and.returnValue(
       throwError(() => error)
@@ -156,14 +156,14 @@ describe('EpisodeDetailComponent', () => {
     expect(mockMessageService.handleError).toHaveBeenCalledWith(error);
   }));
 
-  it('debería manejar cuando falta el ID del episodio en la ruta', () => {
+  it('debe manejar cuando falta el ID del episodio en la ruta', () => {
     mockActivatedRoute.snapshot.paramMap.get.and.returnValue(null);
     fixture.detectChanges();
 
     expect(mockRickAndMortyService.getEpisodeById).not.toHaveBeenCalled();
   });
 
-  it('debería mostrar los detalles del episodio en la plantilla', fakeAsync(() => {
+  it('debe mostrar los detalles del episodio en la plantilla', fakeAsync(() => {
     fixture.detectChanges();
     tick();
     fixture.detectChanges();
@@ -180,7 +180,7 @@ describe('EpisodeDetailComponent', () => {
     ).toContain(mockEpisode.episode);
   })); // data-testid agregado para que sea mas amigable y entendible en elementos que no tienen clases designadas
 
-  it('debería mostrar los personajes en la plantilla', fakeAsync(() => {
+  it('debe mostrar los personajes en la plantilla', fakeAsync(() => {
     fixture.detectChanges();
     tick();
     fixture.detectChanges();
@@ -192,7 +192,7 @@ describe('EpisodeDetailComponent', () => {
     expect(characterLinks[1].textContent).toContain('Morty Smith');
   }));
 
-  it('debería actualizar el ícono de favorito según el estado', fakeAsync(() => {
+  it('debe actualizar el ícono de favorito según el estado', fakeAsync(() => {
     fixture.detectChanges();
     tick();
     fixture.detectChanges();
@@ -209,7 +209,7 @@ describe('EpisodeDetailComponent', () => {
     expect(icon.classList.contains('favorited')).toBeFalse();
   }));
 
-  it('debería pasar el episodeId al componente de comentarios', fakeAsync(() => {
+  it('debe pasar el episodeId al componente de comentarios', fakeAsync(() => {
     fixture.detectChanges();
     tick();
     fixture.detectChanges();
@@ -224,7 +224,7 @@ describe('EpisodeDetailComponent', () => {
     expect(mockCommentsService.getCommentsByEpisode).toHaveBeenCalledWith(1);
   }));
 
-  it('debería llamar a toggleFavorite al hacer clic en el ícono de favorito', fakeAsync(() => {
+  it('debe llamar a toggleFavorite al hacer clic en el ícono de favorito', fakeAsync(() => {
     spyOn(component, 'toggleFavorite').and.callThrough();
 
     fixture.detectChanges();

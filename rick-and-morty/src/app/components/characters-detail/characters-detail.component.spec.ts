@@ -7,8 +7,12 @@ import { CommonModule } from '@angular/common';
 import { StatusTranslatePipe } from '../../shared/pipes/status-translate.pipe';
 import { GenderTranslatePipe } from '../../shared/pipes/gender-translate.pipe';
 
+// Mock parametrizable
 class RickAndMortyServiceMock {
+  shouldFail = false;
+
   getCharacterById(id: number) {
+    if (this.shouldFail) return throwError(() => new Error('API error'));
     return of({
       id,
       name: 'Rick Sanchez',
@@ -21,19 +25,14 @@ class RickAndMortyServiceMock {
       episode: ['url1', 'url2']
     });
   }
-  getEpisodeByUrl(url: string) {
-    if (url === 'url1') return of({ id: 1, name: 'Pilot' });
-    if (url === 'url2') return of({ id: 2, name: 'Lawnmower Dog' });
-    return of({ id: 99, name: 'Unknown' });
-  }
-}
 
-class RickAndMortyServiceErrorMock {
-  getCharacterById(id: number) {
-    return throwError(() => new Error('API error'));
-  }
   getEpisodeByUrl(url: string) {
-    return throwError(() => new Error('API error'));
+    if (this.shouldFail) return throwError(() => new Error('API error'));
+    const episodes: Record<string, any> = {
+      url1: { id: 1, name: 'Pilot' },
+      url2: { id: 2, name: 'Lawnmower Dog' },
+    };
+    return of(episodes[url] || { id: 99, name: 'Unknown' });
   }
 }
 
@@ -41,81 +40,85 @@ describe('CharactersDetailComponent', () => {
   let component: CharactersDetailComponent;
   let fixture: ComponentFixture<CharactersDetailComponent>;
   let routerNavigateSpy: jasmine.Spy;
+  let serviceMock: RickAndMortyServiceMock;
+
+  // Helper para generar episodios
+  const generateEpisodes = (count: number) => Array.from({ length: count }, (_, i) => ({ id: i + 1, name: `E${i + 1}` }));
 
   beforeEach(async () => {
-  routerNavigateSpy = jasmine.createSpy('navigate');
+    routerNavigateSpy = jasmine.createSpy('navigate');
+    serviceMock = new RickAndMortyServiceMock();
 
-  await TestBed.configureTestingModule({
-    imports: [CommonModule, CharactersDetailComponent, StatusTranslatePipe, GenderTranslatePipe],
-    providers: [
-      { provide: RickAndMortyService, useClass: RickAndMortyServiceMock },
-      { provide: ActivatedRoute, useValue: { snapshot: { paramMap: new Map([['id', '1']]) } } },
-      { provide: Router, useValue: { navigate: routerNavigateSpy } }
-    ]
-  }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [CommonModule, CharactersDetailComponent, StatusTranslatePipe, GenderTranslatePipe],
+      providers: [
+        { provide: RickAndMortyService, useValue: serviceMock },
+        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: new Map([['id', '1']]) } } },
+        { provide: Router, useValue: { navigate: routerNavigateSpy } }
+      ]
+    }).compileComponents();
 
-  fixture = TestBed.createComponent(CharactersDetailComponent);
-  component = fixture.componentInstance;
-});
+    fixture = TestBed.createComponent(CharactersDetailComponent);
+    component = fixture.componentInstance;
+  });
 
-  it('debería crearse', fakeAsync(() => {
+  it('debe crearse en componente CharactersDetail', fakeAsync(() => {
     fixture.detectChanges();
     tick();
     expect(component).toBeTruthy();
   }));
 
-  it('debería cargar personaje y episodios correctamente', fakeAsync(() => {
+  it('debe cargar personaje y episodios correctamente', fakeAsync(() => {
     fixture.detectChanges();
     tick();
     expect(component.character.name).toBe('Rick Sanchez');
     expect(component.episodes.length).toBe(2);
   }));
 
-  it('debería mostrar todos los episodios si son menos de 21', () => {
-  const fewEpisodes = Array.from({ length: 5 }, (_, i) => ({ id: i + 1, name: `E${i + 1}` }));
-  component.episodes = fewEpisodes;
-  component.showAllEpisodes = false;
-  expect(component.visibleEpisodes.length).toBe(5);
-  expect(component.shouldShowMore).toBeFalse();
-});
+  it('debe mostrar todos los episodios si son menos de 21', () => {
+    component.episodes = generateEpisodes(5);
+    component.showAllEpisodes = false;
+    expect(component.visibleEpisodes.length).toBe(5);
+    expect(component.shouldShowMore).toBeFalse();
+  });
 
-  it('debería mostrar todos los episodios al hacer click en (more)', () => {
-    const manyEpisodes = Array.from({ length: 30 }, (_, i) => ({ id: i + 1, name: `E${i + 1}` }));
-    component.episodes = manyEpisodes;
+  it('debe mostrar todos los episodios al hacer click en (more)', () => {
+    component.episodes = generateEpisodes(30);
     component.showAllEpisodes = true;
     expect(component.visibleEpisodes.length).toBe(30);
     expect(component.shouldShowMore).toBeFalse();
   });
 
-  it('debería retornar la clase correcta para status', () => {
-  component.character = { status: 'Alive' };
-  expect(component.statusClass).toBe('alive');
+  it('debe retornar la clase correcta para status', () => {
+    component.character = { status: 'Alive' } as any;
+    expect(component.statusClass).toBe('alive');
 
-  component.character.status = 'Dead';
-  expect(component.statusClass).toBe('dead');
+    component.character.status = 'Dead';
+    expect(component.statusClass).toBe('dead');
 
-  component.character.status = 'unknown';
-  expect(component.statusClass).toBe('unknown');
+    component.character.status = 'unknown';
+    expect(component.statusClass).toBe('unknown');
 
-  component.character.status = 'Otro';
-  expect(component.statusClass).toBe('');
-});
-
-
+    component.character.status = 'Otro';
+    expect(component.statusClass).toBe('');
+  });
 });
 
 describe('CharactersDetailComponent - casos de error', () => {
   let routerNavigateSpy: jasmine.Spy;
   let fixture: ComponentFixture<CharactersDetailComponent>;
+  let serviceMock: RickAndMortyServiceMock;
 
   beforeEach(async () => {
     routerNavigateSpy = jasmine.createSpy('navigate');
+    serviceMock = new RickAndMortyServiceMock();
+    serviceMock.shouldFail = true; // Forzamos error
 
     await TestBed.configureTestingModule({
       imports: [CommonModule, CharactersDetailComponent],
       providers: [
-        { provide: RickAndMortyService, useValue: {} }, // servicio no importa
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: new Map([['id', 'abc']]) } } },
+        { provide: RickAndMortyService, useValue: serviceMock },
+        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: new Map([['id', '1']]) } } },
         { provide: Router, useValue: { navigate: routerNavigateSpy } }
       ]
     }).compileComponents();
@@ -123,38 +126,15 @@ describe('CharactersDetailComponent - casos de error', () => {
     fixture = TestBed.createComponent(CharactersDetailComponent);
   });
 
-  it('debería redirigir a /404 si el id es inválido', fakeAsync(() => {
-    fixture.detectChanges(); // ngOnInit
-    tick(); // deja que se ejecute redirect
+  it('debe redirigir a /404 si el id es inválido', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
     expect(routerNavigateSpy).toHaveBeenCalledWith(['/404']);
   }));
 
-  it('debería redirigir a /404 si el servicio falla', fakeAsync(() => {
-    // Reconfiguramos TestBed en un describe separado para usar el mock de error
-    const routerSpy = jasmine.createSpy('navigate');
-
-    TestBed.resetTestingModule(); // resetea el módulo anterior
-    TestBed.configureTestingModule({
-      imports: [CommonModule, CharactersDetailComponent],
-      providers: [
-        { 
-          provide: RickAndMortyService, 
-          useValue: {
-            getCharacterById: () => throwError(() => new Error('API error')),
-            getEpisodeByUrl: () => throwError(() => new Error('API error'))
-          } 
-        },
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: new Map([['id', '1']]) } } },
-        { provide: Router, useValue: { navigate: routerSpy } }
-      ]
-    }).compileComponents();
-
-    const fixture2 = TestBed.createComponent(CharactersDetailComponent);
-    fixture2.detectChanges();
+  it('debe redirigir a /404 si el servicio falla', fakeAsync(() => {
+    fixture.detectChanges();
     tick();
-
-    expect(routerSpy).toHaveBeenCalledWith(['/404']);
+    expect(routerNavigateSpy).toHaveBeenCalledWith(['/404']);
   }));
 });
-
-  

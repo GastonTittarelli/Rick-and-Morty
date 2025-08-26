@@ -63,24 +63,24 @@ describe('EpisodesComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('debería crearse', () => {
+  it('debe crearse el componente Episodes', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería cargar los episodios al iniciar', () => {
+  it('debe cargar los episodios al iniciar', () => {
     component.ngOnInit();
     expect(mockApiService.getEpisodes).toHaveBeenCalled();
     expect(component.episodes.length).toBe(1);
     expect(component.displayedEpisodes.length).toBe(1);
   });
 
-  it('debería cargar los episodios favoritos al iniciar', () => {
+  it('debe cargar los episodios favoritos al iniciar', () => {
     component.ngOnInit();
     expect(mockFavoritesService.getFavorites).toHaveBeenCalled();
     expect(component.favoriteEpisodeIds.has(1)).toBeTrue();
   });
 
-  it('debería cortar correctamente displayedEpisodes según la página actual', () => {
+  it('debe cortar correctamente displayedEpisodes según la página actual', () => {
     component.currentPage = 2;
     component.episodesPerPage = 10;
     component.episodes = Array.from({ length: 20 }, (_, i) => ({ id: i + 1 }));
@@ -95,7 +95,7 @@ describe('EpisodesComponent', () => {
     expect(component.displayedEpisodes[0].id).toBe(11);
   });
 
-  it('debería navegar a los detalles del episodio al hacer click en la tarjeta', () => {
+  it('debe navegar a los detalles del episodio al hacer click en la tarjeta', () => {
     component.ngOnInit();
     fixture.detectChanges();
 
@@ -105,7 +105,7 @@ describe('EpisodesComponent', () => {
     expect(mockRouter.navigate).toHaveBeenCalledWith(['home/episodes', 5]);
   });
 
-  it('debería alternar favorito y mostrar mensaje de éxito', fakeAsync(() => {
+  it('debe alternar favorito y mostrar mensaje de éxito', fakeAsync(() => {
     const episode = { id: 2, name: 'Test', episode: 'S01E02' };
     component.toggleFavorite(episode);
     tick();
@@ -117,7 +117,7 @@ describe('EpisodesComponent', () => {
     );
   }));
 
-  it('debería manejar error al alternar favorito', fakeAsync(() => {
+  it('debe manejar error al alternar favorito', fakeAsync(() => {
     mockFavoritesService.toggleFavorite.and.returnValue(
       throwError(() => new Error('fail'))
     );
@@ -128,26 +128,26 @@ describe('EpisodesComponent', () => {
     expect(mockMessageService.handleError).toHaveBeenCalled();
   }));
 
-  it('debería devolver true para episodios favoritos', () => {
+  it('debe devolver true para episodios favoritos', () => {
     component.favoriteEpisodeIds = new Set([1, 3]);
     expect(component.isFavorite(1)).toBeTrue();
     expect(component.isFavorite(2)).toBeFalse();
   });
 
-  it('debería calcular correctamente el total de páginas', () => {
+  it('debe calcular correctamente el total de páginas', () => {
     component.totalEpisodes = 25;
     component.episodesPerPage = 10;
     expect(component.totalPages).toBe(3);
   });
 
-  it('debería cambiar de página y recargar episodios', () => {
+  it('debe cambiar de página y recargar episodios', () => {
     spyOn(component, 'loadEpisodes');
     component.onPageChange(2);
     expect(component.currentPage).toBe(2);
     expect(component.loadEpisodes).toHaveBeenCalled();
   });
 
-  it('no debería navegar al hacer click en el ícono de favorito', () => {
+  it('no debe navegar al hacer click en el ícono de favorito', () => {
     component.ngOnInit();
     fixture.detectChanges();
 
@@ -157,7 +157,7 @@ describe('EpisodesComponent', () => {
     expect(mockRouter.navigate).not.toHaveBeenCalled();
   });
 
-  it('debería manejar la respuesta de episodios vacía', () => {
+  it('debe manejar la respuesta de episodios vacía', () => {
     mockApiService.getEpisodes.and.returnValue(
       of({ info: { count: 0 }, results: [] })
     );
@@ -168,7 +168,7 @@ describe('EpisodesComponent', () => {
     expect(component.displayedEpisodes.length).toBe(0);
   });
 
-  it('ngOnInit debería llamar a loadEpisodes y loadFavorites', () => {
+  it('ngOnInit debe llamar a loadEpisodes y loadFavorites', () => {
     spyOn(component, 'loadEpisodes');
     spyOn(component, 'loadFavorites');
 

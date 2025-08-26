@@ -75,16 +75,16 @@ describe('CommentsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('debería crearse', () => {
+  it('debe crearse el componente Comments', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería cargar comentarios al inicializarse', () => {
+  it('debe cargar comentarios al inicializarse', () => {
     expect(component.comments.length).toBe(1);
     expect(component.loading).toBeFalse();
   });
 
-  it('debería manejar error al cargar comentarios', fakeAsync(() => {
+  it('debe manejar error al cargar comentarios', fakeAsync(() => {
   spyOn(commentsService, 'getCommentsByEpisode').and.returnValue(
     throwError(() => new Error('fail'))
   );
@@ -97,7 +97,7 @@ describe('CommentsComponent', () => {
   expect(component.error).toBe('Failed to load comments');
 }));
 
-  it('debería agregar un nuevo comentario', () => {
+  it('debe agregar un nuevo comentario', () => {
     spyOn(messageService, 'showMessageWithTimeout');
     component.newComment = 'New comment';
     component.addComment();
@@ -106,21 +106,21 @@ describe('CommentsComponent', () => {
     expect(messageService.showMessageWithTimeout).toHaveBeenCalledWith('success', 'Comment added successfully');
   });
 
-  it('no debería agregar comentario vacío', () => {
+  it('no debe agregar comentario vacío', () => {
     spyOn(commentsService, 'createComment').and.callThrough();
     component.newComment = '   ';
     component.addComment();
     expect(commentsService.createComment).not.toHaveBeenCalled();
   });
 
-  it('debería iniciar edición', () => {
+  it('debe iniciar edición', () => {
     const comment = component.comments[0];
     component.startEditing(comment);
     expect(component.editingCommentId).toBe(comment.id);
     expect(component.editContent).toBe(comment.content);
   });
 
-  it('debería cancelar edición', () => {
+  it('debe cancelar edición', () => {
     component.editingCommentId = '1';
     component.editContent = 'test';
     component.cancelEdit();
@@ -128,7 +128,7 @@ describe('CommentsComponent', () => {
     expect(component.editContent).toBe('');
   });
 
-  it('debería guardar edición de comentario', () => {
+  it('debe guardar edición de comentario', () => {
     spyOn(messageService, 'showMessageWithTimeout');
     const comment = component.comments[0];
     component.startEditing(comment);
@@ -139,14 +139,14 @@ describe('CommentsComponent', () => {
     expect(messageService.showMessageWithTimeout).toHaveBeenCalledWith('success', 'Comment updated successfully');
   });
 
-  it('no debería guardar comentario vacío al editar', () => {
+  it('no debe guardar comentario vacío al editar', () => {
     component.editingCommentId = '1';
     component.editContent = '   ';
     component.saveEdit(component.comments[0]);
     expect(component.error).toBe('Comment cannot be empty');
   });
 
-  it('debería eliminar un comentario', () => {
+  it('debe eliminar un comentario', () => {
     spyOn(messageService, 'showMessageWithTimeout');
     const id = component.comments[0].id;
     component.deleteComment(id);
@@ -154,7 +154,7 @@ describe('CommentsComponent', () => {
     expect(messageService.showMessageWithTimeout).toHaveBeenCalledWith('success', 'Comment deleted successfully');
   });
 
-  it('debería deshabilitar y habilitar comentarios (toggle)', () => {
+  it('debe deshabilitar y habilitar comentarios (toggle)', () => {
     component.commentingDisabled = false;
     component.toggleComments();
     expect(component.commentingDisabled).toBeTrue();
@@ -162,7 +162,7 @@ describe('CommentsComponent', () => {
     expect(component.commentingDisabled).toBeFalse();
   });
 
-  it('debería usar imagen fallback si falla la original', () => {
+  it('debe usar imagen fallback si falla la original', () => {
     const event = { target: document.createElement('img') } as unknown as Event;
     component.onCommentImageError(event, 'Morty');
     const img = event.target as HTMLImageElement;

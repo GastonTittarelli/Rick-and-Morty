@@ -98,7 +98,7 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('inicialización del Formulario', () => {
+  describe('Form initialization', () => {
     it('debe inicializar loginForm con valores vacíos', () => {
       expect(component.loginForm).toBeDefined();
       expect(component.loginForm.get('mail')?.value).toBe('');
@@ -203,7 +203,7 @@ describe('LoginComponent', () => {
       expect(authService.login).toHaveBeenCalledWith(testMail, testPassword);
     });
 
-    it('deber guardar la sesión y navegar a home tras un login exitoso', fakeAsync(() => {
+    it('debe guardar la sesión y navegar a home tras un login exitoso', fakeAsync(() => {
       const testMail = 'test@example.com';
       const testPassword = 'password123';
       const rememberMe = true;
