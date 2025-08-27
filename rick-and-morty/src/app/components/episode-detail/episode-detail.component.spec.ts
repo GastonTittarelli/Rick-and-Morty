@@ -239,4 +239,19 @@ describe('EpisodeDetailComponent', () => {
     expect(component.toggleFavorite).toHaveBeenCalled();
     expect(mockFavoritesService.toggleFavorite).toHaveBeenCalledWith(1);
   }));
+
+  it('debe usar el mensaje por defecto si no hay mensaje en la respuesta de toggleFavorite', fakeAsync(() => {
+    mockFavoritesService.toggleFavorite.and.returnValue(of({})); // Sin message
+
+    fixture.detectChanges();
+    tick();
+
+    component.toggleFavorite();
+    tick();
+
+    expect(mockMessageService.showMessageWithTimeout).toHaveBeenCalledWith(
+      'success',
+      'Favorite list updated'
+    );
+  }));
 });

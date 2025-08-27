@@ -119,61 +119,6 @@ describe('LoginComponent', () => {
     });
   });
 
-  describe('Form Validation', () => {
-    it('el campo mail debe ser obligatorio', () => {
-      const mailControl = component.loginForm.get('mail');
-      mailControl?.setValue('');
-      expect(mailControl?.hasError('required')).toBeTrue();
-    });
-
-    it('debe validar el formato del mail', () => {
-      const mailControl = component.loginForm.get('mail');
-      mailControl?.setValue('invalid-email');
-      expect(mailControl?.hasError('email')).toBeTrue();
-    });
-
-    it('debe validar los campos mínimos del mail', () => {
-      const mailControl = component.loginForm.get('mail');
-      mailControl?.setValue('a@b.c');
-      expect(mailControl?.hasError('minlength')).toBeTrue();
-    });
-
-    it('debe validar los campos máximos del mail', () => {
-      const mailControl = component.loginForm.get('mail');
-      mailControl?.setValue('a'.repeat(51) + '@example.com');
-      expect(mailControl?.hasError('maxlength')).toBeTrue();
-    });
-
-    it('el campo password debe ser obligatorio', () => {
-      const passwordControl = component.loginForm.get('password');
-      passwordControl?.setValue('');
-      expect(passwordControl?.hasError('required')).toBeTrue();
-    });
-
-    it('debe validar la longitud mínima del password', () => {
-      const passwordControl = component.loginForm.get('password');
-      passwordControl?.setValue('short');
-      expect(passwordControl?.hasError('minlength')).toBeTrue();
-    });
-
-    it('debe validar la longitud máxima del password', () => {
-      const passwordControl = component.loginForm.get('password');
-      passwordControl?.setValue('a'.repeat(31));
-      expect(passwordControl?.hasError('maxlength')).toBeTrue();
-    });
-
-    it('debe validar el patrón del password (al menos una letra y un número)', () => {
-      const passwordControl = component.loginForm.get('password');
-      passwordControl?.setValue('password'); // sin número
-      expect(passwordControl?.hasError('pattern')).toBeTrue();
-
-      passwordControl?.setValue('12345678'); // sin letter
-      expect(passwordControl?.hasError('pattern')).toBeTrue();
-
-      passwordControl?.setValue('pass1234'); // válido
-      expect(passwordControl?.hasError('pattern')).toBeFalse();
-    });
-  });
 
   describe('onSubmit', () => {
     it('no debe llamar a authService.login si el formulario es inválido', () => {

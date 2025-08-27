@@ -118,6 +118,31 @@ describe('FavoriteListComponent', () => {
     expect(messageService.processResultCode).toHaveBeenCalledWith(200, 'Deleted');
   }));
 
+  it('debe usar el mensaje por defecto si res.header.message no existe al eliminar favorito', fakeAsync(() => {
+    component.favorites = [episodeMock];
+    component.charactersMap = { 1: [characterMock] };
+
+    // Forzamos que el observable devuelva un header sin message
+    favoritesService.removeFavorite.and.returnValue(of({ header: { resultCode: 200 } }));
+
+    component.removeFavorite(1);
+    tick();
+
+    expect(component.favorites.length).toBe(0);
+    expect(component.charactersMap[1]).toBeUndefined();
+    expect(messageService.processResultCode).toHaveBeenCalledWith(200, 'Eliminado de favoritos');
+  }));
+
+  it('no debe romper si getFavorites devuelve favoritos vacíos', fakeAsync(() => {
+    favoritesService.getFavorites.and.returnValue(of([]));
+
+    component.ngOnInit();
+    tick();
+
+    expect(component.favorites.length).toBe(0);
+    expect(Object.keys(component.charactersMap).length).toBe(0);
+  }));
+
   it('debe manejar errores al eliminar un favorito', fakeAsync(() => {
     favoritesService.removeFavorite.and.returnValue(throwError(() => new Error('fail')));
 
@@ -185,5 +210,40 @@ it('no debe navegar al hacer clic en el ícono de eliminar', () => {
 
   expect(component.goToEpisode).not.toHaveBeenCalled();
 });
+
+
+it('debe usar fav.id si episodeId no existe', fakeAsync(() => {
+  const favMock = [{ id: 99 }]; // sin episodeId
+  favoritesService.getFavorites.and.returnValue(of(favMock));
+  rmService.getEpisodeById.and.returnValue(of({ id: 99, name: 'Test', characters: [] }));
+
+  component.ngOnInit();
+  tick();
+
+  expect(component.favorites[0].id).toBe(99);
+}));
+
+it('debe manejar episodios sin personajes', fakeAsync(() => {
+  const favMock = [{ id: 1, episodeId: 1 }];
+  favoritesService.getFavorites.and.returnValue(of(favMock));
+  rmService.getEpisodeById.and.returnValue(of({ id: 1, name: 'Solo episodio' })); // sin characters
+
+  component.ngOnInit();
+  tick();
+
+  expect(component.charactersMap[1]).toEqual([]);
+}));
+
+it('debe usar resultCode por defecto si no existe', fakeAsync(() => {
+  component.favorites = [episodeMock];
+  component.charactersMap = { 1: [characterMock] };
+
+  favoritesService.removeFavorite.and.returnValue(of({ header: {} }));
+
+  component.removeFavorite(1);
+  tick();
+
+  expect(messageService.processResultCode).toHaveBeenCalledWith(0, 'Eliminado de favoritos');
+}));
 
 });

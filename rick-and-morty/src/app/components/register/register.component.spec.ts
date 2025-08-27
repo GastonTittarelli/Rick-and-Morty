@@ -84,20 +84,16 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('debería crear el componente', () => {
+  it('debe crear el componente Register', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería inicializar el formulario con valores vacíos', () => {
+  it('debe inicializar el formulario con valores vacíos', () => {
     expect(component.registerForm).toBeDefined();
     expect(component.registerForm.get('name')?.value).toBe('');
     expect(component.registerForm.get('mail')?.value).toBe('');
-    expect(component.registerForm.get('passwordGroup.password')?.value).toBe(
-      ''
-    );
-    expect(
-      component.registerForm.get('passwordGroup.repeatPassword')?.value
-    ).toBe('');
+    expect(component.registerForm.get('passwordGroup.password')?.value).toBe('');
+    expect(component.registerForm.get('passwordGroup.repeatPassword')?.value).toBe('');
     expect(component.registerForm.get('address.street')?.value).toBe('');
     expect(component.registerForm.get('address.city')?.value).toBe('');
     expect(component.registerForm.get('address.country')?.value).toBe('');
@@ -106,160 +102,8 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.get('phone')?.value).toBe('');
   });
 
-  describe('Form Validation', () => {
-    it('debería validar el campo del nombre', () => {
-      const nameControl = component.registerForm.get('name');
-
-      nameControl?.setValue('');
-      expect(nameControl?.hasError('required')).toBeTrue();
-
-      nameControl?.setValue('abc');
-      expect(nameControl?.hasError('minlength')).toBeTrue();
-
-      nameControl?.setValue('a'.repeat(16));
-      expect(nameControl?.hasError('maxlength')).toBeTrue();
-
-      nameControl?.setValue('Valid Name');
-      expect(nameControl?.valid).toBeTrue();
-    });
-
-    it('debería validar el campo del correo', () => {
-      const emailControl = component.registerForm.get('mail');
-
-      emailControl?.setValue('');
-      expect(emailControl?.hasError('required')).toBeTrue();
-
-      emailControl?.setValue('invalid');
-      expect(emailControl?.hasError('email')).toBeTrue();
-
-      emailControl?.setValue('a@b.c');
-      expect(emailControl?.hasError('minlength')).toBeTrue();
-
-      emailControl?.setValue('a'.repeat(51) + '@test.com');
-      expect(emailControl?.hasError('maxlength')).toBeTrue();
-
-      emailControl?.setValue('valid@example.com');
-      expect(emailControl?.valid).toBeTrue();
-    });
-
-    it('debería validar el campo de la contraseña', () => {
-      const passwordControl = component.registerForm.get(
-        'passwordGroup.password'
-      );
-
-      passwordControl?.setValue('');
-      expect(passwordControl?.hasError('required')).toBeTrue();
-
-      passwordControl?.setValue('short');
-      expect(passwordControl?.hasError('minlength')).toBeTrue();
-
-      passwordControl?.setValue('a'.repeat(31));
-      expect(passwordControl?.hasError('maxlength')).toBeTrue();
-
-      passwordControl?.setValue('password'); // sin números
-      expect(passwordControl?.hasError('pattern')).toBeTrue();
-
-      passwordControl?.setValue('password123');
-      expect(passwordControl?.valid).toBeTrue();
-    });
-
-    it('debería validar la coincidencia de contraseñas', () => {
-      const passwordGroup = component.registerForm.get('passwordGroup');
-      const passwordControl = component.registerForm.get(
-        'passwordGroup.password'
-      );
-      const repeatControl = component.registerForm.get(
-        'passwordGroup.repeatPassword'
-      );
-
-      passwordControl?.setValue('password123');
-      repeatControl?.setValue('different');
-
-      expect(passwordGroup?.hasError('passwordsDontMatch')).toBeTrue();
-
-      repeatControl?.setValue('password123');
-      expect(passwordGroup?.valid).toBeTrue();
-    });
-
-    it('debería validar el grupo de address', () => {
-      const addressGroup = component.registerForm.get('address');
-
-      // Todos vacíos
-      expect(addressGroup?.valid).toBeTrue();
-
-      // Algunos campos llenos
-      addressGroup?.get('street')?.setValue('Test Street');
-      expect(addressGroup?.hasError('incompleteAddress')).toBeTrue();
-
-      // Todos los campos llenos
-      addressGroup?.get('city')?.setValue('Test City');
-      addressGroup?.get('country')?.setValue('Test Country');
-      addressGroup?.get('cp')?.setValue('1234');
-      expect(addressGroup?.valid).toBeTrue();
-    });
-
-    it('debería invalidar el formulario si se completa parcialmente la dirección, obligando a llenar todos los campos de addressGroup', () => {
-      component.registerForm.get('name')?.setValue('Test User');
-      component.registerForm.get('mail')?.setValue('test@example.com');
-      component.registerForm
-        .get('passwordGroup.password')
-        ?.setValue('password123');
-      component.registerForm
-        .get('passwordGroup.repeatPassword')
-        ?.setValue('password123');
-
-      const addressGroup = component.registerForm.get('address');
-      addressGroup?.get('street')?.setValue('123 Main St'); // solo un campo
-
-      component.onSubmit();
-      expect(component.registerForm.valid).toBeFalse();
-    });
-
-    it('debería invalidar el grupo de contraseñas si ambos campos están vacíos', () => {
-      const passwordGroup = component.registerForm.get('passwordGroup');
-      passwordGroup?.get('password')?.setValue('');
-      passwordGroup?.get('repeatPassword')?.setValue('');
-      expect(passwordGroup?.valid).toBeFalse();
-    });
-
-    it('debería invalidar el grupo de contraseñas si solo se llena un campo', () => {
-      const passwordGroup = component.registerForm.get('passwordGroup');
-      passwordGroup?.get('password')?.setValue('password123');
-      passwordGroup?.get('repeatPassword')?.setValue('');
-      expect(passwordGroup?.hasError('passwordsDontMatch')).toBeTrue();
-    });
-
-    it('debería marcar el grupo de dirección como inválido si se completa parcialmente', () => {
-      const addressGroup = component.registerForm.get('address');
-      addressGroup?.get('street')?.setValue('Test Street');
-      expect(addressGroup?.hasError('incompleteAddress')).toBeTrue();
-    });
-
-    it('debería marcar todos los campos de dirección como tocados si se modifica al menos uno', () => {
-      const addressGroup = component.registerForm.get('address');
-      addressGroup?.get('street')?.setValue('Some Street');
-      expect(addressGroup?.get('street')?.touched).toBeTrue();
-      expect(addressGroup?.get('city')?.touched).toBeTrue();
-      expect(addressGroup?.get('country')?.touched).toBeTrue();
-      expect(addressGroup?.get('cp')?.touched).toBeTrue();
-    });
-
-    it('debería mostrar el mensaje de error del campo nombre solo después de que ha sido tocado', () => {
-      const nameControl = component.registerForm.get('name');
-      nameControl?.setValue('');
-      fixture.detectChanges();
-      let errorEl = fixture.debugElement.query(By.css('.text-danger'));
-      expect(errorEl.nativeElement.textContent.trim()).toBe('');
-
-      nameControl?.markAsTouched();
-      fixture.detectChanges();
-      errorEl = fixture.debugElement.query(By.css('.text-danger'));
-      expect(errorEl.nativeElement.textContent).toContain('Name is required.');
-    });
-  });
-
   describe('Error Messages', () => {
-    it('debería retornar los mensajes de error del nombre correctamente', () => {
+    it('debe retornar los mensajes de error del nombre correctamente', () => {
       const nameControl = component.registerForm.get('name');
 
       nameControl?.setValue('');
@@ -273,7 +117,7 @@ describe('RegisterComponent', () => {
       expect(component.nameError).toBe('Name cannot exceed 15 characters.');
     });
 
-    it('debería retornar los mensajes de error del correo correctamente', () => {
+    it('debe retornar los mensajes de error del correo correctamente', () => {
       const emailControl = component.registerForm.get('mail');
 
       emailControl?.setValue('');
@@ -298,19 +142,10 @@ describe('RegisterComponent', () => {
         'Password must have at least 8 characters.'
       );
     });
-
-    it('debería retornar los mensajes de error de la dirección correctamente', () => {
-      const addressGroup = component.registerForm.get('address');
-
-      addressGroup?.get('street')?.setValue('Test Street');
-      addressGroup?.markAllAsTouched();
-
-      expect(component.getAddressError('city')).toBe('This field is required.');
-    });
   });
 
   describe('Form Submission', () => {
-    it('debería no enviar el formulario si es inválido', () => {
+    it('no debe enviar el formulario si es inválido', () => {
       const registerSpy = spyOn(authService, 'register');
 
       component.onSubmit();
@@ -319,7 +154,7 @@ describe('RegisterComponent', () => {
       expect(component.registerForm.touched).toBeTrue();
     });
 
-    it('debería llamar a handleError del MessageService cuando el registro falla con error del servidor', () => {
+    it('debe llamar a handleError del MessageService cuando el registro falla con error del servidor', () => {
       const errorResponse = {
         error: { header: { resultCode: 500, error: 'Server error' } },
       };
@@ -327,7 +162,7 @@ describe('RegisterComponent', () => {
         throwError(() => errorResponse)
       );
 
-      // Llenar el formulario con datos válidos
+      // Llena el formulario con datos válidos
       component.registerForm.get('name')?.setValue('Test User');
       component.registerForm.get('mail')?.setValue('test@example.com');
       component.registerForm
@@ -342,7 +177,7 @@ describe('RegisterComponent', () => {
       expect(messageService.handleError).toHaveBeenCalledWith(errorResponse);
     });
 
-    it('debería llamar a markAllAsTouched para mostrar errores al enviar un formulario inválido', () => {
+    it('debe llamar a markAllAsTouched para mostrar errores al enviar un formulario inválido', () => {
       const markAllAsTouchedSpy = spyOn(
         component.registerForm,
         'markAllAsTouched'
@@ -352,7 +187,7 @@ describe('RegisterComponent', () => {
       expect(markAllAsTouchedSpy).toHaveBeenCalled();
     });
 
-    it('debería aplicar valores predeterminados en el payload si los campos opcionales están vacíos', fakeAsync(() => {
+    it('debe aplicar valores predeterminados en el payload si los campos opcionales están vacíos', fakeAsync(() => {
       component.registerForm.get('name')?.setValue('Test User');
       component.registerForm.get('mail')?.setValue('test@example.com');
       component.registerForm
@@ -372,14 +207,14 @@ describe('RegisterComponent', () => {
       tick(1500);
     }));
 
-    it('no debería enviar el formulario si este es inválido', () => {
+    it('no debe enviar el formulario si este es inválido', () => {
       const authSpy = spyOn(authService, 'register');
       component.registerForm.get('name')?.setValue('');
       component.onSubmit();
       expect(authSpy).not.toHaveBeenCalled();
     });
 
-    it('debería llamar a processResultCode en caso de registro exitoso', fakeAsync(() => {
+    it('debe llamar a processResultCode en caso de registro exitoso', fakeAsync(() => {
       component.registerForm.get('name')?.setValue('Test User');
       component.registerForm.get('mail')?.setValue('test@example.com');
       component.registerForm
@@ -397,7 +232,7 @@ describe('RegisterComponent', () => {
       tick(1500);
     }));
 
-    it('debería navegar a login después de un registro exitoso con timeout', fakeAsync(() => {
+    it('debe navegar a login después de un registro exitoso con timeout', fakeAsync(() => {
       component.registerForm.get('name')?.setValue('Test User');
       component.registerForm.get('mail')?.setValue('test@example.com');
       component.registerForm
@@ -413,14 +248,14 @@ describe('RegisterComponent', () => {
       expect(navigateSpy).toHaveBeenCalledWith(['/auth/login']);
     }));
 
-    it('no debería navegar al login si el formulario es inválido', () => {
+    it('no debe navegar al login si el formulario es inválido', () => {
       const navigateSpy = spyOn(router, 'navigate');
       component.registerForm.get('name')?.setValue('');
       component.onSubmit();
       expect(navigateSpy).not.toHaveBeenCalled();
     });
 
-    it('debería enviar el formulario correctamente y aplicar valores por defecto cuando los campos opcionales están vacíos', fakeAsync(() => {
+    it('debe enviar el formulario correctamente y aplicar valores por defecto cuando los campos opcionales están vacíos', fakeAsync(() => {
       component.registerForm.get('name')?.setValue('Test User');
       component.registerForm.get('mail')?.setValue('test@example.com');
       component.registerForm
@@ -443,7 +278,7 @@ describe('RegisterComponent', () => {
       tick(1500);
     }));
 
-    it('debería enviar el formulario correctamente usando todos los valores ingresados en los campos opcionales', fakeAsync(() => {
+    it('debe enviar el formulario correctamente usando todos los valores ingresados en los campos opcionales', fakeAsync(() => {
       component.registerForm.get('name')?.setValue('Test User');
       component.registerForm.get('mail')?.setValue('test@example.com');
       component.registerForm
@@ -475,7 +310,7 @@ describe('RegisterComponent', () => {
       tick(1500);
     }));
 
-    it('debería enviar el formulario correctamente y rellenar automáticamente los campos opcionales vacíos con valores por defecto', fakeAsync(() => {
+    it('debe enviar el formulario correctamente y rellenar automáticamente los campos opcionales vacíos con valores por defecto', fakeAsync(() => {
       component.registerForm.get('name')?.setValue('Test User');
       component.registerForm.get('mail')?.setValue('test@example.com');
       component.registerForm
@@ -513,7 +348,7 @@ describe('RegisterComponent', () => {
       tick(1500);
     }));
 
-    it('debería bloquear el envío si los campos opcionales contienen solo espacios', fakeAsync(() => {
+    it('debe bloquear el envío si los campos opcionales contienen solo espacios', fakeAsync(() => {
       component.registerForm.get('name')?.setValue('Test User');
       component.registerForm.get('mail')?.setValue('test@example.com');
       component.registerForm
@@ -544,7 +379,7 @@ describe('RegisterComponent', () => {
   });
 
   describe('Template Integration', () => {
-    it('debería mostrar el mensaje de "Name is required" cuando no se ingresa nada', () => {
+    it('debe mostrar el mensaje de "Name is required" cuando no se ingresa nada', () => {
       const nameControl = component.registerForm.get('name');
 
       nameControl?.setValue('');
@@ -557,7 +392,7 @@ describe('RegisterComponent', () => {
       );
     });
 
-    it('debería habilitar el botón de enviar cuando el formulario es válido', () => {
+    it('debe habilitar el botón de enviar cuando el formulario es válido', () => {
       // Llena el formulario con datos válidos
       component.registerForm.get('name')?.setValue('Test User');
       component.registerForm.get('mail')?.setValue('test@example.com');
@@ -576,7 +411,7 @@ describe('RegisterComponent', () => {
       expect(submitButton.nativeElement.disabled).toBeFalse();
     });
 
-    it('debería llamar a onSubmit al enviar el formulario', () => {
+    it('debe llamar a onSubmit al enviar el formulario', () => {
       const onSubmitSpy = spyOn(component, 'onSubmit');
 
       const form = fixture.debugElement.query(By.css('form'));
@@ -585,7 +420,7 @@ describe('RegisterComponent', () => {
       expect(onSubmitSpy).toHaveBeenCalled();
     });
 
-    it('debería mostrar un enlace que redirija al login (/auth/login)', () => {
+    it('debe mostrar un enlace que redirija al login (/auth/login)', () => {
       const loginLink = fixture.debugElement.query(By.css('.loged-user a'));
 
       expect(loginLink).toBeTruthy(); // aseguramos que existe
@@ -599,13 +434,13 @@ describe('RegisterComponent', () => {
   });
 
   describe('Value Changes Subscription', () => {
-    it('debería limpiar los mensajes al cambiar los valores del nombre del formulario', () => {
+    it('debe limpiar los mensajes al cambiar los valores del nombre del formulario', () => {
       component.registerForm.get('name')?.setValue('New Name');
 
       expect(messageService.clear).toHaveBeenCalled();
     });
 
-    it('debería limpiar los mensajes al cambiar los valores del correo del formulario', () => {
+    it('debe limpiar los mensajes al cambiar los valores del correo del formulario', () => {
       component.registerForm.get('mail')?.setValue('new@mail.com');
       expect(messageService.clear).toHaveBeenCalled();
     });

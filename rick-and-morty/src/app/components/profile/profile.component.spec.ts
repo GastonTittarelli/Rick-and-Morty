@@ -425,4 +425,53 @@ describe('ProfileComponent', () => {
     const editBtn = fixture.debugElement.query(By.css('button'));
     expect(editBtn.nativeElement.textContent).not.toContain('Editar perfil');
   });
+
+
+  describe('Form error getters', () => {
+  it('nicknameError: retorna null si el control no existe', () => {
+    spyOn(component.profileForm, 'get').and.returnValue(null as any);
+    expect(component.nicknameError).toBeNull();
+  });
+
+  it('nicknameError: retorna null si no está touched ni dirty', () => {
+    const ctrl = component.profileForm.get('nickname')!;
+    ctrl.markAsUntouched();
+    ctrl.markAsPristine();
+    expect(component.nicknameError).toBeNull();
+  });
+
+  it('profilePictureError: retorna null si control no existe', () => {
+    spyOn(component.profileForm, 'get').and.returnValue(null as any);
+    expect(component.profilePictureError).toBeNull();
+  });
+
+  it('profilePictureError: retorna null si no hay error y no está touched ni dirty', () => {
+    const ctrl = component.profileForm.get('profilePicture')!;
+    ctrl.setErrors(null);
+    ctrl.markAsPristine();
+    ctrl.markAsUntouched();
+    expect(component.profilePictureError).toBeNull();
+  });
+
+  it('locationError: retorna null si control no existe', () => {
+    spyOn(component.profileForm, 'get').and.returnValue(null as any);
+    expect(component.locationError).toBeNull();
+  });
+
+  it('locationError: retorna mensaje maxlength', () => {
+    const ctrl = component.profileForm.get('location')!;
+    ctrl.setErrors({ maxlength: true });
+    ctrl.markAsDirty();
+    expect(component.locationError).toBe('Location cannot exceed 50 characters.');
+  });
+
+  it('locationError: retorna null si no hay error y no está touched ni dirty', () => {
+    const ctrl = component.profileForm.get('location')!;
+    ctrl.setErrors(null);
+    ctrl.markAsPristine();
+    ctrl.markAsUntouched();
+    expect(component.locationError).toBeNull();
+  });
+});
+
 });

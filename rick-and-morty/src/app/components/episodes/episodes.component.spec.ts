@@ -117,6 +117,21 @@ describe('EpisodesComponent', () => {
     );
   }));
 
+  it('debe usar el mensaje por defecto si toggleFavorite no devuelve message', fakeAsync(() => {
+    const episode = { id: 10, name: 'Test Episode' };
+    // Forzamos que toggleFavorite devuelva un objeto vacío
+    mockFavoritesService.toggleFavorite.and.returnValue(of({}));
+
+    component.toggleFavorite(episode);
+    tick();
+
+    expect(mockFavoritesService.toggleFavorite).toHaveBeenCalledWith(10);
+    expect(mockMessageService.showMessageWithTimeout).toHaveBeenCalledWith(
+      'success',
+      'Favorite list updated'
+    );
+  }));
+
   it('debe manejar error al alternar favorito', fakeAsync(() => {
     mockFavoritesService.toggleFavorite.and.returnValue(
       throwError(() => new Error('fail'))

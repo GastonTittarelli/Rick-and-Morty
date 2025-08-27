@@ -1,14 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BreadcrumbNavComponent } from './breadcrumb-nav.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { RickAndMortyService } from '../../service/rick-and-morty.service';
 import { Subject, of, throwError } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 
+const routerEventsSubject = new Subject<any>();
+
 const routerMock = {
   url: '/home/characters/1',
-  events: new Subject<any>().asObservable(),
+  events: routerEventsSubject, // Usamos un Subject para emitir eventos manualmente
   navigate: jasmine.createSpy('navigate'),
   createUrlTree: jasmine.createSpy('createUrlTree').and.callFake((commands: any) => commands),
   serializeUrl: jasmine.createSpy('serializeUrl').and.callFake((url: any) => url)
@@ -100,6 +102,27 @@ describe('BreadcrumbNavComponent', () => {
     expect(items.length).toBe(component.breadcrumbs.length);
     expect(items[items.length - 1].classList.contains('active')).toBeTrue();
   });
+
+  it('debe reaccionar a NavigationEnd y llamar a buildBreadcrumbs', async () => {
+  const event = new NavigationEnd(1, '/home/characters', '/home/characters');
+  routerEventsSubject.next(event); // ahora funciona
+
+  await fixture.whenStable();
+  fixture.detectChanges();
+
+  expect(component.breadcrumbs.length).toBeGreaterThan(0);
+});
+
+
+it('debe saltarse el breadcrumb si el primer segmento es "characters"', async () => {
+  (router as any).url = '/characters/1';
+  await (component as any).buildBreadcrumbs();
+  fixture.detectChanges();
+
+  // Se asegura que el breadcrumb "characters" no se agregue
+  const labels = component.breadcrumbs.map(b => b.label);
+  expect(labels).not.toContain('Characters');
+});
 });
 
 // Bloque independiente para el test con servicio que falla
