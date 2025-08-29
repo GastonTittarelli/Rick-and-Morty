@@ -117,19 +117,32 @@ Aplicación desarrollada en Angular, NestJS y CSS, con base de datos PostgreSQL.
 
 ---
 
-### 11. 🌐 Pipes personalizados
+### 11. 🧪 Testeo y cobertura
+
+#### Unit Testing con Jasmine + Karma
+- Se desarrollaron pruebas unitarias bajo el enfoque **Given – When – Then**, garantizando la claridad en los escenarios de prueba.  
+- La aplicación alcanza un **>95% de coverage** en *statements, branches, functions y lines*.  
+- Se testearon **módulos, componentes, servicios, interceptores, guards y pipes personalizados**.  
+
+#### End-to-End Testing con Cypress
+- Se implementó un flujo **E2E completo para la autenticación de usuarios** (login y registro).  
+- Los servicios fueron **mockeados con `cy.intercept`**, evitando dependencias externas y asegurando consistencia en los tests.  
+- Se utilizaron **comandos personalizados** (`custom.commands.js`) para simplificar la reutilización de pasos repetitivos dentro de los escenarios de prueba.  
+
+
+### 12. 🌐 Pipes personalizados
 
 - Se creó un pipe llamado `TranslateStatusPipe` para traducir el estado (`status`) y género (`gender`) del personaje del inglés al español.
 
 ---
 
-### 12. 🎨 Colores dinámicos con `ngClass`
+### 13. 🎨 Colores dinámicos con `ngClass`
 
 - Según el estado del personaje (`status`), el color de fondo cambia dinámicamente.
 
 ---
 
-### 13. 📱 Responsive design + estilos
+### 14. 📱 Responsive design + estilos
 
 - Bootstrap 5 utilizado como base de diseño.
 - Se agregaron estilos y ajustes personalizados con CSS.

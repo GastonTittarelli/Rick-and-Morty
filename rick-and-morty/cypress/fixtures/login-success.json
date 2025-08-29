@@ -1,0 +1,15 @@
+{
+  "header": {
+    "message": "Authenticated user",
+    "resultCode": 0
+  },
+  "data": {
+    "user": {
+      "id": 1,
+      "name": "Test User",
+      "mail": "test@mail.com",
+      "role": "user"
+    },
+    "token": "fake-jwt-token"
+  }
+}

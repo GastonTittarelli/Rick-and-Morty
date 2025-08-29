@@ -1,0 +1,14 @@
+{
+  "header": {
+    "message": "User created successfully",
+    "resultCode": 0
+  },
+  "data": {
+    "user": {
+      "id": 1,
+      "name": "Test User",
+      "mail": "test@mail.com",
+      "role": "user"
+    }
+  }
+}

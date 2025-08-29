@@ -12,8 +12,8 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'https://rick-and-morty-qxca.onrender.com/user'; 
   // private baseUrl = 'http://localhost:3000/user';
+  private baseUrl = 'https://rick-and-morty-qxca.onrender.com/user'; 
 
   constructor(private http: HttpClient) {}
 
