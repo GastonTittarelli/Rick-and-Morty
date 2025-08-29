@@ -11,13 +11,15 @@ Aplicación desarrollada en Angular, NestJS y CSS, con base de datos PostgreSQL.
 
 ## 📸 Screenshots
 - **Login**
-<img width="1918" height="917" alt="Login" src="https://github.com/user-attachments/assets/8334f204-db93-4dd2-b64e-b4e1758ba0be" />
+<img width="1918" height="917" alt="login" src="https://github.com/user-attachments/assets/8334f204-db93-4dd2-b64e-b4e1758ba0be" />
 
-- **Home**
-<img width="1918" height="917" alt="Home" src="https://github.com/user-attachments/assets/754981cd-3bc5-4e13-8c73-bc6a287a8986" />
+- **Character-detail**
+<img width="1918" height="916" alt="character.detail" src="https://github.com/user-attachments/assets/4e70770e-9342-4b0d-b397-38e3822c8ad4" />
+
 
 - **Profile**
-<img width="1918" height="917" alt="Profile" src="https://github.com/user-attachments/assets/4fe6df03-fc2a-4467-869a-d54450048032" />
+<img width="1918" height="917" alt="screenshot4" src="https://github.com/user-attachments/assets/a337b498-41e9-40f5-9129-59b4e4bb479e" />
+
 
 - **Not Found**
 <img width="1918" height="917" alt="not-found" src="https://github.com/user-attachments/assets/3417f817-49cb-496a-8190-c7e95c8ba6f7" />
