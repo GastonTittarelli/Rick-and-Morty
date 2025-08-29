@@ -9,6 +9,10 @@ Aplicación desarrollada en Angular, NestJS y CSS, con base de datos PostgreSQL.
 - **Deploy en Vercel:** https://rick-and-morty-blond-three.vercel.app/
 ℹ️ Nota: debido a que los entornos están hosteados en servidores gratuitos, la aplicación puede tardar algunos segundos en activarse al primer acceso. (demora hasta 30 segundos para loguear o registrar usuario apenas ingresas a la página)
 
+<img width="1918" height="917" alt="screenshot" src="https://github.com/user-attachments/assets/8334f204-db93-4dd2-b64e-b4e1758ba0be" />
+
+<img width="1918" height="917" alt="screenshot2" src="https://github.com/user-attachments/assets/3417f817-49cb-496a-8190-c7e95c8ba6f7" />
+
 ---
 
 ## ✨ Funcionalidades desarrolladas
