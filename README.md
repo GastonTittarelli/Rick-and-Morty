@@ -21,6 +21,9 @@ Aplicación desarrollada en Angular, NestJS y CSS, con base de datos PostgreSQL.
 
 - **Not Found**
 <img width="1918" height="917" alt="not-found" src="https://github.com/user-attachments/assets/3417f817-49cb-496a-8190-c7e95c8ba6f7" />
+
+![screenshot6](https://github.com/user-attachments/assets/326af025-3be0-447e-a3b4-142934778a7a)
+
 ---
 
 ## ✨ Funcionalidades desarrolladas
