@@ -2,12 +2,14 @@
 
 Aplicación desarrollada en Angular, NestJS y CSS, con base de datos PostgreSQL. El proyecto consume la API pública de Rick & Morty y extiende sus funcionalidades con autenticación, favoritos y comentarios personalizados. Se trabajó con buenas prácticas, arquitectura modular, servicios reutilizables, validaciones a nivel frontend y backend, interceptores, guards, pipes personalizados, diseño responsive y backend propio con persistencia de datos.
 
----
-
-## 🔗 Enlaces
-
 - **Deploy en Vercel:** https://rick-and-morty-blond-three.vercel.app/
-ℹ️ Nota: debido a que los entornos están hosteados en servidores gratuitos, la aplicación puede tardar algunos segundos en activarse al primer acceso. (demora hasta 30 segundos para loguear o registrar usuario apenas ingresas a la página)
+  
+-
+
+ℹ️ **Nota: debido a que los entornos están hosteados en servidores gratuitos, la aplicación puede tardar algunos segundos en activarse al primer acceso. (demora hasta 30 segundos para loguear o registrar usuario apenas ingresas a la página)**
+
+--
+
 
 ## 📸 Screenshots
 - **Login**
